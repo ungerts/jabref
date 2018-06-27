@@ -15,6 +15,7 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.jabref.logic.bibtex.InvalidFieldValueException;
 import org.jabref.logic.exporter.BibtexDatabaseWriter;
 import org.jabref.logic.exporter.FileSaveSession;
 import org.jabref.logic.exporter.SaveException;
@@ -26,8 +27,8 @@ import org.jabref.model.database.event.CoarseChangeFilter;
 import org.jabref.preferences.JabRefPreferences;
 
 import com.google.common.eventbus.Subscribe;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Backups the given bib database file from {@link BibDatabaseContext} on every {@link BibDatabaseContextChangedEvent}.
@@ -37,7 +38,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class BackupManager {
 
-    private static final Log LOGGER = LogFactory.getLog(BackupManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BackupManager.class);
 
     private static final String BACKUP_EXTENSION = ".sav";
 
@@ -118,11 +119,24 @@ public class BackupManager {
     private void performBackup(Path backupPath) {
         try {
             Charset charset = bibDatabaseContext.getMetaData().getEncoding().orElse(preferences.getDefaultEncoding());
-            SavePreferences savePreferences = SavePreferences.loadForSaveFromPreferences(preferences).withEncoding
+            SavePreferences savePreferences = preferences.loadForSaveFromPreferences().withEncoding
                     (charset).withMakeBackup(false);
             new BibtexDatabaseWriter<>(FileSaveSession::new).saveDatabase(bibDatabaseContext, savePreferences).commit
                     (backupPath);
         } catch (SaveException e) {
+            logIfCritical(e);
+        }
+    }
+
+    private void logIfCritical(SaveException e) {
+        Throwable innermostCause = e;
+        while (innermostCause.getCause() != null) {
+            innermostCause = innermostCause.getCause();
+        }
+        boolean isErrorInField = innermostCause instanceof InvalidFieldValueException;
+
+        // do not print errors in field values into the log during autosave
+        if (!isErrorInField) {
             LOGGER.error("Error while saving file.", e);
         }
     }

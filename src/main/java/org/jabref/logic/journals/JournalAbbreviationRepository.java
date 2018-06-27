@@ -7,15 +7,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * A repository for all journal abbreviations, including add and find methods.
  */
 public class JournalAbbreviationRepository {
 
-    private static final Log LOGGER = LogFactory.getLog(JournalAbbreviationRepository.class);
     private final Set<Abbreviation> abbreviations = new HashSet<>(16000); // We have over 15.000 abbreviations in the built-in lists
 
     public JournalAbbreviationRepository(Abbreviation... abbreviations) {
@@ -31,18 +27,28 @@ public class JournalAbbreviationRepository {
     }
 
     private static boolean isMatchedAbbreviated(String name, Abbreviation abbreviation) {
-        return name.equalsIgnoreCase(abbreviation.getIsoAbbreviation())
+        boolean isAbbreviated = name.equalsIgnoreCase(abbreviation.getIsoAbbreviation())
                 || name.equalsIgnoreCase(abbreviation.getMedlineAbbreviation());
+        boolean isExpanded = name.equalsIgnoreCase(abbreviation.getName());
+        return isAbbreviated && !isExpanded;
     }
 
     public int size() {
         return abbreviations.size();
     }
 
+    /**
+     * Returns true if the given journal name is contained in the list either in its full form (e.g Physical Review
+     * Letters) or its abbreviated form (e.g. Phys. Rev. Lett.).
+     */
     public boolean isKnownName(String journalName) {
         return abbreviations.stream().anyMatch(abbreviation -> isMatched(journalName.trim(), abbreviation));
     }
 
+    /**
+     * Returns true if the given journal name is in its abbreviated form (e.g. Phys. Rev. Lett.). The test is strict,
+     * i.e. journals whose abbreviation is the same as the full name are not considered
+     */
     public boolean isAbbreviatedName(String journalName) {
         return abbreviations.stream().anyMatch(abbreviation -> isMatchedAbbreviated(journalName.trim(), abbreviation));
     }
@@ -60,11 +66,9 @@ public class JournalAbbreviationRepository {
     public void addEntry(Abbreviation abbreviation) {
         Objects.requireNonNull(abbreviation);
 
+        // Abbreviation equality is tested on name only, so we might have to remove an old abbreviation
         if (abbreviations.contains(abbreviation)) {
-            Abbreviation previous = getAbbreviation(abbreviation.getName()).get();
-            abbreviations.remove(previous);
-            LOGGER.info("Duplicate journal abbreviation - old one will be overwritten by new one\nOLD: "
-                    + previous + "\nNEW: " + abbreviation);
+            abbreviations.remove(abbreviation);
         }
 
         abbreviations.add(abbreviation);

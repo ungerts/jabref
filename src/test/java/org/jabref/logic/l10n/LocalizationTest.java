@@ -1,74 +1,76 @@
 package org.jabref.logic.l10n;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.Locale;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.Assert.assertEquals;
-
-public class LocalizationTest {
+class LocalizationTest {
 
     private Locale locale;
 
-    @Before
-    public void storeDefaultLocale() {
+    @BeforeEach
+    void storeDefaultLocale() {
         locale = Locale.getDefault();
     }
 
-    @After
-    public void restoreDefaultLocale() {
+    @AfterEach
+    void restoreDefaultLocale() {
         Locale.setDefault(locale);
         javax.swing.JComponent.setDefaultLocale(locale);
+        Localization.setLanguage("en");
     }
 
     @Test
-    public void testSetKnownLanguage() {
+    void testSetKnownLanguage() {
         Locale.setDefault(Locale.CHINA);
         Localization.setLanguage("en");
         assertEquals("en", Locale.getDefault().toString());
     }
 
     @Test
-    public void testSetUnknownLanguage() {
+    void testSetUnknownLanguage() {
         Locale.setDefault(Locale.CHINA);
         Localization.setLanguage("WHATEVER");
         assertEquals("en", Locale.getDefault().toString());
     }
 
     @Test
-    public void testKnownTranslation() {
+    void testKnownTranslationWithGroups() {
         Localization.setLanguage("en");
-        String knownKey = "Groups";
-        assertEquals(knownKey, Localization.lang(knownKey));
-        String knownValueWithMnemonics = "&Groups";
-        assertEquals(knownValueWithMnemonics, Localization.menuTitle(knownKey));
+        assertEquals("Groups", Localization.lang("Groups"));
     }
 
     @Test
-    public void testKnownTranslationWithCountryModifier() {
+    void testKnownEnglishTranslationOfUndo() {
+        Localization.setLanguage("en");
+        assertEquals("Undo", Localization.lang("Undo"));
+    }
+
+    @Test
+    void testKnownGermanTranslation() {
+        Localization.setLanguage("de");
+        assertEquals("Zeige Einstellungen", Localization.lang("Show preferences"));
+    }
+
+    @Test
+    void testKnownTranslationWithCountryModifier() {
         Localization.setLanguage("en_US");
-        String knownKey = "Groups";
-        assertEquals(knownKey, Localization.lang(knownKey));
-        String knownValueWithMnemonics = "&Groups";
-        assertEquals(knownValueWithMnemonics, Localization.menuTitle(knownKey));
+        assertEquals("Groups", Localization.lang("Groups"));
     }
 
     @Test
-    public void testUnknownTranslation() {
+    void testUnknownTranslation() {
         Localization.setLanguage("en");
-        String knownKey = "WHATEVER";
-        assertEquals(knownKey, Localization.lang(knownKey));
-        assertEquals(knownKey, Localization.menuTitle(knownKey));
+        assertEquals("WHATEVER", Localization.lang("WHATEVER"));
     }
 
     @Test
-    public void testUnsetLanguageTranslation() {
-        String knownKey = "Groups";
-        assertEquals(knownKey, Localization.lang(knownKey));
-        String knownValueWithMnemonics = "&Groups";
-        assertEquals(knownValueWithMnemonics, Localization.menuTitle(knownKey));
+    void testUnsetLanguageTranslation() {
+        assertEquals("Groups", Localization.lang("Groups"));
     }
 
 }

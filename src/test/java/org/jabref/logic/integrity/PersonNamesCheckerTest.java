@@ -2,18 +2,43 @@ package org.jabref.logic.integrity;
 
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.jabref.model.database.BibDatabaseContext;
+import org.jabref.model.database.BibDatabaseMode;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PersonNamesCheckerTest {
 
-    PersonNamesChecker checker;
+    private PersonNamesChecker checker;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-        checker = new PersonNamesChecker();
+        BibDatabaseContext databaseContext = new BibDatabaseContext();
+        databaseContext.setMode(BibDatabaseMode.BIBTEX);
+        checker = new PersonNamesChecker(databaseContext);
+    }
+
+    @Test
+    public void validNameFirstnameAuthor() throws Exception {
+        assertEquals(Optional.empty(), checker.checkValue("Kolb, Stefan"));
+    }
+
+    @Test
+    public void validNameFirstnameAuthors() throws Exception {
+        assertEquals(Optional.empty(), checker.checkValue("Kolb, Stefan and Harrer, Simon"));
+    }
+
+    @Test
+    public void validFirstnameNameAuthor() throws Exception {
+        assertEquals(Optional.empty(), checker.checkValue("Stefan Kolb"));
+    }
+
+    @Test
+    public void validFirstnameNameAuthors() throws Exception {
+        assertEquals(Optional.empty(), checker.checkValue("Stefan Kolb and Simon Harrer"));
     }
 
     @Test
@@ -25,5 +50,16 @@ public class PersonNamesCheckerTest {
     @Test
     public void doNotComplainAboutSecondNameInFront() throws Exception {
         assertEquals(Optional.empty(), checker.checkValue("M. J. Gotay"));
+    }
+
+    @Test
+    public void validCorporateNameInBrackets() throws Exception {
+        assertEquals(Optional.empty(), checker.checkValue("{JabRef}"));
+    }
+
+    @Test
+    public void validCorporateNameAndPerson() throws Exception {
+        assertEquals(Optional.empty(), checker.checkValue("{JabRef} and Stefan Kolb"));
+        assertEquals(Optional.empty(), checker.checkValue("{JabRef} and Kolb, Stefan"));
     }
 }

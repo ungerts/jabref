@@ -22,14 +22,14 @@ import org.jabref.logic.logging.LogMessages;
 import org.jabref.logic.util.BuildInfo;
 import org.jabref.logic.util.OS;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.logging.log4j.core.LogEvent;
 import org.fxmisc.easybind.EasyBind;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ErrorConsoleViewModel extends AbstractViewModel {
-    private static final Log LOGGER = LogFactory.getLog(ErrorConsoleViewModel.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorConsoleViewModel.class);
 
     private final DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
     private final Date date = new Date();
@@ -75,7 +75,7 @@ public class ErrorConsoleViewModel extends AbstractViewModel {
         if (messages.isEmpty()) {
             return;
         }
-        clipBoardManager.setClipboardContents(getLogMessagesAsString(messages));
+        clipBoardManager.setContent(getLogMessagesAsString(messages));
         dialogService.notify(Localization.lang("Log copied to clipboard."));
     }
 
@@ -100,7 +100,7 @@ public class ErrorConsoleViewModel extends AbstractViewModel {
             // log messages
             String issueDetails = "<details>\n" + "<summary>" + "Detail information:" + "</summary>\n\n```\n"
                     + getLogMessagesAsString(allMessagesData) + "\n```\n\n</details>";
-            clipBoardManager.setClipboardContents(issueDetails);
+            clipBoardManager.setContent(issueDetails);
             // bug report body
             String issueBody = systemInfo + "\n\n" + howToReproduce + "\n\n" + "Paste your log details here.";
 
@@ -118,7 +118,7 @@ public class ErrorConsoleViewModel extends AbstractViewModel {
                     .setParameter("body", issueBody);
             JabRefDesktop.openBrowser(uriBuilder.build().toString());
         } catch (IOException | URISyntaxException e) {
-            LOGGER.error(e);
+            LOGGER.error("Problem opening url", e);
         }
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jabref.logic.layout.LayoutFormatterPreferences;
+import org.jabref.logic.xmp.XmpPreferences;
 import org.jabref.model.database.BibDatabaseContext;
 import org.jabref.model.entry.BibEntry;
 
@@ -24,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 public class HtmlExportFormatTest {
-    private IExportFormat exportFormat;
+    private Exporter exportFormat;
     public BibDatabaseContext databaseContext;
     public Charset charset;
     public List<BibEntry> entries;
@@ -34,12 +35,13 @@ public class HtmlExportFormatTest {
 
     @Before
     public void setUp() {
-        Map<String, ExportFormat> customFormats = new HashMap<>();
+        Map<String, TemplateExporter> customFormats = new HashMap<>();
         LayoutFormatterPreferences layoutPreferences = mock(LayoutFormatterPreferences.class, Answers.RETURNS_DEEP_STUBS);
         SavePreferences savePreferences = mock(SavePreferences.class);
-        ExportFormats.initAllExports(customFormats, layoutPreferences, savePreferences);
+        XmpPreferences xmpPreferences = mock(XmpPreferences.class);
+        ExporterFactory exporterFactory = ExporterFactory.create(customFormats, layoutPreferences, savePreferences, xmpPreferences);
 
-        exportFormat = ExportFormats.getExportFormat("html");
+        exportFormat = exporterFactory.getExporterByName("html").get();
 
         databaseContext = new BibDatabaseContext();
         charset = StandardCharsets.UTF_8;
@@ -58,8 +60,7 @@ public class HtmlExportFormatTest {
     @Test
     public void emitWellFormedHtml() throws Exception {
         File tmpFile = testFolder.newFile();
-        String filename = tmpFile.getCanonicalPath();
-        exportFormat.performExport(databaseContext, filename, charset, entries);
+        exportFormat.export(databaseContext, tmpFile.toPath(), charset, entries);
         List<String> lines = Files.readAllLines(tmpFile.toPath());
         assertEquals("</html>", lines.get(lines.size() - 1));
     }

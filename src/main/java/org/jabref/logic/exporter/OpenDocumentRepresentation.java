@@ -16,20 +16,15 @@ import org.jabref.model.database.BibDatabase;
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.FieldName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
-/**
- * @author Morten O. Alver.
- * Based on net.sf.jabref.MODSDatabase by Michael Wrighton
- *
- */
 class OpenDocumentRepresentation {
 
-    private static final Log LOGGER = LogFactory.getLog(OpenDocumentRepresentation.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OpenDocumentRepresentation.class);
     private final List<BibEntry> entries;
 
     private final BibDatabase database;

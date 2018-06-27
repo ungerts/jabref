@@ -35,9 +35,9 @@ import org.jabref.model.entry.identifier.DOI;
 import org.jabref.model.strings.StringUtil;
 import org.jabref.model.util.OptionalUtil;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.utils.URIBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -45,8 +45,8 @@ import org.xml.sax.SAXException;
 /**
  * Fetcher for the arXiv.
  *
- * @see <a href="http://arxiv.org/help/api/index">ArXiv API</a> for an overview of the API
- * @see <a href="http://arxiv.org/help/api/user-manual#_calling_the_api">ArXiv API User's Manual</a> for a detailed
+ * @see <a href="https://arxiv.org/help/api/index">ArXiv API</a> for an overview of the API
+ * @see <a href="https://arxiv.org/help/api/user-manual#_calling_the_api">ArXiv API User's Manual</a> for a detailed
  * description on how to use the API
  *
  * Similar implementions:
@@ -54,9 +54,9 @@ import org.xml.sax.SAXException;
  * <a herf="https://gitlab.c3sl.ufpr.br/portalmec/dspace-portalmec/blob/aa209d15082a9870f9daac42c78a35490ce77b52/dspace-api/src/main/java/org/dspace/submit/lookup/ArXivService.java">dspace-portalmec</a>
  */
 public class ArXiv implements FulltextFetcher, SearchBasedFetcher, IdBasedFetcher, IdFetcher<ArXivIdentifier> {
-    private static final Log LOGGER = LogFactory.getLog(ArXiv.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ArXiv.class);
 
-    private static final String API_URL = "http://export.arxiv.org/api/query";
+    private static final String API_URL = "https://export.arxiv.org/api/query";
 
     private final ImportFormatPreferences importFormatPreferences;
 
@@ -84,6 +84,11 @@ public class ArXiv implements FulltextFetcher, SearchBasedFetcher, IdBasedFetche
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public TrustLevel getTrustLevel() {
+        return TrustLevel.PREPRINT;
     }
 
     private Optional<ArXivEntry> searchForEntry(String searchQuery) throws FetcherException {
@@ -217,9 +222,9 @@ public class ArXiv implements FulltextFetcher, SearchBasedFetcher, IdBasedFetche
 
         // Check if the API returned an error
         // In case of an error, only one entry will be returned with the error information. For example:
-        // http://export.arxiv.org/api/query?id_list=0307015
+        // https://export.arxiv.org/api/query?id_list=0307015
         // <entry>
-        //      <id>http://arxiv.org/api/errors#incorrect_id_format_for_0307015</id>
+        //      <id>https://arxiv.org/api/errors#incorrect_id_format_for_0307015</id>
         //      <title>Error</title>
         //      <summary>incorrect id format for 0307015</summary>
         // </entry>
@@ -253,8 +258,10 @@ public class ArXiv implements FulltextFetcher, SearchBasedFetcher, IdBasedFetche
 
     @Override
     public Optional<BibEntry> performSearchById(String identifier) throws FetcherException {
-        return searchForEntryById(identifier).map(
-                (arXivEntry) -> arXivEntry.toBibEntry(importFormatPreferences.getKeywordSeparator()));
+        String cleanedIdentifier = identifier.trim();
+        cleanedIdentifier = identifier.replaceAll(" ", "");
+
+        return searchForEntryById(cleanedIdentifier).map((arXivEntry) -> arXivEntry.toBibEntry(importFormatPreferences.getKeywordSeparator()));
     }
 
     @Override
@@ -286,7 +293,7 @@ public class ArXiv implements FulltextFetcher, SearchBasedFetcher, IdBasedFetche
 
 
         public ArXivEntry(Node item) {
-            // see http://arxiv.org/help/api/user-manual#_details_of_atom_results_returned
+            // see https://arxiv.org/help/api/user-manual#_details_of_atom_results_returned
 
             // Title of the article
             // The result from the arXiv contains hard line breaks, try to remove them
@@ -339,7 +346,7 @@ public class ArXiv implements FulltextFetcher, SearchBasedFetcher, IdBasedFetche
             journalReferenceText = XMLUtil.getNodeContent(item, "arxiv:journal_ref");
 
             // Primary category
-            // Ex: <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+            // Ex: <arxiv:primary_category xmlns:arxiv="https://arxiv.org/schemas/atom" term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
             primaryCategory = XMLUtil.getNode(item, "arxiv:primary_category")
                     .flatMap(node -> XMLUtil.getAttributeContent(node, "term"));
         }
@@ -355,8 +362,8 @@ public class ArXiv implements FulltextFetcher, SearchBasedFetcher, IdBasedFetche
          * Returns the arXiv identifier
          */
         public Optional<String> getIdString() {
-            // remove leading http://arxiv.org/abs/ from abstract url to get arXiv ID
-            String prefix = "http://arxiv.org/abs/";
+            // remove leading https://arxiv.org/abs/ from abstract url to get arXiv ID
+            String prefix = "https://arxiv.org/abs/";
             return urlAbstractPage.map(abstractUrl -> {
                 if (abstractUrl.startsWith(prefix)) {
                     return abstractUrl.substring(prefix.length());
@@ -398,7 +405,7 @@ public class ArXiv implements FulltextFetcher, SearchBasedFetcher, IdBasedFetche
             primaryCategory.ifPresent(category -> bibEntry.setField(FieldName.EPRINTCLASS, category));
             journalReferenceText.ifPresent(journal -> bibEntry.setField(FieldName.JOURNALTITLE, journal));
             getPdfUrl().ifPresent(url -> bibEntry
-                    .setFiles(Collections.singletonList(new LinkedFile("online", url, "PDF"))));
+                    .setFiles(Collections.singletonList(new LinkedFile(url, "PDF"))));
             return bibEntry;
         }
     }

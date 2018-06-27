@@ -15,14 +15,15 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FulltextFetcher implementation that attempts to find a PDF URL at ScienceDirect.
@@ -30,7 +31,7 @@ import org.jsoup.nodes.Element;
  * @see http://dev.elsevier.com/
  */
 public class ScienceDirect implements FulltextFetcher {
-    private static final Log LOGGER = LogFactory.getLog(ScienceDirect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScienceDirect.class);
 
     private static final String API_URL = "http://api.elsevier.com/content/article/doi/";
     private static final String API_KEY = "fb82f2e692b3c72dafe5f4f1fa0ac00b";
@@ -53,7 +54,16 @@ public class ScienceDirect implements FulltextFetcher {
                             .referrer("http://www.google.com")
                             .ignoreHttpErrors(true).get();
 
+                    // Retrieve PDF link from meta data (most recent)
+                    Elements metaLinks = html.getElementsByAttributeValue("name", "citation_pdf_url");
+
+                    if (!metaLinks.isEmpty()) {
+                        String link = metaLinks.first().attr("content");
+                        return Optional.of(new URL(link));
+                    }
+
                     // Retrieve PDF link (old page)
+                    // TODO: can possibly be removed
                     Element link = html.getElementById("pdfLink");
 
                     if (link != null) {
@@ -62,6 +72,7 @@ public class ScienceDirect implements FulltextFetcher {
                         return pdfLink;
                     }
                     // Retrieve PDF link (new page)
+                    // TODO: can possibly be removed
                     String url = html.getElementsByClass("pdf-download-btn-link").attr("href");
 
                     if (url != null) {
@@ -75,6 +86,11 @@ public class ScienceDirect implements FulltextFetcher {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public TrustLevel getTrustLevel() {
+        return TrustLevel.PUBLISHER;
     }
 
     private String getUrlByDoi(String doi) throws UnirestException {

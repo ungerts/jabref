@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jabref.logic.layout.LayoutFormatterPreferences;
+import org.jabref.logic.xmp.XmpPreferences;
 import org.jabref.model.database.BibDatabaseContext;
 import org.jabref.model.entry.BibEntry;
 
@@ -24,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 public class CsvExportFormatTest {
-    private IExportFormat exportFormat;
+    private Exporter exportFormat;
     public BibDatabaseContext databaseContext;
     public Charset charset;
 
@@ -33,12 +34,13 @@ public class CsvExportFormatTest {
 
     @Before
     public void setUp() {
-        Map<String, ExportFormat> customFormats = new HashMap<>();
+        Map<String, TemplateExporter> customFormats = new HashMap<>();
         LayoutFormatterPreferences layoutPreferences = mock(LayoutFormatterPreferences.class, Answers.RETURNS_DEEP_STUBS);
         SavePreferences savePreferences = mock(SavePreferences.class);
-        ExportFormats.initAllExports(customFormats, layoutPreferences, savePreferences);
+        XmpPreferences xmpPreferences = mock(XmpPreferences.class);
+        ExporterFactory exporterFactory = ExporterFactory.create(customFormats, layoutPreferences, savePreferences, xmpPreferences);
 
-        exportFormat = ExportFormats.getExportFormat("oocsv");
+        exportFormat = exporterFactory.getExporterByName("oocsv").get();
 
         databaseContext = new BibDatabaseContext();
         charset = StandardCharsets.UTF_8;
@@ -52,12 +54,11 @@ public class CsvExportFormatTest {
     @Test
     public void testPerformExportForSingleAuthor() throws Exception {
         File tmpFile = testFolder.newFile();
-        String filename = tmpFile.getCanonicalPath();
         BibEntry entry = new BibEntry();
         entry.setField("author", "Someone, Van Something");
         List<BibEntry> entries = Arrays.asList(entry);
 
-        exportFormat.performExport(databaseContext, filename, charset, entries);
+        exportFormat.export(databaseContext, tmpFile.toPath(), charset, entries);
 
         List<String> lines = Files.readAllLines(tmpFile.toPath());
         assertEquals(2, lines.size());
@@ -69,12 +70,11 @@ public class CsvExportFormatTest {
     @Test
     public void testPerformExportForMultipleAuthors() throws Exception {
         File tmpFile = testFolder.newFile();
-        String filename = tmpFile.getCanonicalPath();
         BibEntry entry = new BibEntry();
         entry.setField("author", "von Neumann, John and Smith, John and Black Brown, Peter");
         List<BibEntry> entries = Arrays.asList(entry);
 
-        exportFormat.performExport(databaseContext, filename, charset, entries);
+        exportFormat.export(databaseContext, tmpFile.toPath(), charset, entries);
 
         List<String> lines = Files.readAllLines(tmpFile.toPath());
         assertEquals(2, lines.size());
@@ -86,12 +86,11 @@ public class CsvExportFormatTest {
     @Test
     public void testPerformExportForSingleEditor() throws Exception {
         File tmpFile = testFolder.newFile();
-        String filename = tmpFile.getCanonicalPath();
         BibEntry entry = new BibEntry();
         entry.setField("editor", "Someone, Van Something");
         List<BibEntry> entries = Arrays.asList(entry);
 
-        exportFormat.performExport(databaseContext, filename, charset, entries);
+        exportFormat.export(databaseContext, tmpFile.toPath(), charset, entries);
 
         List<String> lines = Files.readAllLines(tmpFile.toPath());
         assertEquals(2, lines.size());
@@ -103,12 +102,11 @@ public class CsvExportFormatTest {
     @Test
     public void testPerformExportForMultipleEditors() throws Exception {
         File tmpFile = testFolder.newFile();
-        String filename = tmpFile.getCanonicalPath();
         BibEntry entry = new BibEntry();
         entry.setField("editor", "von Neumann, John and Smith, John and Black Brown, Peter");
         List<BibEntry> entries = Arrays.asList(entry);
 
-        exportFormat.performExport(databaseContext, filename, charset, entries);
+        exportFormat.export(databaseContext, tmpFile.toPath(), charset, entries);
 
         List<String> lines = Files.readAllLines(tmpFile.toPath());
         assertEquals(2, lines.size());

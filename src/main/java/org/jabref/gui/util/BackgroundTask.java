@@ -1,9 +1,17 @@
 package org.jabref.gui.util;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Task;
+
+import org.fxmisc.easybind.EasyBind;
 
 /**
  * This class is essentially a wrapper around {@link Task}.
@@ -13,19 +21,41 @@ import javafx.concurrent.Task;
  *
  * @param <V> type of the return value of the task
  */
-public class BackgroundTask<V> {
-    private final Callable<V> callable;
+public abstract class BackgroundTask<V> {
     private Runnable onRunning;
     private Consumer<V> onSuccess;
     private Consumer<Exception> onException;
     private Runnable onFinished;
+    private ObjectProperty<BackgroundProgress> progress = new SimpleObjectProperty<>(new BackgroundProgress(0, 0));
+    private DoubleProperty workDonePercentage = new SimpleDoubleProperty(0);
 
-    private BackgroundTask(Callable<V> callable) {
-        this.callable = callable;
+    public BackgroundTask() {
+        workDonePercentage.bind(EasyBind.map(progress, BackgroundTask.BackgroundProgress::getWorkDonePercentage));
     }
 
     public static <V> BackgroundTask<V> wrap(Callable<V> callable) {
-        return new BackgroundTask<>(callable);
+        return new BackgroundTask<V>() {
+            @Override
+            protected V call() throws Exception {
+                return callable.call();
+            }
+        };
+    }
+
+    public double getWorkDonePercentage() {
+        return workDonePercentage.get();
+    }
+
+    public DoubleProperty workDonePercentageProperty() {
+        return workDonePercentage;
+    }
+
+    public BackgroundProgress getProgress() {
+        return progress.get();
+    }
+
+    public ObjectProperty<BackgroundProgress> progressProperty() {
+        return progress;
     }
 
     private static <T> Consumer<T> chain(Runnable first, Consumer<T> second) {
@@ -59,9 +89,7 @@ public class BackgroundTask<V> {
         return this;
     }
 
-    V call() throws Exception {
-        return callable.call();
-    }
+    protected abstract V call() throws Exception;
 
     Runnable getOnRunning() {
         return onRunning;
@@ -80,8 +108,8 @@ public class BackgroundTask<V> {
         return this;
     }
 
-    public void executeWith(TaskExecutor taskExecutor) {
-        taskExecutor.execute(this);
+    public Future<?> executeWith(TaskExecutor taskExecutor) {
+        return taskExecutor.execute(this);
     }
 
     /**
@@ -91,5 +119,58 @@ public class BackgroundTask<V> {
     public BackgroundTask<V> onFinished(Runnable onFinished) {
         this.onFinished = onFinished;
         return this;
+    }
+
+    /**
+     * Creates a {@link BackgroundTask} that first runs this task and based on the result runs a second task.
+     *
+     * @param nextTaskFactory the function that creates the new task
+     * @param <T>             type of the return value of the second task
+     */
+    public <T> BackgroundTask<T> then(Function<V, BackgroundTask<T>> nextTaskFactory) {
+        return new BackgroundTask<T>() {
+            @Override
+            protected T call() throws Exception {
+                V result = BackgroundTask.this.call();
+                BackgroundTask<T> nextTask = nextTaskFactory.apply(result);
+                EasyBind.subscribe(nextTask.progressProperty(), this::updateProgress);
+                return nextTask.call();
+            }
+        };
+    }
+
+    protected void updateProgress(BackgroundProgress newProgress) {
+        progress.setValue(newProgress);
+    }
+
+    protected void updateProgress(double workDone, double max) {
+        updateProgress(new BackgroundProgress(workDone, max));
+    }
+
+    class BackgroundProgress {
+
+        private final double workDone;
+        private final double max;
+
+        public BackgroundProgress(double workDone, double max) {
+            this.workDone = workDone;
+            this.max = max;
+        }
+
+        public double getWorkDone() {
+            return workDone;
+        }
+
+        public double getMax() {
+            return max;
+        }
+
+        public double getWorkDonePercentage() {
+            if (max == 0) {
+                return 0;
+            } else {
+                return workDone / max;
+            }
+        }
     }
 }

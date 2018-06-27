@@ -1,27 +1,25 @@
 package org.jabref.gui.fieldeditors;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 
 import org.jabref.gui.DialogService;
 import org.jabref.gui.autocompleter.AutoCompleteSuggestionProvider;
 import org.jabref.gui.fieldeditors.contextmenu.EditorMenus;
-import org.jabref.gui.util.ControlHelper;
 import org.jabref.gui.util.TaskExecutor;
 import org.jabref.logic.integrity.FieldCheckers;
 import org.jabref.logic.l10n.Localization;
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.FieldName;
 import org.jabref.preferences.JabRefPreferences;
+
+import com.airhacks.afterburner.views.ViewLoader;
 
 public class IdentifierEditor extends HBox implements FieldEditorFX {
 
@@ -34,7 +32,9 @@ public class IdentifierEditor extends HBox implements FieldEditorFX {
     public IdentifierEditor(String fieldName, TaskExecutor taskExecutor, DialogService dialogService, AutoCompleteSuggestionProvider<?> suggestionProvider, FieldCheckers fieldCheckers, JabRefPreferences preferences) {
         this.viewModel = new IdentifierEditorViewModel(fieldName, suggestionProvider, taskExecutor, dialogService, fieldCheckers);
 
-        ControlHelper.loadFXMLForControl(this);
+        ViewLoader.view(this)
+                  .root(this)
+                  .load();
 
         textArea.textProperty().bindBidirectional(viewModel.textProperty());
 
@@ -43,12 +43,11 @@ public class IdentifierEditor extends HBox implements FieldEditorFX {
         lookupIdentifierButton.setTooltip(
                 new Tooltip(Localization.lang("Look up %0", FieldName.getDisplayName(fieldName))));
 
-        List<MenuItem> menuItems = new ArrayList<>();
         if (fieldName.equalsIgnoreCase(FieldName.DOI)) {
-            menuItems.addAll(EditorMenus.getDOIMenu(textArea));
+            textArea.addToContextMenu(EditorMenus.getDOIMenu(textArea));
+        } else {
+            textArea.addToContextMenu(EditorMenus.getDefaultMenu(textArea));
         }
-        menuItems.addAll(EditorMenus.getDefaultMenu(textArea));
-        textArea.addToContextMenu(menuItems);
 
         new EditorValidator(preferences).configureValidation(viewModel.getFieldValidator().getValidationStatus(), textArea);
     }
@@ -82,5 +81,4 @@ public class IdentifierEditor extends HBox implements FieldEditorFX {
     private void openExternalLink(ActionEvent event) {
         viewModel.openExternalLink();
     }
-
 }

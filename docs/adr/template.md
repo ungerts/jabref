@@ -1,36 +1,70 @@
-# <Short Title of the Issue>
+# [short title of solved problem and solution]
 
-**UserStory:** <TICKET/ISSUE-NUMBER>
+* Status: [accepted | superseeded by [ADR-0005](0005-example.md) | deprecated | …] <!-- optional -->
+* Deciders: [list everyone involved in the decision] <!-- optional -->
+* Date: [YYYY-MM-DD when the decision was last updated] <!-- optional -->
 
-<WRITE ONE SENTENCE DESCRIBING THE PROBLEM. (Optional)>
+Technical Story: [description | ticket/issue URL] <!-- optional -->
 
-## Considered Alternatives
+## Context and Problem Statement
 
-* <ALTERNATIVE 1>
-* <ALTERNATIVE 2>
-* <ALTERNATIVE 3>
+[Describe the context and problem statement, e.g., in free form using two to three sentences. You may want to articulate the problem in form of a question.]
 
-## Conclusion
+## Decision Drivers <!-- optional -->
 
-* *Chosen Alternative: <ALTERNATIVE 1>*
-* <FURTHER RATIONALE (Optional)>
+* [driver 1, e.g., a force, facing concern, …]
+* [driver 2, e.g., a force, facing concern, …]
+* … <!-- numbers of drivers can vary -->
 
-## Comparison (Optional)
+## Considered Options
 
-### <ALTERNATIVE 1>
+* [option 1]
+* [option 2]
+* [option 3]
+* … <!-- numbers of options can vary -->
 
-* + <ARGUMENT 1 PRO>
-* + <ARGUMENT 2 PRO>
-* - <ARGUMENT 1 CONTRA>
+## Decision Outcome
 
-### <ALTERNATIVE 2>
+Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)].
 
-* + <ARGUMENT 1 PRO>
-* + <ARGUMENT 2 PRO>
-* - <ARGUMENT 1 CONTRA>
+Positive Consequences: <!-- optional -->
+* [e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
+* …
 
-### <ALTERNATIVE 3>
+Negative consequences: <!-- optional -->
+* [e.g., compromising quality attribute, follow-up decisions required, …]
+* …
 
-* + <ARGUMENT 1 PRO>
-* + <ARGUMENT 2 PRO>
-* - <ARGUMENT 1 CONTRA>
+## Pros and Cons of the Options <!-- optional -->
+
+### [option 1]
+
+[example | description | pointer to more information | …] <!-- optional -->
+
+* Good, because [argument a]
+* Good, because [argument b]
+* Bad, because [argument c]
+* … <!-- numbers of pros and cons can vary -->
+
+### [option 2]
+
+[example | description | pointer to more information | …] <!-- optional -->
+
+* Good, because [argument a]
+* Good, because [argument b]
+* Bad, because [argument c]
+* … <!-- numbers of pros and cons can vary -->
+
+### [option 3]
+
+[example | description | pointer to more information | …] <!-- optional -->
+
+* Good, because [argument a]
+* Good, because [argument b]
+* Bad, because [argument c]
+* … <!-- numbers of pros and cons can vary -->
+
+## Links <!-- optional -->
+
+* [Link type] [Link to ADR] <!-- example: Refined by [ADR-0005](0005-example.md) -->
+* … <!-- numbers of links can vary -->

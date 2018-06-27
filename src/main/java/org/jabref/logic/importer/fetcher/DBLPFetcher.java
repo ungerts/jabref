@@ -16,23 +16,23 @@ import org.jabref.logic.importer.fileformat.BibtexParser;
 import org.jabref.model.cleanup.FieldFormatterCleanup;
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.FieldName;
+import org.jabref.model.util.DummyFileUpdateMonitor;
 
 import org.apache.http.client.utils.URIBuilder;
 
 /**
  * Fetches BibTeX data from DBLP (dblp.org)
  *
- * @see <a href="http://dblp.dagstuhl.de/faq/13501473">Basic API documentation</a>
+ * @see <a href="https://dblp.dagstuhl.de/faq/13501473">Basic API documentation</a>
  */
 public class DBLPFetcher implements SearchBasedParserFetcher {
 
-    private static final String BASIC_SEARCH_URL = "http://dblp.org/search/publ/api";
+    private static final String BASIC_SEARCH_URL = "https://dblp.org/search/publ/api";
 
     private final ImportFormatPreferences importFormatPreferences;
 
     public DBLPFetcher(ImportFormatPreferences importFormatPreferences) {
         Objects.requireNonNull(importFormatPreferences);
-
         this.importFormatPreferences = importFormatPreferences;
     }
 
@@ -50,7 +50,7 @@ public class DBLPFetcher implements SearchBasedParserFetcher {
 
     @Override
     public Parser getParser() {
-        return new BibtexParser(importFormatPreferences);
+        return new BibtexParser(importFormatPreferences, new DummyFileUpdateMonitor());
     }
 
     @Override

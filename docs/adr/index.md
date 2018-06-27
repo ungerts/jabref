@@ -1,8 +1,16 @@
-# Architectural Decision Records
+# Architectural Decision Log
 
-This lists the architectural decisions for JabRef.
+This log lists the architectural decisions for JabRef.
 
-- [0000-use-architectural-decision-records.md](0000-use-architectural-decision-records) - Use Architectural Decision Records
-- [template.md](template/) - the template
+<!-- adrlog -->
 
-More information on architectural decision records is available at <https://adr.github.io/>.
+- [ADR-0000](0000-use-markdown-architectural-decision-records.md) - Use Markdown Architectural Decision Records
+- [ADR-0001](0001-use-crowdin-for-translations.md) - Use Crowdin for translations
+- [ADR-0002](0002-use-slf4j-for-logging.md) - Use slf4j together with log4j2 for logging
+- [ADR-0003](0003-use-gradle-as-build-tool.md) - Use Gradle as build tool
+
+<!-- adrlogstop -->
+
+For new ADRs, please use [template.md](template.md) as basis.
+More information on MADR is available at <https://adr.github.io/madr/>.
+General information about architectural decision records is available at <https://adr.github.io/>.

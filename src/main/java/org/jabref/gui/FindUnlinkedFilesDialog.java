@@ -18,12 +18,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -31,7 +34,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.AbstractAction;
@@ -68,12 +70,14 @@ import org.jabref.Globals;
 import org.jabref.JabRefExecutorService;
 import org.jabref.JabRefGUI;
 import org.jabref.gui.desktop.JabRefDesktop;
+import org.jabref.gui.externalfiletype.ExternalFileTypes;
 import org.jabref.gui.importer.EntryFromFileCreator;
 import org.jabref.gui.importer.EntryFromFileCreatorManager;
 import org.jabref.gui.importer.UnlinkedFilesCrawler;
 import org.jabref.gui.importer.UnlinkedPDFFileFilter;
 import org.jabref.gui.util.DefaultTaskExecutor;
 import org.jabref.gui.util.DirectoryDialogConfiguration;
+import org.jabref.gui.util.FileDialogConfiguration;
 import org.jabref.logic.l10n.Localization;
 import org.jabref.model.EntryTypes;
 import org.jabref.model.database.BibDatabaseContext;
@@ -83,24 +87,15 @@ import org.jabref.model.entry.FieldName;
 import org.jabref.preferences.JabRefPreferences;
 
 import com.jgoodies.forms.builder.ButtonBarBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * GUI Dialog for the feature "Find unlinked files".
  */
 public class FindUnlinkedFilesDialog extends JabRefDialog {
 
-    /**
-     * Keys to be used for referencing this Action.
-     */
-    public static final String ACTION_COMMAND = "findUnlinkedFiles";
-    public static final String ACTION_MENU_TITLE = Localization.menuTitle("Find unlinked files...");
-
-    public static final String ACTION_SHORT_DESCRIPTION = Localization
-            .lang("Searches for unlinked PDF files on the file system");
-
-    private static final Log LOGGER = LogFactory.getLog(FindUnlinkedFilesDialog.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FindUnlinkedFilesDialog.class);
     private static final String GLOBAL_PREFS_WORKING_DIRECTORY_KEY = "findUnlinkedFilesWD";
 
     private static final String GLOBAL_PREFS_DIALOG_SIZE_KEY = "findUnlinkedFilesDialogSize";
@@ -123,6 +118,7 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
     private JPanel panelImportArea;
     private JButton buttonBrowse;
     private JButton buttonScan;
+    private JButton buttonExport;
     private JButton buttonApply;
 
     private JButton buttonClose;
@@ -141,6 +137,7 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
     private JLabel labelSearchingDirectoryInfo;
 
     private JLabel labelImportingInfo;
+    private JLabel labelExportingInfo;
     private JTree tree;
     private JScrollPane scrollpaneTree;
     private JComboBox<FileFilter> comboBoxFileTypeSelection;
@@ -161,20 +158,22 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
 
     private boolean checkBoxWhyIsThereNoGetSelectedStupidSwing;
 
-    public FindUnlinkedFilesDialog(Frame owner, JabRefFrame frame, BasePanel panel) {
+    public FindUnlinkedFilesDialog(Frame owner, JabRefFrame frame) {
         super(owner, Localization.lang("Find unlinked files"), true, FindUnlinkedFilesDialog.class);
         this.frame = frame;
 
         restoreSizeOfDialog();
 
-        databaseContext = panel.getDatabaseContext();
-        creatorManager = new EntryFromFileCreatorManager();
+        databaseContext = frame.getCurrentBasePanel().getBibDatabaseContext();
+        creatorManager = new EntryFromFileCreatorManager(ExternalFileTypes.getInstance());
+
         crawler = new UnlinkedFilesCrawler(databaseContext);
 
         lastSelectedDirectory = loadLastSelectedDirectory();
 
         initialize();
         buttonApply.setEnabled(false);
+        buttonExport.setEnabled(false);
     }
 
     /**
@@ -493,6 +492,7 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
 
         progressBarImporting.setVisible(true);
         labelImportingInfo.setVisible(true);
+        buttonExport.setVisible(false);
         buttonApply.setVisible(false);
         buttonClose.setVisible(false);
         disOrEnableDialog(false);
@@ -528,6 +528,72 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
     }
 
     /**
+     * This starts the export of all files of all selected nodes in this
+     * dialogs tree view. <br>
+     * <br>
+     * The export itself will run in a seperate thread, whilst this dialog will
+     * be showing a progress bar, until the thread has finished its work. <br>
+     * <br>
+     * When the export has finished, the {@link #exportFinishedHandler()} is
+     * invoked.
+     */
+    private void startExport() {
+        if (treeModel == null) {
+            return;
+        }
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        CheckableTreeNode root = (CheckableTreeNode) treeModel.getRoot();
+
+        final List<File> fileList = getFileListFromNode(root);
+        if ((fileList == null) || fileList.isEmpty()) {
+            return;
+        }
+
+        buttonExport.setVisible(false);
+        buttonApply.setVisible(false);
+        buttonClose.setVisible(false);
+        disOrEnableDialog(false);
+
+        FileDialogConfiguration fileDialogConfiguration = new FileDialogConfiguration.Builder()
+                .withInitialDirectory(Globals.prefs.get(JabRefPreferences.WORKING_DIRECTORY)).build();
+        DialogService ds = new FXDialogService();
+
+        Optional<Path> exportPath = DefaultTaskExecutor
+                .runInJavaFXThread(() -> ds.showFileSaveDialog(fileDialogConfiguration));
+
+        if (!exportPath.isPresent()) {
+            exportFinishedHandler();
+            return;
+        }
+
+        threadState.set(true);
+        JabRefExecutorService.INSTANCE.execute(() -> {
+            try (BufferedWriter writer =
+                         Files.newBufferedWriter(exportPath.get(), StandardCharsets.UTF_8,
+                                 StandardOpenOption.CREATE)) {
+                for (File file : fileList) {
+                    writer.write(file.toString() + "\n");
+                }
+
+            } catch (IOException e) {
+                LOGGER.warn("IO Error.", e);
+            }
+        });
+
+        exportFinishedHandler();
+    }
+
+    private void exportFinishedHandler() {
+        buttonExport.setVisible(true);
+        buttonApply.setVisible(true);
+        buttonClose.setVisible(true);
+        disOrEnableDialog(true);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.getCurrentBasePanel().markBaseChanged();
+    }
+
+    /**
      *
      * @param errors
      */
@@ -548,6 +614,7 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
 
         progressBarImporting.setVisible(false);
         labelImportingInfo.setVisible(false);
+        buttonExport.setVisible(true);
         buttonApply.setVisible(true);
         buttonClose.setVisible(true);
         disOrEnableDialog(true);
@@ -578,6 +645,7 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
 
         disOrEnableDialog(true);
         buttonApply.setEnabled(true);
+        buttonExport.setEnabled(true);
     }
 
     /**
@@ -587,7 +655,7 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
 
         DirectoryDialogConfiguration directoryDialogConfiguration = new DirectoryDialogConfiguration.Builder()
                 .withInitialDirectory(Globals.prefs.get(JabRefPreferences.WORKING_DIRECTORY)).build();
-        DialogService ds = new FXDialogService();
+        DialogService ds = frame.getDialogService();
         /**
          * Stores the selected directory.
          */
@@ -608,8 +676,8 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
          * Actions on this button will start the import of all file of all
          * selected nodes in this dialogs tree view. <br>
          */
-        ActionListener actionListenerImportEntrys = e -> startImport();
-        buttonApply.addActionListener(actionListenerImportEntrys);
+        buttonExport.addActionListener(e -> startExport());
+        buttonApply.addActionListener(e -> startImport());
         buttonClose.addActionListener(e -> dispose());
     }
 
@@ -691,6 +759,9 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
         buttonScan = new JButton(Localization.lang("Scan directory"));
         buttonScan.setMnemonic('S');
         buttonScan.setToolTipText(Localization.lang("Searches the selected directory for unlinked files."));
+        buttonExport = new JButton(Localization.lang("Export"));
+        buttonExport.setMnemonic('E');
+        buttonExport.setToolTipText(Localization.lang("Export to text file."));
         buttonApply = new JButton(Localization.lang("Apply"));
         buttonApply.setMnemonic('I');
         buttonApply.setToolTipText(Localization.lang("Starts the import of BibTeX entries."));
@@ -733,6 +804,9 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
         labelImportingInfo = new JLabel(Localization.lang("Importing into Library..."));
         labelImportingInfo.setHorizontalAlignment(SwingConstants.CENTER);
         labelImportingInfo.setVisible(false);
+        labelExportingInfo = new JLabel(Localization.lang("Exporting into file..."));
+        labelExportingInfo.setHorizontalAlignment(SwingConstants.CENTER);
+        labelExportingInfo.setVisible(false);
 
         tree = new JTree();
 
@@ -815,6 +889,8 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
                 GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST, basicInsets, 0, 1, 2, 1, 0, 0, 0, 0);
         FindUnlinkedFilesDialog.addComponent(gbl, panelImportArea, labelImportingInfo, GridBagConstraints.HORIZONTAL,
                 GridBagConstraints.CENTER, new Insets(6, 6, 0, 6), 0, 1, 1, 1, 1, 0, 0, 0);
+        FindUnlinkedFilesDialog.addComponent(gbl, panelImportArea, labelExportingInfo, GridBagConstraints.HORIZONTAL,
+                GridBagConstraints.CENTER, new Insets(6, 6, 0, 6), 0, 1, 1, 1, 1, 0, 0, 0);
         FindUnlinkedFilesDialog.addComponent(gbl, panelImportArea, progressBarImporting, GridBagConstraints.HORIZONTAL,
                 GridBagConstraints.CENTER, new Insets(0, 6, 6, 6), 0, 2, 1, 1, 1, 0, 0, 0);
         FindUnlinkedFilesDialog.addComponent(gbl, panelButtons, panelImportArea, GridBagConstraints.NONE,
@@ -832,6 +908,7 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
 
         ButtonBarBuilder bb = new ButtonBarBuilder();
         bb.addGlue();
+        bb.addButton(buttonExport);
         bb.addButton(buttonApply);
         bb.addButton(buttonClose);
         bb.addGlue();
@@ -973,11 +1050,7 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
 
         List<FileFilter> fileFilterList = creatorManager.getFileFilterList();
 
-        Vector<FileFilter> vector = new Vector<>();
-        for (FileFilter fileFilter : fileFilterList) {
-            vector.add(fileFilter);
-        }
-        comboBoxFileTypeSelection = new JComboBox<>(vector);
+        comboBoxFileTypeSelection = new JComboBox<>(fileFilterList.toArray(new FileFilter[fileFilterList.size()]));
 
         comboBoxFileTypeSelection.setRenderer(new DefaultListCellRenderer() {
 
@@ -992,7 +1065,7 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
                 if (value instanceof EntryFromFileCreator) {
                     EntryFromFileCreator creator = (EntryFromFileCreator) value;
                     if (creator.getExternalFileType() != null) {
-                        label.setIcon(creator.getExternalFileType().getIcon());
+                        label.setIcon(creator.getExternalFileType().getIcon().getSmallIcon());
                     }
                 }
                 return label;
@@ -1009,27 +1082,21 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
 
         Iterator<EntryType> iterator = EntryTypes
                 .getAllValues(frame.getCurrentBasePanel().getBibDatabaseContext().getMode()).iterator();
-        Vector<BibtexEntryTypeWrapper> list = new Vector<>();
+        List<BibtexEntryTypeWrapper> list = new ArrayList<>();
         list.add(
                 new BibtexEntryTypeWrapper(null));
         while (iterator.hasNext()) {
             list.add(new BibtexEntryTypeWrapper(iterator.next()));
         }
-        comboBoxEntryTypeSelection = new JComboBox<>(list);
+        comboBoxEntryTypeSelection = new JComboBox<>(list.toArray(new BibtexEntryTypeWrapper[list.size()]));
     }
-
 
     /**
      * Wrapper for displaying the Type {@link BibtexEntryType} in a Combobox.
-     *
-     * @author Nosh&Dan
-     * @version 12.11.2008 | 01:02:30
-     *
      */
     private static class BibtexEntryTypeWrapper {
 
         private final EntryType entryType;
-
 
         BibtexEntryTypeWrapper(EntryType bibtexType) {
             this.entryType = bibtexType;
@@ -1052,7 +1119,6 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
 
         private boolean isSelected;
         private final JCheckBox checkbox;
-
 
         public CheckableTreeNode(Object userObject) {
             super(userObject);
@@ -1133,7 +1199,6 @@ public class FindUnlinkedFilesDialog extends JabRefDialog {
 
         public final File file;
         public final int fileCount;
-
 
         public FileNodeWrapper(File aFile) {
             this(aFile, 0);

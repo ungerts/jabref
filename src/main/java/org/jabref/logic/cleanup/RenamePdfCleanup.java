@@ -12,7 +12,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.jabref.logic.layout.LayoutFormatterPreferences;
 import org.jabref.logic.util.io.FileUtil;
 import org.jabref.model.FieldChange;
 import org.jabref.model.cleanup.CleanupJob;
@@ -23,37 +22,32 @@ import org.jabref.model.metadata.FileDirectoryPreferences;
 import org.jabref.model.strings.StringUtil;
 import org.jabref.model.util.FileHelper;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RenamePdfCleanup implements CleanupJob {
-
-    private static final Log LOGGER = LogFactory.getLog(RenamePdfCleanup.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RenamePdfCleanup.class);
 
     private final BibDatabaseContext databaseContext;
     private final boolean onlyRelativePaths;
     private final String fileNamePattern;
-    private final LayoutFormatterPreferences layoutPreferences;
     private final FileDirectoryPreferences fileDirectoryPreferences;
     private int unsuccessfulRenames;
     private LinkedFile singleFieldCleanup;
 
+
     public RenamePdfCleanup(boolean onlyRelativePaths, BibDatabaseContext databaseContext, String fileNamePattern,
-                            LayoutFormatterPreferences layoutPreferences,
                             FileDirectoryPreferences fileDirectoryPreferences) {
         this.databaseContext = Objects.requireNonNull(databaseContext);
         this.onlyRelativePaths = onlyRelativePaths;
         this.fileNamePattern = Objects.requireNonNull(fileNamePattern);
-        this.layoutPreferences = Objects.requireNonNull(layoutPreferences);
         this.fileDirectoryPreferences = fileDirectoryPreferences;
     }
 
     public RenamePdfCleanup(boolean onlyRelativePaths, BibDatabaseContext databaseContext, String fileNamePattern,
-                            LayoutFormatterPreferences layoutPreferences,
                             FileDirectoryPreferences fileDirectoryPreferences, LinkedFile singleField) {
 
-        this(onlyRelativePaths, databaseContext, fileNamePattern, layoutPreferences,
-                fileDirectoryPreferences);
+        this(onlyRelativePaths, databaseContext, fileNamePattern, fileDirectoryPreferences);
         this.singleFieldCleanup = singleField;
     }
 
@@ -161,7 +155,7 @@ public class RenamePdfCleanup implements CleanupJob {
         String realOldFilename = flEntry.getLink();
 
         String targetFileName = FileUtil.createFileNameFromPattern(
-                databaseContext.getDatabase(), entry, fileNamePattern, layoutPreferences).trim()
+                databaseContext.getDatabase(), entry, fileNamePattern).trim()
                 + '.'
                 + FileHelper.getFileExtension(realOldFilename).orElse("pdf");
 

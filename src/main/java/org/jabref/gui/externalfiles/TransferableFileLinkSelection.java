@@ -13,15 +13,15 @@ import org.jabref.gui.BasePanel;
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.LinkedFile;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  */
 public class TransferableFileLinkSelection implements Transferable {
 
-    private static final Log LOGGER = LogFactory.getLog(TransferableFileLinkSelection.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransferableFileLinkSelection.class);
 
     private final List<Path> fileList = new ArrayList<>();
 
@@ -31,7 +31,7 @@ public class TransferableFileLinkSelection implements Transferable {
         if (!files.isEmpty()) {
             // Find the default directory for this field type, if any:
             LinkedFile firstFile = files.get(0);
-            firstFile.findIn(panel.getDatabaseContext(), Globals.prefs.getFileDirectoryPreferences())
+            firstFile.findIn(panel.getBibDatabaseContext(), Globals.prefs.getFileDirectoryPreferences())
                 .ifPresent(fileList::add);
         }
     }

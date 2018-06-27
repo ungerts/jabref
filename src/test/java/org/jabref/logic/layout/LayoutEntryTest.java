@@ -5,10 +5,10 @@ import java.io.StringReader;
 
 import org.jabref.model.entry.BibEntry;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -26,8 +26,6 @@ import static org.mockito.Mockito.mock;
  * - There are two words which will be highlighted ignoring case sensitivity.
  * - There is one word which will be highlighted case sensitivity.
  * - There are more words which will be highlighted case sensitivity.
- *
- * @author Arne
  */
 
 public class LayoutEntryTest {
@@ -35,14 +33,8 @@ public class LayoutEntryTest {
     private BibEntry mBTE;
 
 
-    /**
-     * Initialize Preferences.
-     */
-    @Before
+    @BeforeEach
     public void setUp() {
-
-        // create Bibtext Entry
-
         mBTE = new BibEntry();
         mBTE.setField("abstract", "In this paper, we initiate a formal study of security on Android: Google's new open-source platform for mobile devices. Tags: Paper android google Open-Source Devices");
         //  Specifically, we present a core typed language to describe Android applications, and to reason about their data-flow security properties. Our operational semantics and type system provide some necessary foundations to help both users and developers of Android applications deal with their security concerns.
@@ -68,8 +60,6 @@ public class LayoutEntryTest {
         mBTE.setField("doi", "10.1145/1554339.1554341");
     }
 
-    // helper Methods
-
     public String layout(String layoutFile, BibEntry entry) throws IOException {
         StringReader sr = new StringReader(layoutFile.replace("__NEWLINE__", "\n"));
         Layout layout = new LayoutHelper(sr, mock(LayoutFormatterPreferences.class)).getLayoutFromText();
@@ -77,37 +67,33 @@ public class LayoutEntryTest {
         return layout.doLayout(entry, null);
     }
 
-    /*************************/
-    /****** tests Cases ******/
-    /*************************/
-
     @Test
     public void testParseMethodCalls() {
 
-        Assert.assertEquals(1, LayoutEntry.parseMethodsCalls("bla").size());
-        Assert.assertEquals("bla", (LayoutEntry.parseMethodsCalls("bla").get(0)).get(0));
+        assertEquals(1, LayoutEntry.parseMethodsCalls("bla").size());
+        assertEquals("bla", (LayoutEntry.parseMethodsCalls("bla").get(0)).get(0));
 
-        Assert.assertEquals(1, LayoutEntry.parseMethodsCalls("bla,").size());
-        Assert.assertEquals("bla", (LayoutEntry.parseMethodsCalls("bla,").get(0)).get(0));
+        assertEquals(1, LayoutEntry.parseMethodsCalls("bla,").size());
+        assertEquals("bla", (LayoutEntry.parseMethodsCalls("bla,").get(0)).get(0));
 
-        Assert.assertEquals(1, LayoutEntry.parseMethodsCalls("_bla.bla.blub,").size());
-        Assert.assertEquals("_bla.bla.blub", (LayoutEntry.parseMethodsCalls("_bla.bla.blub,").get(0)).get(0));
+        assertEquals(1, LayoutEntry.parseMethodsCalls("_bla.bla.blub,").size());
+        assertEquals("_bla.bla.blub", (LayoutEntry.parseMethodsCalls("_bla.bla.blub,").get(0)).get(0));
 
-        Assert.assertEquals(2, LayoutEntry.parseMethodsCalls("bla,foo").size());
-        Assert.assertEquals("bla", (LayoutEntry.parseMethodsCalls("bla,foo").get(0)).get(0));
-        Assert.assertEquals("foo", (LayoutEntry.parseMethodsCalls("bla,foo").get(1)).get(0));
+        assertEquals(2, LayoutEntry.parseMethodsCalls("bla,foo").size());
+        assertEquals("bla", (LayoutEntry.parseMethodsCalls("bla,foo").get(0)).get(0));
+        assertEquals("foo", (LayoutEntry.parseMethodsCalls("bla,foo").get(1)).get(0));
 
-        Assert.assertEquals(2, LayoutEntry.parseMethodsCalls("bla(\"test\"),foo(\"fark\")").size());
-        Assert.assertEquals("bla", (LayoutEntry.parseMethodsCalls("bla(\"test\"),foo(\"fark\")").get(0)).get(0));
-        Assert.assertEquals("foo", (LayoutEntry.parseMethodsCalls("bla(\"test\"),foo(\"fark\")").get(1)).get(0));
-        Assert.assertEquals("test", (LayoutEntry.parseMethodsCalls("bla(\"test\"),foo(\"fark\")").get(0)).get(1));
-        Assert.assertEquals("fark", (LayoutEntry.parseMethodsCalls("bla(\"test\"),foo(\"fark\")").get(1)).get(1));
+        assertEquals(2, LayoutEntry.parseMethodsCalls("bla(\"test\"),foo(\"fark\")").size());
+        assertEquals("bla", (LayoutEntry.parseMethodsCalls("bla(\"test\"),foo(\"fark\")").get(0)).get(0));
+        assertEquals("foo", (LayoutEntry.parseMethodsCalls("bla(\"test\"),foo(\"fark\")").get(1)).get(0));
+        assertEquals("test", (LayoutEntry.parseMethodsCalls("bla(\"test\"),foo(\"fark\")").get(0)).get(1));
+        assertEquals("fark", (LayoutEntry.parseMethodsCalls("bla(\"test\"),foo(\"fark\")").get(1)).get(1));
 
-        Assert.assertEquals(2, LayoutEntry.parseMethodsCalls("bla(test),foo(fark)").size());
-        Assert.assertEquals("bla", (LayoutEntry.parseMethodsCalls("bla(test),foo(fark)").get(0)).get(0));
-        Assert.assertEquals("foo", (LayoutEntry.parseMethodsCalls("bla(test),foo(fark)").get(1)).get(0));
-        Assert.assertEquals("test", (LayoutEntry.parseMethodsCalls("bla(test),foo(fark)").get(0)).get(1));
-        Assert.assertEquals("fark", (LayoutEntry.parseMethodsCalls("bla(test),foo(fark)").get(1)).get(1));
+        assertEquals(2, LayoutEntry.parseMethodsCalls("bla(test),foo(fark)").size());
+        assertEquals("bla", (LayoutEntry.parseMethodsCalls("bla(test),foo(fark)").get(0)).get(0));
+        assertEquals("foo", (LayoutEntry.parseMethodsCalls("bla(test),foo(fark)").get(1)).get(0));
+        assertEquals("test", (LayoutEntry.parseMethodsCalls("bla(test),foo(fark)").get(0)).get(1));
+        assertEquals("fark", (LayoutEntry.parseMethodsCalls("bla(test),foo(fark)").get(1)).get(1));
     }
 
 }

@@ -32,21 +32,22 @@ import org.jabref.logic.journals.JournalAbbreviationLoader;
 import org.jabref.logic.journals.JournalAbbreviationPreferences;
 import org.jabref.logic.l10n.Localization;
 import org.jabref.logic.net.URLDownload;
+import org.jabref.model.cleanup.Formatter;
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.FieldName;
 import org.jabref.preferences.JabRefPreferences;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IEEEXploreFetcher implements EntryFetcher {
 
-    private static final Log LOGGER = LogFactory.getLog(IEEEXploreFetcher.class);
-    private static final String URL_SEARCH = "http://ieeexplore.ieee.org/rest/search?reload=true";
-    private static final String URL_BIBTEX_START = "http://ieeexplore.ieee.org/xpl/downloadCitations?reload=true&recordIds=";
+    private static final Logger LOGGER = LoggerFactory.getLogger(IEEEXploreFetcher.class);
+    private static final String URL_SEARCH = "https://ieeexplore.ieee.org/rest/search?reload=true";
+    private static final String URL_BIBTEX_START = "https://ieeexplore.ieee.org/xpl/downloadCitations?reload=true&recordIds=";
     private static final String URL_BIBTEX_END = "&download-format=download-bibtex&x=0&y=0";
     private static final String DIALOG_TITLE = Localization.lang("Search %0", "IEEEXplore");
     private static final int MAX_FETCH = 100;
@@ -64,7 +65,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
     private static final Pattern SUPER_DETECTION_2 = Pattern.compile("\\(sup\\)([^(]+)\\(/sup\\)");
     private static final String SUPER_TEXT_RESULT = "\\\\textsuperscript\\{$1\\}";
 
-    private final ProtectTermsFormatter protectTermsFormatter = new ProtectTermsFormatter();
+    private final Formatter protectTermsFormatter = new ProtectTermsFormatter(Globals.protectedTermsLoader);
     private final UnitsToLatexFormatter unitsToLatexFormatter = new UnitsToLatexFormatter();
     private final HtmlToLatexFormatter htmlToLatexFormatter = new HtmlToLatexFormatter();
     private final JCheckBox absCheckBox = new JCheckBox(Localization.lang("Include abstracts"), false);
@@ -105,7 +106,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
             //add request header
             dl.addHeader("Accept", "application/json");
             dl.addHeader("Content-Type", "application/json");
-            dl.addHeader("Referer", "http://ieeexplore.ieee.org/search/searchresult.jsp");
+            dl.addHeader("Referer", "https://ieeexplore.ieee.org/search/searchresult.jsp");
 
             // set post data
             dl.setPostData(postData);
@@ -148,7 +149,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
             bibtexPage = preprocessBibtexResultsPage(bibtexPage);
 
             //parse the page into Bibtex entries
-            Collection<BibEntry> parsedBibtexCollection = new BibtexParser(Globals.prefs.getImportFormatPreferences())
+            Collection<BibEntry> parsedBibtexCollection = new BibtexParser(Globals.prefs.getImportFormatPreferences(), Globals.getFileUpdateMonitor())
                     .parseEntries(bibtexPage);
             int nEntries = parsedBibtexCollection.size();
             Iterator<BibEntry> parsedBibtexCollectionIterator = parsedBibtexCollection.iterator();
@@ -477,7 +478,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
 
         // Clean up url
         entry.getField(FieldName.URL)
-                .ifPresent(url -> entry.setField(FieldName.URL, "http://ieeexplore.ieee.org" + url.replace("tp=&", "")));
+                .ifPresent(url -> entry.setField(FieldName.URL, "https://ieeexplore.ieee.org" + url.replace("tp=&", "")));
 
         // Replace ; as keyword separator
         entry.getField(FieldName.KEYWORDS).ifPresent(keys -> entry.setField(FieldName.KEYWORDS,

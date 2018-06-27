@@ -28,7 +28,6 @@ import org.jabref.model.entry.IdGenerator;
  * Given a file, the manager can then provide a creator, which is able to create a Bibtex entry for his file.
  * Knowing all implementations of the interface, the manager also knows the set of all files, of which Bibtex entries can be created.
  * The GUI uses this capability for offering the user only such files, of which entries could actually be created.
- * @author Dan&Nosh
  *
  */
 public final class EntryFromFileCreatorManager {
@@ -36,14 +35,14 @@ public final class EntryFromFileCreatorManager {
     private final List<EntryFromFileCreator> entryCreators;
 
 
-    public EntryFromFileCreatorManager() {
+    public EntryFromFileCreatorManager(ExternalFileTypes externalFilesTypes) {
 
         entryCreators = new ArrayList<>(10);
-        entryCreators.add(new EntryFromPDFCreator());
+        entryCreators.add(new EntryFromPDFCreator(externalFilesTypes));
 
         // add a creator for each ExternalFileType if there is no specialized
         // creator existing.
-        Collection<ExternalFileType> fileTypes = ExternalFileTypes.getInstance().getExternalFileTypeSelection();
+        Collection<ExternalFileType> fileTypes = externalFilesTypes.getExternalFileTypeSelection();
 
         for (ExternalFileType exFileType : fileTypes) {
             if (!hasSpecialisedCreatorForExternalFileType(exFileType)) {
@@ -152,7 +151,7 @@ public final class EntryFromFileCreatorManager {
                     } else {
                         count++;
                         if (panel != null) {
-                            ce.addEdit(new UndoableInsertEntry(database, entry.get(), panel));
+                            ce.addEdit(new UndoableInsertEntry(database, entry.get()));
                         }
                     }
                 }

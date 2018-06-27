@@ -39,7 +39,7 @@ import org.json.JSONObject;
  */
 public class CrossRef implements IdParserFetcher<DOI>, EntryBasedParserFetcher, SearchBasedParserFetcher, IdBasedParserFetcher {
 
-    private static final String API_URL = "http://api.crossref.org/works";
+    private static final String API_URL = "https://api.crossref.org/works";
 
     private static final RemoveBracesFormatter REMOVE_BRACES_FORMATTER = new RemoveBracesFormatter();
 
@@ -110,7 +110,9 @@ public class CrossRef implements IdParserFetcher<DOI>, EntryBasedParserFetcher, 
         try {
             BibEntry entry = new BibEntry();
             entry.setType(convertType(item.getString("type")));
-            entry.setField(FieldName.TITLE, item.getJSONArray("title").optString(0));
+            entry.setField(FieldName.TITLE,
+                    Optional.ofNullable(item.optJSONArray("title"))
+                            .map(array -> array.optString(0)).orElse(""));
             entry.setField(FieldName.SUBTITLE,
                     Optional.ofNullable(item.optJSONArray("subtitle"))
                             .map(array -> array.optString(0)).orElse(""));

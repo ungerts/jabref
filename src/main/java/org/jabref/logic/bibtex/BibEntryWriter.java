@@ -1,7 +1,9 @@
 package org.jabref.logic.bibtex;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -28,6 +30,15 @@ public class BibEntryWriter {
     public BibEntryWriter(LatexFieldFormatter fieldFormatter, boolean write) {
         this.fieldFormatter = fieldFormatter;
         this.write = write;
+    }
+
+    public String serializeAll(List<BibEntry> entries, BibDatabaseMode databaseMode) throws IOException {
+        StringWriter writer = new StringWriter();
+
+        for (BibEntry entry : entries) {
+            write(entry, writer, databaseMode);
+        }
+        return writer.toString();
     }
 
     public void write(BibEntry entry, Writer out, BibDatabaseMode bibDatabaseMode) throws IOException {
@@ -95,7 +106,7 @@ public class BibEntryWriter {
         EntryType type = EntryTypes.getTypeOrDefault(entry.getType(), bibDatabaseMode);
 
         // Write required fields first.
-        List<String> fields = type.getRequiredFieldsFlat();
+        Collection<String> fields = type.getRequiredFieldsFlat();
         if (fields != null) {
             for (String value : fields) {
                 writeField(entry, out, value, indentation);
@@ -153,7 +164,7 @@ public class BibEntryWriter {
                 out.write(fieldFormatter.format(field.get(), name));
                 out.write(',' + OS.NEWLINE);
             } catch (InvalidFieldValueException ex) {
-                throw new IOException("Error in field '" + name + "': " + ex.getMessage());
+                throw new IOException("Error in field '" + name + "': " + ex.getMessage(), ex);
             }
         }
     }

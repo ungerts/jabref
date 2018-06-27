@@ -3,12 +3,10 @@ package org.jabref.gui.actions;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javafx.application.Platform;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-
 import org.jabref.JabRefGUI;
+import org.jabref.gui.ClipBoardManager;
 import org.jabref.gui.maintable.MainTable;
+import org.jabref.gui.util.DefaultTaskExecutor;
 import org.jabref.logic.l10n.Localization;
 import org.jabref.logic.util.OS;
 import org.jabref.model.entry.BibEntry;
@@ -22,9 +20,11 @@ import org.jabref.model.entry.FieldName;
 public class CopyBibTeXKeyAndLinkAction implements BaseAction {
 
     private final MainTable mainTable;
+    private final ClipBoardManager clipboardManager;
 
-    public CopyBibTeXKeyAndLinkAction(MainTable mainTable) {
+    public CopyBibTeXKeyAndLinkAction(MainTable mainTable, ClipBoardManager clipboardManager) {
         this.mainTable = mainTable;
+        this.clipboardManager = clipboardManager;
     }
 
     @Override
@@ -47,16 +47,7 @@ public class CopyBibTeXKeyAndLinkAction implements BaseAction {
                 sb.append(OS.NEWLINE);
             }
 
-            // This works on Mac and Windows 10, but not on Ubuntu 16.04
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    final Clipboard clipboard = Clipboard.getSystemClipboard();
-                    final ClipboardContent content = new ClipboardContent();
-                    content.putHtml(sb.toString());
-                    clipboard.setContent(content);
-                }
-            });
+            DefaultTaskExecutor.runInJavaFXThread(() -> clipboardManager.setHtmlContent(sb.toString()));
 
             int copied = entriesWithKey.size();
             int toCopy = entries.size();

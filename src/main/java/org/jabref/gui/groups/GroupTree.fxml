@@ -8,15 +8,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
-<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import org.jabref.gui.icon.JabRefIconView?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="150.0" styleClass="groupsPane"
-            xmlns="http://javafx.com/javafx/8.0.112" fx:controller="org.jabref.gui.groups.GroupTreeController">
+            xmlns="http://javafx.com/javafx/8.0.112" fx:controller="org.jabref.gui.groups.GroupTreeView">
     <center>
         <TreeTableView fx:id="groupTree" layoutY="-7.0" prefHeight="600.0" prefWidth="250.0" styleClass="groupsPane">
             <columns>
                 <TreeTableColumn fx:id="mainColumn"/>
-                <TreeTableColumn fx:id="numberColumn" minWidth="43.0" maxWidth="55.0"
+                <TreeTableColumn fx:id="numberColumn" minWidth="50.0" maxWidth="70.0" prefWidth="60.0"
                                  styleClass="numberColumn"/>
                 <TreeTableColumn fx:id="disclosureNodeColumn" maxWidth="14.0" minWidth="14.0"
                                  styleClass="disclosureNodeColumn" text="Column X"/>
@@ -33,7 +33,7 @@
                     <Button fx:id="newGroupButton" onAction="#addNewGroup" styleClass="flatButton"
                             ButtonBar.buttonData="LEFT">
                         <graphic>
-                            <MaterialDesignIconView glyphName="PLUS"/>
+                            <JabRefIconView glyph="NEW_GROUP" glyphSize="18"/>
                         </graphic>
                         <tooltip>
                             <Tooltip text="%New group"/>

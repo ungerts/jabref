@@ -3,13 +3,11 @@ package org.jabref.logic.importer;
 import java.io.File;
 import java.nio.file.Paths;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-/**
- * @author Nosh&Dan
- * @version 09.11.2008 | 19:41:40
- */
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class ImportDataTest {
 
     public static final File FILE_IN_DATABASE = Paths
@@ -32,20 +30,20 @@ public class ImportDataTest {
     @Test
     public void testTestingEnvironment() {
 
-        Assert.assertTrue(ImportDataTest.EXISTING_FOLDER.exists());
-        Assert.assertTrue(ImportDataTest.EXISTING_FOLDER.isDirectory());
+        assertTrue(ImportDataTest.EXISTING_FOLDER.exists());
+        assertTrue(ImportDataTest.EXISTING_FOLDER.isDirectory());
 
-        Assert.assertTrue(ImportDataTest.FILE_IN_DATABASE.exists());
-        Assert.assertTrue(ImportDataTest.FILE_IN_DATABASE.isFile());
+        assertTrue(ImportDataTest.FILE_IN_DATABASE.exists());
+        assertTrue(ImportDataTest.FILE_IN_DATABASE.isFile());
 
-        Assert.assertTrue(ImportDataTest.FILE_NOT_IN_DATABASE.exists());
-        Assert.assertTrue(ImportDataTest.FILE_NOT_IN_DATABASE.isFile());
+        assertTrue(ImportDataTest.FILE_NOT_IN_DATABASE.exists());
+        assertTrue(ImportDataTest.FILE_NOT_IN_DATABASE.isFile());
     }
 
     @Test
     public void testOpenNotExistingDirectory() {
-        Assert.assertFalse(ImportDataTest.NOT_EXISTING_FOLDER.exists());
-        Assert.assertFalse(ImportDataTest.NOT_EXISTING_PDF.exists());
+        assertFalse(ImportDataTest.NOT_EXISTING_FOLDER.exists());
+        assertFalse(ImportDataTest.NOT_EXISTING_PDF.exists());
     }
 
 }

@@ -1,6 +1,7 @@
 package org.jabref.gui.util;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -13,11 +14,15 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.css.PseudoClass;
 import javafx.scene.Node;
 
+import org.fxmisc.easybind.PreboundBinding;
 
 /**
  * Helper methods for javafx binding.
@@ -65,8 +70,21 @@ public class BindingsHelper {
      * the items are converted when the are inserted (and at the initialization) instead of when they are accessed.
      * Thus the initial CPU overhead and memory consumption is higher but the access to list items is quicker.
      */
-    public static <A, B> MappedList mapBacked(ObservableList<A> source, Function<A, B> mapper) {
+    public static <A, B> MappedList<B, A> mapBacked(ObservableList<A> source, Function<A, B> mapper) {
         return new MappedList<>(source, mapper);
+    }
+
+    public static <T, U> ObservableList<U> map(ObservableValue<T> source, Function<T, List<U>> mapper) {
+        PreboundBinding<List<U>> binding = new PreboundBinding<List<U>>(source) {
+            @Override
+            protected List<U> computeValue() {
+                return mapper.apply(source.getValue());
+            }
+        };
+
+        ObservableList<U> list = FXCollections.observableArrayList();
+        binding.addListener((observable, oldValue, newValue) -> list.setAll(newValue));
+        return list;
     }
 
     /**
@@ -126,6 +144,34 @@ public class BindingsHelper {
                 property,
                 updateList,
                 updateB);
+    }
+
+    public static <A, V, B> void bindContentBidirectional(ObservableMap<A, V> propertyA, ObservableValue<B> propertyB, Consumer<B> updateA, Consumer<Map<A, V>> updateB) {
+        final BidirectionalMapBinding<A, V, B> binding = new BidirectionalMapBinding<>(propertyA, propertyB, updateA, updateB);
+
+        // use list as initial source
+        updateB.accept(propertyA);
+
+        propertyA.addListener(binding);
+        propertyB.addListener(binding);
+    }
+
+    public static <A, V, B> void bindContentBidirectional(ObservableMap<A, V> propertyA, Property<B> propertyB, Consumer<B> updateA, Function<Map<A, V>, B> mapToB) {
+        Consumer<Map<A, V>> updateB = newValueList -> propertyB.setValue(mapToB.apply(newValueList));
+        bindContentBidirectional(
+                propertyA,
+                propertyB,
+                updateA,
+                updateB);
+    }
+
+    public static ObservableValue<? extends Boolean> constantOf(boolean value) {
+        return new BooleanBinding() {
+            @Override
+            protected boolean computeValue() {
+                return value;
+            }
+        };
     }
 
     private static class BidirectionalBinding<A, B> {
@@ -202,6 +248,46 @@ public class BindingsHelper {
                 try {
                     updating = true;
                     updateB.accept(listProperty);
+                } finally {
+                    updating = false;
+                }
+            }
+        }
+    }
+
+    private static class BidirectionalMapBinding<A, V, B> implements MapChangeListener<A, V>, ChangeListener<B> {
+
+        private final ObservableMap<A, V> mapProperty;
+        private final ObservableValue<B> property;
+        private final Consumer<B> updateA;
+        private final Consumer<Map<A, V>> updateB;
+        private boolean updating = false;
+
+        public BidirectionalMapBinding(ObservableMap<A, V> mapProperty, ObservableValue<B> property, Consumer<B> updateA, Consumer<Map<A, V>> updateB) {
+            this.mapProperty = mapProperty;
+            this.property = property;
+            this.updateA = updateA;
+            this.updateB = updateB;
+        }
+
+        @Override
+        public void changed(ObservableValue<? extends B> observable, B oldValue, B newValue) {
+            if (!updating) {
+                try {
+                    updating = true;
+                    updateA.accept(newValue);
+                } finally {
+                    updating = false;
+                }
+            }
+        }
+
+        @Override
+        public void onChanged(Change<? extends A, ? extends V> c) {
+            if (!updating) {
+                try {
+                    updating = true;
+                    updateB.accept(mapProperty);
                 } finally {
                     updating = false;
                 }

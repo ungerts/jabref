@@ -14,13 +14,13 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import org.jabref.Globals;
-import org.jabref.gui.JabRefFrame;
+import org.jabref.gui.DialogService;
 import org.jabref.gui.keyboard.KeyBinding;
 import org.jabref.logic.l10n.Localization;
 import org.jabref.logic.openoffice.CitationEntry;
@@ -40,15 +40,15 @@ import com.sun.star.container.NoSuchElementException;
 import com.sun.star.container.XNameAccess;
 import com.sun.star.lang.IllegalArgumentException;
 import com.sun.star.lang.WrappedTargetException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Dialog for modifying existing citations.
  */
 class CitationManager {
 
-    private static final Log LOGGER = LogFactory.getLog(CitationManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CitationManager.class);
     private final OOBibBase ooBase;
     private final JDialog diag;
     private final EventList<CitationEntry> list;
@@ -56,10 +56,9 @@ class CitationManager {
 
     private final DefaultEventTableModel<CitationEntry> tableModel;
 
-
-    public CitationManager(final JabRefFrame frame, OOBibBase ooBase)
+    public CitationManager(OOBibBase ooBase, DialogService dialogService)
             throws NoSuchElementException, WrappedTargetException, UnknownPropertyException {
-        diag = new JDialog(frame, Localization.lang("Manage citations"), true);
+        diag = new JDialog((JFrame) null, Localization.lang("Manage citations"), true);
         this.ooBase = ooBase;
 
         list = new BasicEventList<>();
@@ -94,7 +93,7 @@ class CitationManager {
             } catch (UnknownPropertyException | NotRemoveableException | PropertyExistException | IllegalTypeException |
                     IllegalArgumentException ex) {
                 LOGGER.warn("Problem modifying citation", ex);
-                JOptionPane.showMessageDialog(frame, Localization.lang("Problem modifying citation"));
+                dialogService.showErrorDialogAndWait(Localization.lang("Problem modifying citation"), ex);
             }
             diag.dispose();
         });
@@ -109,7 +108,7 @@ class CitationManager {
         cancel.addActionListener(cancelAction);
 
         bb.getPanel().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put
-                (Globals.getKeyPrefs().getKey(KeyBinding.CLOSE_DIALOG), "close");
+                (Globals.getKeyPrefs().getKey(KeyBinding.CLOSE), "close");
         bb.getPanel().getActionMap().put("close", cancelAction);
 
         table.getColumnModel().getColumn(0).setPreferredWidth(580);
@@ -224,7 +223,7 @@ class CitationManager {
             cancelButton.addActionListener(cancelAction);
 
             builder.getPanel().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put
-                    (Globals.getKeyPrefs().getKey(KeyBinding.CLOSE_DIALOG), "close");
+                    (Globals.getKeyPrefs().getKey(KeyBinding.CLOSE), "close");
             builder.getPanel().getActionMap().put("close", cancelAction);
 
         }

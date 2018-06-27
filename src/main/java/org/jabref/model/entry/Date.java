@@ -16,6 +16,18 @@ public class Date {
 
     private final TemporalAccessor date;
 
+    public Date(int year, int month, int dayOfMonth) {
+        this(LocalDate.of(year, month, dayOfMonth));
+    }
+
+    public Date(int year, int month) {
+        this(YearMonth.of(year, month));
+    }
+
+    public Date(int year) {
+        this(Year.of(year));
+    }
+
     public Date(TemporalAccessor date) {
         this.date = date;
     }
@@ -32,9 +44,17 @@ public class Date {
      */
     public static Optional<Date> parse(String dateString) {
         Objects.requireNonNull(dateString);
-        List<String> formatStrings = Arrays.asList("uuuu-M-d", "uuuu-M", "d-M-uuuu", "M/uu", "M/uuuu", "MMMM d, uuuu",
+        List<String> formatStrings = Arrays.asList(
+                "uuuu-M-d",
+                "uuuu-M",
+                "d-M-uuuu",
+                "M-uuuu",
+                "M/uu",
+                "M/uuuu",
+                "MMMM d, uuuu",
                 "MMMM, uuuu",
-                "d.M.uuuu", "uuuu.M.d", "uuuu");
+                "d.M.uuuu",
+                "uuuu.M.d", "uuuu");
 
             for (String formatString : formatStrings) {
                 try {

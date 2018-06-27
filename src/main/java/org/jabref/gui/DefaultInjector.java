@@ -6,16 +6,17 @@ import org.jabref.Globals;
 import org.jabref.gui.keyboard.KeyBindingRepository;
 import org.jabref.gui.util.TaskExecutor;
 import org.jabref.logic.journals.JournalAbbreviationLoader;
+import org.jabref.model.util.FileUpdateMonitor;
 import org.jabref.preferences.PreferencesService;
 
 import com.airhacks.afterburner.injection.Injector;
 import com.airhacks.afterburner.injection.PresenterFactory;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultInjector implements PresenterFactory {
 
-    private static final Log LOGGER = LogFactory.getLog(DefaultInjector.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultInjector.class);
 
     /**
      * This method takes care of creating dependencies.
@@ -35,6 +36,10 @@ public class DefaultInjector implements PresenterFactory {
             return Globals.journalAbbreviationLoader;
         } else if (clazz == StateManager.class) {
             return Globals.stateManager;
+        } else if (clazz == FileUpdateMonitor.class) {
+            return Globals.getFileUpdateMonitor();
+        } else if (clazz == ClipBoardManager.class) {
+            return Globals.clipboardManager;
         } else {
             try {
                 return clazz.newInstance();
@@ -53,5 +58,15 @@ public class DefaultInjector implements PresenterFactory {
         Injector.setInstanceSupplier(DefaultInjector::createDependency);
 
         return Injector.instantiatePresenter(clazz, injectionContext);
+    }
+
+    @Override
+    public void injectMembers(Object instance, Function<String, Object> injectionContext) {
+        LOGGER.debug("Inject into " + instance.getClass().getName());
+
+        // Use our own method to construct dependencies
+        Injector.setInstanceSupplier(DefaultInjector::createDependency);
+
+        Injector.injectMembers(instance, injectionContext);
     }
 }

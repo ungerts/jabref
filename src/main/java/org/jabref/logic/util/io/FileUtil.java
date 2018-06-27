@@ -2,11 +2,12 @@ package org.jabref.logic.util.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.UncheckedIOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,21 +19,21 @@ import java.util.Stack;
 import java.util.Vector;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import org.jabref.logic.layout.Layout;
-import org.jabref.logic.layout.LayoutFormatterPreferences;
-import org.jabref.logic.layout.LayoutHelper;
+import org.jabref.logic.bibtexkeypattern.BracketedPattern;
 import org.jabref.model.database.BibDatabase;
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.util.OptionalUtil;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FileUtil {
+
     public static final boolean IS_POSIX_COMPILANT = FileSystems.getDefault().supportedFileAttributeViews().contains("posix");
     public static final int MAXIMUM_FILE_NAME_LENGTH = 255;
-    private static final Log LOGGER = LogFactory.getLog(FileUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
 
     private FileUtil() {
     }
@@ -63,13 +64,8 @@ public class FileUtil {
     /**
      * Returns the name part of a file name (i.e., everything in front of last ".").
      */
-    public static String getFileName(String fileNameWithExtension) {
-        int dotPosition = fileNameWithExtension.lastIndexOf('.');
-        if (dotPosition >= 0) {
-            return fileNameWithExtension.substring(0, dotPosition);
-        } else {
-            return fileNameWithExtension;
-        }
+    public static String getBaseName(String fileNameWithExtension) {
+        return com.google.common.io.Files.getNameWithoutExtension(fileNameWithExtension);
     }
 
     /**
@@ -78,7 +74,7 @@ public class FileUtil {
      * Currently, only the length is restricted to 255 chars, see MAXIMUM_FILE_NAME_LENGTH.
      */
     public static String getValidFileName(String fileName) {
-        String nameWithoutExtension = getFileName(fileName);
+        String nameWithoutExtension = getBaseName(fileName);
 
         if (nameWithoutExtension.length() > MAXIMUM_FILE_NAME_LENGTH) {
             Optional<String> extension = getFileExtension(fileName);
@@ -163,7 +159,10 @@ public class FileUtil {
             return false;
         }
         try {
-            return Files.copy(pathToSourceFile, pathToDestinationFile, StandardCopyOption.REPLACE_EXISTING) != null;
+            // Preserve Hard Links with OpenOption defaults included for clarity
+            Files.write(pathToDestinationFile, Files.readAllBytes(pathToSourceFile),
+                    StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+            return true;
         } catch (IOException e) {
             LOGGER.error("Copying Files failed.", e);
             return false;
@@ -188,7 +187,9 @@ public class FileUtil {
      * @param toFile          The target fileName
      * @param replaceExisting Wether to replace existing files or not
      * @return True if the rename was successful, false if an exception occurred
+     * @deprecated Use {@link #renameFileWithException(Path, Path, boolean)} instead and handle exception properly
      */
+    @Deprecated
     public static boolean renameFile(Path fromFile, Path toFile, boolean replaceExisting) {
         try {
             return renameFileWithException(fromFile, toFile, replaceExisting);
@@ -252,29 +253,37 @@ public class FileUtil {
      * @param database        the database, where the entry is located
      * @param entry           the entry to which the file should be linked to
      * @param fileNamePattern the filename pattern
-     * @param prefs           the layout preferences
      * @return a suggested fileName
      */
-    public static String createFileNameFromPattern(BibDatabase database, BibEntry entry, String fileNamePattern,
-                                                   LayoutFormatterPreferences prefs) {
-        String targetName = null;
+    public static String createFileNameFromPattern(BibDatabase database, BibEntry entry, String fileNamePattern) {
+        String targetName = BracketedPattern.expandBrackets(fileNamePattern, ';', entry, database);
 
-        StringReader sr = new StringReader(fileNamePattern);
-        Layout layout = null;
-        try {
-            layout = new LayoutHelper(sr, prefs).getLayoutFromText();
-        } catch (IOException e) {
-            LOGGER.info("Wrong format " + e.getMessage(), e);
-        }
-        if (layout != null) {
-            targetName = layout.doLayout(entry, database);
-        }
-
-        if ((targetName == null) || targetName.isEmpty()) {
+        if (targetName.isEmpty()) {
             targetName = entry.getCiteKeyOptional().orElse("default");
         }
+
         //Removes illegal characters from filename
         targetName = FileNameCleaner.cleanFileName(targetName);
+        return targetName;
+    }
+
+    /**
+     * Determines filename provided by an entry in a database
+     *
+     * @param database        the database, where the entry is located
+     * @param entry           the entry to which the file should be linked to
+     * @param fileNamePattern the filename pattern
+     * @return a suggested fileName
+     */
+    public static String createDirNameFromPattern(BibDatabase database, BibEntry entry, String fileNamePattern) {
+        String targetName = BracketedPattern.expandBrackets(fileNamePattern, ';', entry, database);
+
+        if (targetName.isEmpty()) {
+            targetName = entry.getCiteKeyOptional().orElse("default");
+        }
+
+        //Removes illegal characters from filename
+        targetName = FileNameCleaner.cleanDirectoryName(targetName);
         return targetName;
     }
 
@@ -286,12 +295,12 @@ public class FileUtil {
      * @return the path to the first file that matches the defined conditions
      */
     public static Optional<Path> find(String filename, Path rootDirectory) {
-        try {
-            return Files.walk(rootDirectory)
+        try (Stream<Path> pathStream = Files.walk(rootDirectory)) {
+            return pathStream
                     .filter(Files::isRegularFile)
                     .filter(f -> f.getFileName().toString().equals(filename))
                     .findFirst();
-        } catch (IOException ex) {
+        } catch (UncheckedIOException | IOException ex) {
             LOGGER.error("Error trying to locate the file " + filename + " inside the directory " + rootDirectory);
         }
         return Optional.empty();
@@ -310,5 +319,14 @@ public class FileUtil {
             FileUtil.find(filename, dir).ifPresent(files::add);
         }
         return files;
+    }
+
+    /**
+     * Creates a string representation of the given path that should work on all systems.
+     * This method should be used when a path needs to be stored in the bib file or preferences.
+     */
+    public static String toPortableString(Path path) {
+        return path.toString()
+                   .replace('\\', '/');
     }
 }

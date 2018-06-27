@@ -10,7 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 
 import org.jabref.Globals;
-import org.jabref.gui.IconTheme;
+import org.jabref.gui.icon.IconTheme;
 import org.jabref.gui.util.BackgroundTask;
 import org.jabref.gui.util.OpenHyperlinksInExternalBrowser;
 import org.jabref.logic.importer.fetcher.MrDLibFetcher;
@@ -20,12 +20,12 @@ import org.jabref.preferences.JabRefPreferences;
 
 public class RelatedArticlesTab extends EntryEditorTab {
 
-    private final BibEntry entry;
+    private final EntryEditorPreferences preferences;
 
-    public RelatedArticlesTab(BibEntry entry) {
-        this.entry = entry;
+    public RelatedArticlesTab(EntryEditorPreferences preferences) {
         setText(Localization.lang("Related articles"));
         setTooltip(new Tooltip(Localization.lang("Related articles")));
+        this.preferences = preferences;
     }
 
     private StackPane getPane(BibEntry entry) {
@@ -73,19 +73,19 @@ public class RelatedArticlesTab extends EntryEditorTab {
         htmlContent.append("<br><div style='margin-left: 5px'>");
         htmlContent.append(
                 "<a href='http://mr-dlib.org/information-for-users/information-about-mr-dlib-for-jabref-users/#' target=\"_blank\">");
-        htmlContent.append(Localization.lang("What_is_Mr._DLib?"));
+        htmlContent.append(Localization.lang("What is Mr. DLib?"));
         htmlContent.append("</a></div>");
         htmlContent.append("</body></html>");
         return htmlContent.toString();
     }
 
     @Override
-    public boolean shouldShow() {
-        return Globals.prefs.getBoolean(JabRefPreferences.SHOW_RECOMMENDATIONS);
+    public boolean shouldShow(BibEntry entry) {
+        return preferences.shouldShowRecommendationsTab();
     }
 
     @Override
-    protected void initialize() {
+    protected void bindToEntry(BibEntry entry) {
         setContent(getPane(entry));
     }
 }

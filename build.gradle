@@ -15,7 +15,7 @@ buildscript {
 }
 
 plugins {
-    id 'com.gradle.build-scan' version '1.16'
+    id 'com.gradle.build-scan' version '2.0'
     id 'com.install4j.gradle' version '7.0.7'
     id 'com.github.johnrengelman.shadow' version '2.0.4'
     id "de.sebastianboegl.shadow.transformer.log4j" version "2.1.1"
@@ -25,11 +25,6 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.20.0'
 }
 
-// use the gradle build scan feature: https://scans.gradle.com/get-started
-buildScan {
-    licenseAgreementUrl = 'https://gradle.com/terms-of-service'
-    licenseAgree = 'yes'
-}
 
 apply plugin: 'java'
 apply plugin: 'application'
@@ -129,6 +124,7 @@ dependencies {
 
     // JavaFX stuff
     compile 'de.jensd:fontawesomefx-materialdesignfont:1.7.22-4'
+
     compile 'de.saxsys:mvvmfx-validation:1.7.0'
     compile 'de.saxsys:mvvmfx:1.7.0'
     compile 'org.fxmisc.easybind:easybind:1.0.3'
@@ -150,6 +146,8 @@ dependencies {
     compile 'org.apache.logging.log4j:log4j-jcl:2.11.1'
     compile 'org.apache.logging.log4j:log4j-api:2.11.1'
     compile 'org.apache.logging.log4j:log4j-core:2.11.1'
+    annotationProcessor 'org.apache.logging.log4j:log4j-core:2.11.1'
+
 
     // need to use snapshots as the stable version is from 2013 and doesn't support v1.0.1 CitationStyles
     compile 'org.citationstyles:styles:1.0.1-SNAPSHOT'

@@ -116,7 +116,6 @@ public class BasePanel extends StackPane {
 
     private final BibDatabaseContext bibDatabaseContext;
     private final MainTableDataModel tableModel;
-    private final DatabaseChangePane changePane;
 
     private final CitationStyleCache citationStyleCache;
     private final FileAnnotationCache annotationCache;
@@ -140,6 +139,7 @@ public class BasePanel extends StackPane {
     private BasePanelMode mode = BasePanelMode.SHOWING_NOTHING;
     private SplitPane splitPane;
     private boolean saving;
+    private DatabaseChangePane changePane = null;
 
     // AutoCompleter used in the search bar
     private PersonNameSuggestionProvider searchAutoCompleter;
@@ -191,8 +191,7 @@ public class BasePanel extends StackPane {
         if (file.isPresent()) {
             // Register so we get notifications about outside changes to the file.
             changeMonitor = Optional.of(new DatabaseChangeMonitor(bibDatabaseContext, Globals.getFileUpdateMonitor(), Globals.TASK_EXECUTOR));
-            changePane = new DatabaseChangePane(mainTable.getPane(), bibDatabaseContext, changeMonitor.get());
-            getChildren().add(changePane);
+            setupChangePane();
         } else {
             if (bibDatabaseContext.getDatabase().hasEntries()) {
                 // if the database is not empty and no file is assigned,
@@ -200,7 +199,7 @@ public class BasePanel extends StackPane {
                 // -> mark as changed
                 this.baseChanged = true;
             }
-            changePane = null;
+            this.getChildren().setAll(splitPane);
         }
 
         this.getDatabase().registerListener(new UpdateTimestampListener(Globals.prefs));
@@ -782,7 +781,6 @@ public class BasePanel extends StackPane {
         AnchorPane.setLeftAnchor(pane, 0.0);
         AnchorPane.setRightAnchor(pane, 0.0);
         splitPane.getItems().add(anchorPane);
-        this.getChildren().setAll(splitPane);
 
         // Set up name autocompleter for search:
         instantiateSearchAutoCompleter();
@@ -795,6 +793,12 @@ public class BasePanel extends StackPane {
         dividerPositionSubscription = EasyBind.monadic(Bindings.valueAt(splitPane.getDividers(), 0))
                                               .flatMap(SplitPane.Divider::positionProperty)
                                               .subscribe((observable, oldValue, newValue) -> saveDividerLocation(newValue));
+    }
+
+    public void setupChangePane() {
+        changePane = new DatabaseChangePane(splitPane, bibDatabaseContext, changeMonitor.get());
+
+        this.getChildren().setAll(changePane);
     }
 
     /**

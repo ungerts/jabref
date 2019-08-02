@@ -201,7 +201,7 @@ public class BibTeXMLExporter extends Exporter {
                         try {
                             method.invoke(entryType, new BigInteger(value));
                         } catch (NumberFormatException exception) {
-                            LOGGER.warn("The value %s of the 'number' field is not an integer and thus is ignored for the export", value);
+                            LOGGER.warn("The value {} of the 'number' field is not an integer and thus is ignored for the export", value);
                         }
                         break;
                     } else {

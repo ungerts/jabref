@@ -90,7 +90,7 @@ public class MedlinePlainImporter extends Importer {
             EntryType type = BibEntry.DEFAULT_TYPE;
             String author = "";
             String editor = "";
-            String comment = "";
+            StringBuilder comment = new StringBuilder();
             Map<Field, String> fieldConversionMap = new HashMap<>();
 
             String[] lines = entry1.split("\n");
@@ -194,16 +194,16 @@ public class MedlinePlainImporter extends Importer {
                         || "CRI".equals(label) || "CRF".equals(label) || "PRIN".equals(label) || "PROF".equals(label)
                         || "RPI".equals(label) || "RPF".equals(label) || "RIN".equals(label) || "ROF".equals(label)
                         || "UIN".equals(label) || "UOF".equals(label) || "SPIN".equals(label) || "ORI".equals(label)) {
-                    if (!comment.isEmpty()) {
-                        comment = comment + "\n";
+                    if (comment.length() > 0) {
+                        comment.append("\n");
                     }
-                    comment = comment + value;
+                    comment.append(value);
                 }
             }
             fixAuthors(fieldConversionMap, author, StandardField.AUTHOR);
             fixAuthors(fieldConversionMap, editor, StandardField.EDITOR);
-            if (!comment.isEmpty()) {
-                fieldConversionMap.put(StandardField.COMMENT, comment);
+            if (comment.length() > 0) {
+                fieldConversionMap.put(StandardField.COMMENT, comment.toString());
             }
 
             BibEntry b = new BibEntry(type);

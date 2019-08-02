@@ -40,21 +40,21 @@ public class GvkFetcher implements SearchBasedParserFetcher {
     }
 
     private String getSearchQueryStringForComplexQuery(List<String> queryList) {
-        String query = "";
+        StringBuilder query = new StringBuilder();
         boolean lastWasNoKey = false;
 
         for (String key : queryList) {
             if (searchKeys.contains(key)) {
                 if (lastWasNoKey) {
-                    query = query + "and ";
+                    query.append("and ");
                 }
-                query = query + "pica." + key + "=";
+                query.append("pica.").append(key).append("=");
             } else {
-                query = query + key + " ";
+                query.append(key).append(" ");
                 lastWasNoKey = true;
             }
         }
-        return query.trim();
+        return query.toString().trim();
     }
 
     protected String getSearchQueryString(String query) {

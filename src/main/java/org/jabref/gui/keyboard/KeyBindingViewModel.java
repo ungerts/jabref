@@ -64,11 +64,11 @@ public class KeyBindingViewModel {
     private void setBinding(String bind) {
         this.realBinding = bind;
         String[] parts = bind.split(" ");
-        String displayBind = "";
+        StringBuilder displayBind = new StringBuilder();
         for (String part : parts) {
-            displayBind += CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, part) + " ";
+            displayBind.append(CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, part)).append(" ");
         }
-        this.shownBinding.set(displayBind.trim().replace(" ", " + "));
+        this.shownBinding.set(displayBind.toString().trim().replace(" ", " + "));
     }
 
     private void setDisplayName() {

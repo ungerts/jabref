@@ -1271,7 +1271,7 @@ class OOBibBase {
                         }
                     }
                 }
-                Collections.sort(entries, new FieldComparator(StandardField.YEAR));
+                entries.sort(new FieldComparator(StandardField.YEAR));
                 String keyString = String.join(",", entries.stream().map(entry -> entry.getCiteKeyOptional().orElse(""))
                                                            .collect(Collectors.toList()));
                 // Insert bookmark:

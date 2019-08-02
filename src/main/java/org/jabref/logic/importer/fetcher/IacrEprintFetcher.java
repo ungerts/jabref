@@ -133,7 +133,7 @@ public class IacrEprintFetcher implements IdBasedFetcher {
             throw new FetcherException(Localization.lang("Entry from %0 could not be parsed.", "IACR"));
         }
 
-        Collections.sort(formattedDates, Collections.reverseOrder());
+        formattedDates.sort(Collections.reverseOrder());
         return formattedDates.get(0);
     }
 

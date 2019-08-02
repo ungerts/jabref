@@ -155,7 +155,7 @@ public class LinkedFileViewModel extends AbstractViewModel {
         observables.add(downloadOngoing);
         observables.add(downloadProgress);
         observables.add(isAutomaticallyFound);
-        return observables.toArray(new Observable[observables.size()]);
+        return observables.toArray(new Observable[0]);
     }
 
     public void open() {

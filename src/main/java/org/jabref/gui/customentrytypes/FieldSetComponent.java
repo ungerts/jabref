@@ -159,7 +159,7 @@ class FieldSetComponent extends JPanel {
             gbl.setConstraints(input, con);
             add(input);
         } else {
-            sel = new JComboBox<>(preset.toArray(new String[preset.size()]));
+            sel = new JComboBox<>(preset.toArray(new String[0]));
             sel.setEditable(true);
             gbl.setConstraints(sel, con);
             add(sel);

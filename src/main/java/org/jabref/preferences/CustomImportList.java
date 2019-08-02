@@ -69,7 +69,7 @@ public class CustomImportList extends TreeSet<CustomImporter> {
 
     public void store() {
         purgeAll();
-        CustomImporter[] importers = this.toArray(new CustomImporter[this.size()]);
+        CustomImporter[] importers = this.toArray(new CustomImporter[0]);
         for (int i = 0; i < importers.length; i++) {
             Globals.prefs.putStringList(JabRefPreferences.CUSTOM_IMPORT_FORMAT + i, importers[i].getAsStringList());
         }

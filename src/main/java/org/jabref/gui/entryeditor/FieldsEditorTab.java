@@ -61,7 +61,7 @@ abstract class FieldsEditorTab extends EntryEditorTab {
     }
 
     private static void addColumn(GridPane gridPane, int columnIndex, List<Label> nodes) {
-        gridPane.addColumn(columnIndex, nodes.toArray(new Node[nodes.size()]));
+        gridPane.addColumn(columnIndex, nodes.toArray(new Node[0]));
     }
 
     private static void addColumn(GridPane gridPane, int columnIndex, Stream<Parent> nodes) {

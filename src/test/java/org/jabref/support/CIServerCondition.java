@@ -17,7 +17,7 @@ public class CIServerCondition implements ExecutionCondition {
     private static boolean isCIServer() {
         // See http://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
         // See https://circleci.com/docs/environment-variables
-        return Boolean.valueOf(System.getenv("CI"));
+        return Boolean.parseBoolean(System.getenv("CI"));
     }
 
     /**

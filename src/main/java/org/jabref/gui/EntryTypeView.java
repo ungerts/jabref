@@ -18,6 +18,7 @@ import org.jabref.gui.util.BaseDialog;
 import org.jabref.gui.util.ControlHelper;
 import org.jabref.gui.util.ViewModelListCellFactory;
 import org.jabref.logic.importer.IdBasedFetcher;
+import org.jabref.logic.importer.WebFetcher;
 import org.jabref.logic.l10n.Localization;
 import org.jabref.model.database.BibDatabaseMode;
 import org.jabref.model.entry.BibEntryType;
@@ -109,7 +110,7 @@ public class EntryTypeView extends BaseDialog<EntryType> {
             }
         });
 
-        new ViewModelListCellFactory<IdBasedFetcher>().withText(item -> item.getName()).install(idBasedFetchers);
+        new ViewModelListCellFactory<IdBasedFetcher>().withText(WebFetcher::getName).install(idBasedFetchers);
 
         //we set the managed property so that they will only be rendered when they are visble so that the Nodes only take the space when visible
         //avoids removing and adding from the scence graph

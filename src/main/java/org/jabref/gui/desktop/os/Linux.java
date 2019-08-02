@@ -97,7 +97,7 @@ public class Linux implements NativeDesktop {
 
             StringJoiner sj = new StringJoiner(" ");
             sj.add(application);
-            parameters.forEach((param) -> sj.add(param));
+            parameters.forEach(sj::add);
 
             openFileWithApplication(filePath, sj.toString());
         } else {

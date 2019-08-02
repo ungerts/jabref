@@ -85,7 +85,7 @@ public class LinkedFileViewModel extends AbstractViewModel {
         this.taskExecutor = taskExecutor;
         this.externalFileTypes = externalFileTypes;
         this.xmpPreferences = xmpPreferences;
-        
+
         downloadOngoing.bind(downloadProgress.greaterThanOrEqualTo(0).and(downloadProgress.lessThan(1)));
         canWriteXMPMetadata.setValue(!linkedFile.isOnlineLink() && linkedFile.getFileType().equalsIgnoreCase("pdf"));
     }
@@ -454,7 +454,7 @@ public class LinkedFileViewModel extends AbstractViewModel {
 
     private Optional<ExternalFileType> inferFileTypeFromURL(String url) {
         return URLUtil.getSuffix(url)
-                      .flatMap(extension -> externalFileTypes.getExternalFileTypeByExt(extension));
+                      .flatMap(externalFileTypes::getExternalFileTypeByExt);
     }
 
     public LinkedFile getFile() {

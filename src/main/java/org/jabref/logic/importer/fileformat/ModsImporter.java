@@ -374,7 +374,7 @@ public class ModsImporter extends Importer implements Parser {
         List<String> places = new ArrayList<>();
         placeDefinition
                 .ifPresent(place -> place.getPlaceTerm().stream().filter(placeTerm -> placeTerm.getValue() != null)
-                        .map(PlaceTermDefinition::getValue).forEach(element -> places.add(element)));
+                        .map(PlaceTermDefinition::getValue).forEach(places::add));
         putIfListIsNotEmpty(fields, places, StandardField.ADDRESS, ", ");
 
         dateDefinition.ifPresent(date -> putDate(fields, elementName, date));

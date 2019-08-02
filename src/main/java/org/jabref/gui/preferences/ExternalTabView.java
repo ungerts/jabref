@@ -59,8 +59,8 @@ public class ExternalTabView extends VBox implements PrefsTab {
         viewModel = new ExternalTabViewModel(dialogService, preferences, frame);
 
         new ViewModelListCellFactory<PushToApplication>()
-                .withText(application -> application.getApplicationName())
-                .withIcon(application -> application.getIcon())
+                .withText(PushToApplication::getApplicationName)
+                .withIcon(PushToApplication::getIcon)
                 .install(pushToApplicationCombo);
 
         eMailReferenceSubject.textProperty().bindBidirectional(viewModel.eMailReferenceSubjectProperty());

@@ -341,6 +341,6 @@ public class FileUtil {
      */
     public static boolean isBibFile(Path file)
     {
-        return getFileExtension(file).filter(type -> "bib".equals(type)).isPresent();
+        return getFileExtension(file).filter("bib"::equals).isPresent();
     }
 }

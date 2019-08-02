@@ -100,7 +100,7 @@ public class OpenDatabaseAction extends SimpleCommand {
             return getWorkingDirectoryPath();
         } else {
             Optional<Path> databasePath = frame.getCurrentBasePanel().getBibDatabaseContext().getDatabasePath();
-            return databasePath.map(p -> p.getParent()).orElse(getWorkingDirectoryPath());
+            return databasePath.map(Path::getParent).orElse(getWorkingDirectoryPath());
         }
     }
 

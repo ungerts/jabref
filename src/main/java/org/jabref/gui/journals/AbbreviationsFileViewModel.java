@@ -70,7 +70,7 @@ public class AbbreviationsFileViewModel {
     public void writeOrCreate() throws IOException {
         if (!isBuiltInList.get()) {
             List<Abbreviation> actualAbbreviations = abbreviations.stream().filter(abb -> !abb.isPseudoAbbreviation())
-                    .map(abb -> abb.getAbbreviationObject()).collect(Collectors.toList());
+                    .map(AbbreviationViewModel::getAbbreviationObject).collect(Collectors.toList());
             AbbreviationWriter.writeOrCreate(path.get(), actualAbbreviations, StandardCharsets.UTF_8);
         }
     }

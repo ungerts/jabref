@@ -969,7 +969,7 @@ public class BasePanel extends StackPane {
             markBasedChangedInternal();
         } else {
             try {
-                SwingUtilities.invokeAndWait(() -> markBasedChangedInternal());
+                SwingUtilities.invokeAndWait(this::markBasedChangedInternal);
             } catch (InvocationTargetException | InterruptedException e) {
                 LOGGER.info("Problem marking database as changed", e);
             }

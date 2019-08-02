@@ -48,7 +48,7 @@ public class SpecialFieldsUtils {
         Optional<Keyword> newValue = entry.getField(specialField).map(Keyword::new);
         newValue.map(value -> entry.replaceKeywords(keyWords, newValue.get(), keywordDelimiter))
                 .orElseGet(() -> entry.removeKeywords(keyWords, keywordDelimiter))
-                .ifPresent(changeValue -> fieldChanges.add(changeValue));
+                .ifPresent(fieldChanges::add);
 
         return fieldChanges;
     }

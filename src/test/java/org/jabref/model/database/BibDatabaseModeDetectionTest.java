@@ -2,6 +2,7 @@ package org.jabref.model.database;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.EntryType;
@@ -19,7 +20,7 @@ public class BibDatabaseModeDetectionTest {
 
     @Test
     public void detectBiblatex() {
-        Collection<BibEntry> entries = Arrays.asList(new BibEntry(StandardEntryType.MvBook));
+        Collection<BibEntry> entries = Collections.singletonList(new BibEntry(StandardEntryType.MvBook));
 
         assertEquals(BibDatabaseMode.BIBLATEX, BibDatabaseModeDetection.inferMode(BibDatabases.createDatabase(entries)));
     }

@@ -2,13 +2,7 @@ package org.jabref.logic.shared;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 import org.jabref.logic.shared.exception.InvalidDBMSConnectionPropertiesException;
@@ -188,7 +182,7 @@ class DBMSProcessorTest {
 
         dbmsProcessor.insertEntry(bibEntry);
 
-        List<BibEntry> expectedEntries = Arrays.asList(bibEntry);
+        List<BibEntry> expectedEntries = Collections.singletonList(bibEntry);
         List<BibEntry> actualEntries = dbmsProcessor.getSharedEntries();
 
         assertEquals(expectedEntries, actualEntries);

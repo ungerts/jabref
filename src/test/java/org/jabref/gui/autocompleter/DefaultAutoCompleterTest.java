@@ -68,7 +68,7 @@ public class DefaultAutoCompleterTest {
         autoCompleter.indexEntry(entry);
 
         Collection<String> result = autoCompleter.call(getRequest(("testValue")));
-        assertEquals(Arrays.asList("testValue"), result);
+        assertEquals(Collections.singletonList("testValue"), result);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class DefaultAutoCompleterTest {
         autoCompleter.indexEntry(entry);
 
         Collection<String> result = autoCompleter.call(getRequest(("test")));
-        assertEquals(Arrays.asList("testValue"), result);
+        assertEquals(Collections.singletonList("testValue"), result);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class DefaultAutoCompleterTest {
         autoCompleter.indexEntry(entry);
 
         Collection<String> result = autoCompleter.call(getRequest(("testvalue")));
-        assertEquals(Arrays.asList("testValue"), result);
+        assertEquals(Collections.singletonList("testValue"), result);
     }
 
     @Test

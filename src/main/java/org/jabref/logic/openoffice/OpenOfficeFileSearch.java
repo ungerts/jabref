@@ -3,10 +3,7 @@ package org.jabref.logic.openoffice;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.jabref.logic.util.OS;
@@ -67,7 +64,7 @@ public class OpenOfficeFileSearch {
     }
 
     private static List<Path> findOSXOpenOfficeDirs() {
-        List<Path> sourceList = Arrays.asList(Paths.get("/Applications"));
+        List<Path> sourceList = Collections.singletonList(Paths.get("/Applications"));
 
         return findOpenOfficeDirectories(sourceList);
     }

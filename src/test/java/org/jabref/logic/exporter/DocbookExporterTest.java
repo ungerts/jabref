@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.jabref.logic.layout.LayoutFormatterPreferences;
@@ -47,7 +48,7 @@ public class DocbookExporterTest {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "Peptidomics of the larval {\\protect{{D}rosophila melanogaster}} central nervous system.");
 
-        List<BibEntry> entries = Arrays.asList(entry);
+        List<BibEntry> entries = Collections.singletonList(entry);
 
         exportFormat.export(databaseContext, tmpFile, charset, entries);
 
@@ -63,7 +64,7 @@ public class DocbookExporterTest {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "Insect neuropeptide bursicon homodimers induce innate immune and stress genes during molting by activating the {NF}-$\\kappa$B transcription factor Relish.");
 
-        List<BibEntry> entries = Arrays.asList(entry);
+        List<BibEntry> entries = Collections.singletonList(entry);
 
         exportFormat.export(databaseContext, tmpFile, charset, entries);
 

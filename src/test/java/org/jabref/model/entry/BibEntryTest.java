@@ -1,6 +1,7 @@
 package org.jabref.model.entry;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +66,7 @@ public class BibEntryTest {
         List<LinkedFile> files = entry.getFiles();
         files.add(new LinkedFile("", "", ""));
         entry.setFiles(files);
-        assertEquals(Arrays.asList(new LinkedFile("", "", "")), entry.getFiles());
+        assertEquals(Collections.singletonList(new LinkedFile("", "", "")), entry.getFiles());
     }
 
     @Test

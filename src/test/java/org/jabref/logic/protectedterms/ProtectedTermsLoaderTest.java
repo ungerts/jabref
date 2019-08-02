@@ -42,7 +42,7 @@ class ProtectedTermsLoaderTest {
                 ProtectedTermsLoader.class.getResource("/org/jabref/logic/protectedterms/namedterms.terms").toURI())
                                .toFile().getPath();
         loader.addProtectedTermsListFromFile(filename, true);
-        assertEquals(Arrays.asList("Einstein"), loader.getProtectedTerms());
+        assertEquals(Collections.singletonList("Einstein"), loader.getProtectedTerms());
     }
 
     @Test

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.jabref.logic.importer.fetcher.TrustLevel;
@@ -34,7 +35,7 @@ public class FulltextFetchersTest {
     public void acceptPdfUrls() throws MalformedURLException {
         URL pdfUrl = new URL("http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.pdf");
         FulltextFetcher finder = (e) -> Optional.of(pdfUrl);
-        FulltextFetchers fetcher = new FulltextFetchers(Arrays.asList(finder));
+        FulltextFetchers fetcher = new FulltextFetchers(Collections.singletonList(finder));
 
         assertEquals(Optional.of(pdfUrl), fetcher.findFullTextPDF(entry));
     }
@@ -43,7 +44,7 @@ public class FulltextFetchersTest {
     public void rejectNonPdfUrls() throws MalformedURLException {
         URL pdfUrl = new URL("https://github.com/JabRef/jabref/blob/master/README.md");
         FulltextFetcher finder = (e) -> Optional.of(pdfUrl);
-        FulltextFetchers fetcher = new FulltextFetchers(Arrays.asList(finder));
+        FulltextFetchers fetcher = new FulltextFetchers(Collections.singletonList(finder));
 
         assertEquals(Optional.empty(), fetcher.findFullTextPDF(entry));
     }
@@ -52,7 +53,7 @@ public class FulltextFetchersTest {
     public void noTrustLevel() throws MalformedURLException {
         URL pdfUrl = new URL("http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.pdf");
         FulltextFetcher finder = (e) -> Optional.of(pdfUrl);
-        FulltextFetchers fetcher = new FulltextFetchers(Arrays.asList(finder));
+        FulltextFetchers fetcher = new FulltextFetchers(Collections.singletonList(finder));
 
         assertEquals(Optional.of(pdfUrl), fetcher.findFullTextPDF(entry));
     }

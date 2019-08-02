@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.jabref.logic.layout.LayoutFormatterPreferences;
@@ -45,7 +46,7 @@ public class HtmlExportFormatTest {
         entry.setField(StandardField.TITLE, "my paper title");
         entry.setField(StandardField.AUTHOR, "Stefan Kolb");
         entry.setCiteKey("mykey");
-        entries = Arrays.asList(entry);
+        entries = Collections.singletonList(entry);
     }
 
     @AfterEach

@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.jabref.logic.layout.LayoutFormatterPreferences;
@@ -55,7 +56,7 @@ public class CsvExportFormatTest {
 
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.AUTHOR, "Someone, Van Something");
-        List<BibEntry> entries = Arrays.asList(entry);
+        List<BibEntry> entries = Collections.singletonList(entry);
 
         exportFormat.export(databaseContext, path, charset, entries);
 
@@ -72,7 +73,7 @@ public class CsvExportFormatTest {
 
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.AUTHOR, "von Neumann, John and Smith, John and Black Brown, Peter");
-        List<BibEntry> entries = Arrays.asList(entry);
+        List<BibEntry> entries = Collections.singletonList(entry);
 
         exportFormat.export(databaseContext, path, charset, entries);
 
@@ -89,7 +90,7 @@ public class CsvExportFormatTest {
         File tmpFile = path.toFile();
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.EDITOR, "Someone, Van Something");
-        List<BibEntry> entries = Arrays.asList(entry);
+        List<BibEntry> entries = Collections.singletonList(entry);
 
         exportFormat.export(databaseContext, tmpFile.toPath(), charset, entries);
 
@@ -106,7 +107,7 @@ public class CsvExportFormatTest {
         File tmpFile = path.toFile();
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.EDITOR, "von Neumann, John and Smith, John and Black Brown, Peter");
-        List<BibEntry> entries = Arrays.asList(entry);
+        List<BibEntry> entries = Collections.singletonList(entry);
 
         exportFormat.export(databaseContext, tmpFile.toPath(), charset, entries);
 

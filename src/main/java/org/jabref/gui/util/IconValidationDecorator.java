@@ -2,6 +2,7 @@ package org.jabref.gui.util;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -61,6 +62,6 @@ public class IconValidationDecorator extends GraphicValidationDecoration {
 
     @Override
     protected Collection<Decoration> createValidationDecorations(ValidationMessage message) {
-        return Arrays.asList(new GraphicDecoration(createDecorationNode(message), position));
+        return Collections.singletonList(new GraphicDecoration(createDecorationNode(message), position));
     }
 }

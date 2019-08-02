@@ -124,7 +124,7 @@ public class BibDatabaseTest {
     @Test
     public void setSingleStringAsCollection() {
         BibtexString string = new BibtexString("DSP", "Digital Signal Processing");
-        List<BibtexString> strings = Arrays.asList(string);
+        List<BibtexString> strings = Collections.singletonList(string);
         database.setStrings(strings);
         assertEquals(Optional.of(string), database.getStringByName("DSP"));
     }
@@ -293,7 +293,7 @@ public class BibDatabaseTest {
         database.addString(tripleC);
         database.insertEntry(entry);
 
-        Set<BibtexString> usedStrings = new HashSet<>(database.getUsedStrings(Arrays.asList(entry)));
+        Set<BibtexString> usedStrings = new HashSet<>(database.getUsedStrings(Collections.singletonList(entry)));
         assertEquals(stringSet, usedStrings);
     }
 
@@ -310,7 +310,7 @@ public class BibDatabaseTest {
         database.addString(tripleB);
         database.insertEntry(entry);
 
-        List<BibtexString> usedStrings = (List<BibtexString>) database.getUsedStrings(Arrays.asList(entry));
+        List<BibtexString> usedStrings = (List<BibtexString>) database.getUsedStrings(Collections.singletonList(entry));
         assertEquals(strings, usedStrings);
     }
 
@@ -321,7 +321,7 @@ public class BibDatabaseTest {
         BibtexString string = new BibtexString("AAA", "Some other text");
         database.addString(string);
         database.insertEntry(entry);
-        Collection<BibtexString> usedStrings = database.getUsedStrings(Arrays.asList(entry));
+        Collection<BibtexString> usedStrings = database.getUsedStrings(Collections.singletonList(entry));
         assertEquals(Collections.emptyList(), usedStrings);
     }
 

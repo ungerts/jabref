@@ -6,12 +6,7 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.jabref.logic.importer.ImportFormatPreferences;
 import org.jabref.logic.importer.Importer;
@@ -91,16 +86,16 @@ public class OOBibStyleTest {
     public void testGetNumCitationMarker() throws IOException {
         OOBibStyle style = new OOBibStyle(StyleLoader.DEFAULT_NUMERICAL_STYLE_PATH,
                 layoutFormatterPreferences);
-        assertEquals("[1] ", style.getNumCitationMarker(Arrays.asList(1), -1, true));
-        assertEquals("[1]", style.getNumCitationMarker(Arrays.asList(1), -1, false));
-        assertEquals("[1] ", style.getNumCitationMarker(Arrays.asList(1), 0, true));
+        assertEquals("[1] ", style.getNumCitationMarker(Collections.singletonList(1), -1, true));
+        assertEquals("[1]", style.getNumCitationMarker(Collections.singletonList(1), -1, false));
+        assertEquals("[1] ", style.getNumCitationMarker(Collections.singletonList(1), 0, true));
         assertEquals("[1-3] ", style.getNumCitationMarker(Arrays.asList(1, 2, 3), 1, true));
         assertEquals("[1; 2; 3] ", style.getNumCitationMarker(Arrays.asList(1, 2, 3), 5, true));
         assertEquals("[1; 2; 3] ", style.getNumCitationMarker(Arrays.asList(1, 2, 3), -1, true));
         assertEquals("[1; 3; 12] ", style.getNumCitationMarker(Arrays.asList(1, 12, 3), 1, true));
         assertEquals("[3-5; 7; 10-12] ", style.getNumCitationMarker(Arrays.asList(12, 7, 3, 4, 11, 10, 5), 1, true));
 
-        String citation = style.getNumCitationMarker(Arrays.asList(1), -1, false);
+        String citation = style.getNumCitationMarker(Collections.singletonList(1), -1, false);
         assertEquals("[1; pp. 55-56]", style.insertPageInfo(citation, "pp. 55-56"));
     }
 
@@ -112,7 +107,7 @@ public class OOBibStyleTest {
                 style.getNumCitationMarker(Arrays.asList(4, 2, 3, 0), 1, true));
 
         assertEquals("[" + OOBibStyle.UNDEFINED_CITATION_MARKER + "] ",
-                style.getNumCitationMarker(Arrays.asList(0), 1, true));
+                style.getNumCitationMarker(Collections.singletonList(0), 1, true));
 
         assertEquals("[" + OOBibStyle.UNDEFINED_CITATION_MARKER + "; 1-3] ",
                 style.getNumCitationMarker(Arrays.asList(1, 2, 3, 0), 1, true));
@@ -152,11 +147,11 @@ public class OOBibStyleTest {
 
         BibEntry entry = db.getEntryByKey("1137631").get();
         assertEquals("[Boström et al., 2006]",
-                style.getCitationMarker(Arrays.asList(entry), entryDBMap, true, null, null));
+                style.getCitationMarker(Collections.singletonList(entry), entryDBMap, true, null, null));
         assertEquals("Boström et al. [2006]",
-                style.getCitationMarker(Arrays.asList(entry), entryDBMap, false, null, new int[]{3}));
+                style.getCitationMarker(Collections.singletonList(entry), entryDBMap, false, null, new int[]{3}));
         assertEquals("[Boström, Wäyrynen, Bodén, Beznosov & Kruchten, 2006]",
-                style.getCitationMarker(Arrays.asList(entry), entryDBMap, true, null, new int[]{5}));
+                style.getCitationMarker(Collections.singletonList(entry), entryDBMap, true, null, new int[]{5}));
     }
 
     /**

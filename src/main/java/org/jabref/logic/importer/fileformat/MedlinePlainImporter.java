@@ -182,12 +182,7 @@ public class MedlinePlainImporter extends Importer {
                 }
 
                 if ("IRAD".equals(label) || "IR".equals(label) || "FIR".equals(label)) {
-                    String oldInvestigator = fieldConversionMap.get(new UnknownField("investigator"));
-                    if (oldInvestigator == null) {
-                        fieldConversionMap.put(new UnknownField("investigator"), value);
-                    } else {
-                        fieldConversionMap.put(new UnknownField("investigator"), oldInvestigator + ", " + value);
-                    }
+                    fieldConversionMap.merge(new UnknownField("investigator"), value, (a, b) -> a + ", " + b);
                 } else if ("MH".equals(label) || "OT".equals(label)) {
                     if (!fieldConversionMap.containsKey(StandardField.KEYWORDS)) {
                         fieldConversionMap.put(StandardField.KEYWORDS, value);

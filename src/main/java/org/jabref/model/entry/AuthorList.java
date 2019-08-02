@@ -151,7 +151,7 @@ public class AuthorList {
     }
 
     public AuthorList() {
-        this(new ArrayList<Author>());
+        this(new ArrayList<>());
     }
 
     /**

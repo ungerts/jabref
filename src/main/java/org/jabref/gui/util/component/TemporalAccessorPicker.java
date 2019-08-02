@@ -37,7 +37,7 @@ public class TemporalAccessorPicker extends DatePicker {
     private ObjectProperty<TemporalAccessor> temporalAccessorValue = new SimpleObjectProperty<>(null);
 
     private DateTimeFormatter defaultFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private ObjectProperty<StringConverter<TemporalAccessor>> converter = new SimpleObjectProperty<StringConverter<TemporalAccessor>>(null);
+    private ObjectProperty<StringConverter<TemporalAccessor>> converter = new SimpleObjectProperty<>(null);
 
     public TemporalAccessorPicker() {
         setConverter(new InternalConverter());

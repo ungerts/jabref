@@ -14,22 +14,14 @@ import java.util.stream.Stream;
 public class OptionalUtil {
 
     public static <T> List<T> toList(Optional<T> value) {
-        if (value.isPresent()) {
-            return Collections.singletonList(value.get());
-        } else {
-            return Collections.emptyList();
-        }
+        return value.map(Collections::singletonList).orElse(Collections.emptyList());
     }
 
     public static <T, U> boolean equals(Optional<T> left, Optional<U> right, BiPredicate<T, U> equality) {
         if (!left.isPresent()) {
             return !right.isPresent();
         } else {
-            if (right.isPresent()) {
-                return equality.test(left.get(), right.get());
-            } else {
-                return false;
-            }
+            return right.filter(u -> equality.test(left.get(), u)).isPresent();
         }
     }
 
@@ -37,11 +29,7 @@ public class OptionalUtil {
      * No longer needed in Java 9 where {@code Optional<T>.stream()} is added.
      */
     public static <T> Stream<T> toStream(Optional<T> value) {
-        if (value.isPresent()) {
-            return Stream.of(value.get());
-        } else {
-            return Stream.empty();
-        }
+        return value.map(Stream::of).orElseGet(Stream::empty);
     }
 
     @SafeVarargs

@@ -185,9 +185,7 @@ public class DBMSConnectionProperties implements DatabaseConnectionProperties {
     private void setFromPreferences(SharedDatabasePreferences prefs) {
         if (prefs.getType().isPresent()) {
             Optional<DBMSType> dbmsType = DBMSType.fromString(prefs.getType().get());
-            if (dbmsType.isPresent()) {
-                this.type = dbmsType.get();
-            }
+            dbmsType.ifPresent(value -> this.type = value);
         }
 
         prefs.getHost().ifPresent(theHost -> this.host = theHost);

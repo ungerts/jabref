@@ -64,11 +64,8 @@ public class DetectOpenOfficeInstallation {
 
         // select among multiple installations
         Optional<Path> actualFile = chooseAmongInstallations(installations);
-        if (actualFile.isPresent()) {
-            return setOpenOfficePreferences(actualFile.get());
-        }
+        return actualFile.filter(this::setOpenOfficePreferences).isPresent();
 
-        return false;
     }
 
     /**

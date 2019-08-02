@@ -25,11 +25,9 @@ public class JournalEditorViewModel extends AbstractEditorViewModel {
         if (journalAbbreviationRepository.isKnownName(text.get())) {
             Optional<String> nextAbbreviation = journalAbbreviationRepository.getNextAbbreviation(text.get());
 
-            if (nextAbbreviation.isPresent()) {
-                text.set(nextAbbreviation.get());
-                // TODO: Add undo
-                //panel.getUndoManager().addEdit(new UndoableFieldChange(entry, editor.getName(), text, nextAbbreviation));
-            }
+            // TODO: Add undo
+            //panel.getUndoManager().addEdit(new UndoableFieldChange(entry, editor.getName(), text, nextAbbreviation));
+            nextAbbreviation.ifPresent(s -> text.set(s));
         }
     }
 }

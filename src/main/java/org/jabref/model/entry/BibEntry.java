@@ -761,11 +761,9 @@ public class BibEntry implements Cloneable {
     public List<LinkedFile> getFiles() {
         //Extract the path
         Optional<String> oldValue = getField(StandardField.FILE);
-        if (!oldValue.isPresent()) {
-            return new ArrayList<>(); //Return new ArrayList because emptyList is immutable
-        }
+        //Return new ArrayList because emptyList is immutable
+        return oldValue.map(FileFieldParser::parse).orElseGet(ArrayList::new);
 
-        return FileFieldParser.parse(oldValue.get());
     }
 
     public void setDate(Date date) {

@@ -81,9 +81,7 @@ public class XmpUtilReader {
                         DublinCoreExtractor dcExtractor = new DublinCoreExtractor(dcSchema, xmpPreferences, new BibEntry());
                         Optional<BibEntry> entry = dcExtractor.extractBibtexEntry();
 
-                        if (entry.isPresent()) {
-                            result.add(entry.get());
-                        }
+                        entry.ifPresent(result::add);
                     }
                 }
             }

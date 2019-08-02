@@ -60,22 +60,20 @@ public class FetchAndMergeEntry {
             Optional<String> fieldContent = entry.getField(field);
             if (fieldContent.isPresent()) {
                 Optional<IdBasedFetcher> fetcher = WebFetchers.getIdBasedFetcherForField(field, Globals.prefs.getImportFormatPreferences());
-                if (fetcher.isPresent()) {
-                    BackgroundTask.wrap(() -> fetcher.get().performSearchById(fieldContent.get()))
-                                  .onSuccess(fetchedEntry -> {
-                                      String type = field.getDisplayName();
-                                      if (fetchedEntry.isPresent()) {
-                                          showMergeDialog(entry, fetchedEntry.get(), fetcher.get());
-                                      } else {
-                                          dialogService.notify(Localization.lang("Cannot get info based on given %0: %1", type, fieldContent.get()));
-                                      }
-                                  })
-                                  .onFailure(exception -> {
-                                      LOGGER.error("Error while fetching bibliographic information", exception);
-                                      dialogService.showErrorDialogAndWait(exception);
-                                  })
-                                  .executeWith(Globals.TASK_EXECUTOR);
-                }
+                fetcher.ifPresent(idBasedFetcher -> BackgroundTask.wrap(() -> idBasedFetcher.performSearchById(fieldContent.get()))
+                        .onSuccess(fetchedEntry -> {
+                            String type = field.getDisplayName();
+                            if (fetchedEntry.isPresent()) {
+                                showMergeDialog(entry, fetchedEntry.get(), idBasedFetcher);
+                            } else {
+                                dialogService.notify(Localization.lang("Cannot get info based on given %0: %1", type, fieldContent.get()));
+                            }
+                        })
+                        .onFailure(exception -> {
+                            LOGGER.error("Error while fetching bibliographic information", exception);
+                            dialogService.showErrorDialogAndWait(exception);
+                        })
+                        .executeWith(Globals.TASK_EXECUTOR));
             } else {
                 dialogService.notify(Localization.lang("No %0 found", field.getDisplayName()));
             }

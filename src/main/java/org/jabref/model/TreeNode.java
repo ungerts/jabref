@@ -554,9 +554,7 @@ import javafx.collections.ObservableList;
 
         // Remove from previous parent
         Optional<T> oldParent = getParent();
-        if (oldParent.isPresent()) {
-            oldParent.get().removeChild((T) this);
-        }
+        oldParent.ifPresent(t -> t.removeChild((T) this));
 
         // Add as child
         target.addChild((T) this, targetIndex);

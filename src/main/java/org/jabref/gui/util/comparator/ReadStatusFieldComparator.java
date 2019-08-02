@@ -10,11 +10,7 @@ public class ReadStatusFieldComparator implements Comparator<Optional<SpecialFie
     @Override
     public int compare(Optional<SpecialFieldValueViewModel> val1, Optional<SpecialFieldValueViewModel> val2) {
         if (val1.isPresent()) {
-            if (val2.isPresent()) {
-                return val1.get().getValue().compareTo(val2.get().getValue());
-            } else {
-                return -1;
-            }
+            return val2.map(specialFieldValueViewModel -> val1.get().getValue().compareTo(specialFieldValueViewModel.getValue())).orElse(-1);
         } else {
             if (val2.isPresent()) {
                 return 1;

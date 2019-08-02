@@ -94,17 +94,13 @@ public class DuplicationChecker {
     @Subscribe
     public void listen(EntryRemovedEvent entryRemovedEvent) {
         Optional<String> citeKey = entryRemovedEvent.getBibEntry().getCiteKeyOptional();
-        if (citeKey.isPresent()) {
-            removeKeyFromSet(citeKey.get());
-        }
+        citeKey.ifPresent(this::removeKeyFromSet);
     }
 
     @Subscribe
     public void listen(EntryAddedEvent entryAddedEvent) {
         Optional<String> citekey = entryAddedEvent.getBibEntry().getCiteKeyOptional();
-        if (citekey.isPresent()) {
-            addKeyToSet(citekey.get());
-        }
+        citekey.ifPresent(this::addKeyToSet);
     }
 
 }

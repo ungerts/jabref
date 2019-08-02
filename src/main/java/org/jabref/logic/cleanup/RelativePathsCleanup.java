@@ -47,11 +47,7 @@ public class RelativePathsCleanup implements CleanupJob {
 
         if (changed) {
             Optional<FieldChange> change = entry.setFiles(newFileList);
-            if (change.isPresent()) {
-                return Collections.singletonList(change.get());
-            } else {
-                return Collections.emptyList();
-            }
+            return change.map(Collections::singletonList).orElse(Collections.emptyList());
         }
 
         return Collections.emptyList();

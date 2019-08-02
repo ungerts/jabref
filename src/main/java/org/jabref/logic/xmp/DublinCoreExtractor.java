@@ -90,9 +90,7 @@ public class DublinCoreExtractor {
                 // not the 1st of January
                 if (!((calender.get(Calendar.MONTH) == 0) && (calender.get(Calendar.DAY_OF_MONTH) == 1))) {
                     Optional<Month> month = Month.getMonthByNumber(calender.get(Calendar.MONTH) + 1);
-                    if (month.isPresent()) {
-                        bibEntry.setField(StandardField.MONTH, month.get().getShortName());
-                    }
+                    month.ifPresent(value -> bibEntry.setField(StandardField.MONTH, value.getShortName()));
                 }
             }
         }

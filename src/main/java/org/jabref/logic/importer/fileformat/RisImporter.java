@@ -195,12 +195,7 @@ public class RisImporter extends Importer {
                     } else if ("VL".equals(tag)) {
                         fields.put(StandardField.VOLUME, value);
                     } else if ("N2".equals(tag) || "AB".equals(tag)) {
-                        String oldAb = fields.get(StandardField.ABSTRACT);
-                        if (oldAb == null) {
-                            fields.put(StandardField.ABSTRACT, value);
-                        } else {
-                            fields.put(StandardField.ABSTRACT, oldAb + OS.NEWLINE + value);
-                        }
+                        fields.merge(StandardField.ABSTRACT, value, (a, b) -> a + OS.NEWLINE + b);
                     } else if ("UR".equals(tag) || "L2".equals(tag) || "LK".equals(tag)) {
                         fields.put(StandardField.URL, value);
                     } else if ((tagPriority = dateTags.indexOf(tag)) != -1 && value.length() >= 4) {

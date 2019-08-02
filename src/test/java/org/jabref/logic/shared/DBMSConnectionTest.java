@@ -24,7 +24,7 @@ public class DBMSConnectionTest {
 
     @ParameterizedTest
     @EnumSource(DBMSType.class)
-    public void testGetConnectionFail(DBMSType dbmsType) throws SQLException, InvalidDBMSConnectionPropertiesException {
+    public void testGetConnectionFail(DBMSType dbmsType) {
         assertThrows(SQLException.class,
                 () -> new DBMSConnection(new DBMSConnectionProperties(dbmsType, "XXXX", 0, "XXXX", "XXXX", "XXXX", false, "XXXX")).getConnection());
     }

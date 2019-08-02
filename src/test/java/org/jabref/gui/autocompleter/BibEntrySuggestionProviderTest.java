@@ -18,7 +18,7 @@ public class BibEntrySuggestionProviderTest {
     private BibEntrySuggestionProvider autoCompleter;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         autoCompleter = new BibEntrySuggestionProvider();
     }
 

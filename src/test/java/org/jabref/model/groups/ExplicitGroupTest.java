@@ -47,7 +47,7 @@ public class ExplicitGroupTest {
     }
 
     @Test
-    public void addDuplicateGroupDoesNotChangeGroupsField() throws Exception {
+    public void addDuplicateGroupDoesNotChangeGroupsField() {
         entry.setField(InternalField.GROUPS, "myExplicitGroup");
         group.add(entry);
         assertEquals(Optional.of("myExplicitGroup"), entry.getField(InternalField.GROUPS));
@@ -55,7 +55,7 @@ public class ExplicitGroupTest {
 
     @Test
     // For https://github.com/JabRef/jabref/issues/2334
-    public void removeDoesNotChangeFieldIfContainsNameAsPart() throws Exception {
+    public void removeDoesNotChangeFieldIfContainsNameAsPart() {
         entry.setField(InternalField.GROUPS, "myExplicitGroup_alternative");
         group.remove(entry);
         assertEquals(Optional.of("myExplicitGroup_alternative"), entry.getField(InternalField.GROUPS));
@@ -63,7 +63,7 @@ public class ExplicitGroupTest {
 
     @Test
     // For https://github.com/JabRef/jabref/issues/2334
-    public void removeDoesNotChangeFieldIfContainsNameAsWord() throws Exception {
+    public void removeDoesNotChangeFieldIfContainsNameAsWord() {
         entry.setField(InternalField.GROUPS, "myExplicitGroup alternative");
         group.remove(entry);
 
@@ -72,14 +72,14 @@ public class ExplicitGroupTest {
 
     @Test
     // For https://github.com/JabRef/jabref/issues/1873
-    public void containsOnlyMatchesCompletePhraseWithWhitespace() throws Exception {
+    public void containsOnlyMatchesCompletePhraseWithWhitespace() {
         entry.setField(InternalField.GROUPS, "myExplicitGroup b");
         assertFalse(group.contains(entry));
     }
 
     @Test
     // For https://github.com/JabRef/jabref/issues/1873
-    public void containsOnlyMatchesCompletePhraseWithSlash() throws Exception {
+    public void containsOnlyMatchesCompletePhraseWithSlash() {
         entry.setField(InternalField.GROUPS, "myExplicitGroup/b");
 
         assertFalse(group.contains(entry));
@@ -87,7 +87,7 @@ public class ExplicitGroupTest {
 
     @Test
     // For https://github.com/JabRef/jabref/issues/2394
-    public void containsMatchesPhraseWithBrackets() throws Exception {
+    public void containsMatchesPhraseWithBrackets() {
         entry.setField(InternalField.GROUPS, "[aa] Subgroup1");
         ExplicitGroup explicitGroup = new ExplicitGroup("[aa] Subgroup1", GroupHierarchyType.INCLUDING, ',');
 

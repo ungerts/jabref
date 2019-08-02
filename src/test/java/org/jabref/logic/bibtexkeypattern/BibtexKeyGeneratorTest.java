@@ -61,7 +61,7 @@ public class BibtexKeyGeneratorTest {
     }
 
     @Test
-    public void testCrossrefAndInAuthorNames() throws Exception {
+    public void testCrossrefAndInAuthorNames() {
         BibDatabase database = new BibDatabase();
         BibEntry entry1 = new BibEntry();
         entry1.setField(StandardField.CROSSREF, "entry2");
@@ -86,7 +86,7 @@ public class BibtexKeyGeneratorTest {
     }
 
     @Test
-    public void testCrossrefAndAuthorNames() throws Exception {
+    public void testCrossrefAndAuthorNames() {
         BibDatabase database = new BibDatabase();
         BibEntry entry1 = new BibEntry();
         entry1.setField(StandardField.CROSSREF, "entry2");
@@ -334,7 +334,7 @@ public class BibtexKeyGeneratorTest {
     }
 
     @Test
-    public void testcrossrefUniversity() throws Exception {
+    public void testcrossrefUniversity() {
         BibDatabase database = new BibDatabase();
         BibEntry entry1 = new BibEntry();
         entry1.setField(StandardField.CROSSREF, "entry2");
@@ -360,7 +360,7 @@ public class BibtexKeyGeneratorTest {
     }
 
     @Test
-    public void testcrossrefDepartment() throws Exception {
+    public void testcrossrefDepartment() {
         BibDatabase database = new BibDatabase();
         BibEntry entry1 = new BibEntry();
         entry1.setField(StandardField.CROSSREF, "entry2");
@@ -386,7 +386,7 @@ public class BibtexKeyGeneratorTest {
     }
 
     @Test
-    public void testcrossrefSchool() throws Exception {
+    public void testcrossrefSchool() {
         BibDatabase database = new BibDatabase();
         BibEntry entry1 = new BibEntry();
         entry1.setField(StandardField.CROSSREF, "entry2");
@@ -411,7 +411,7 @@ public class BibtexKeyGeneratorTest {
     }
 
     @Test
-    public void testcrossrefInstituteOfTechnology() throws Exception {
+    public void testcrossrefInstituteOfTechnology() {
         BibDatabase database = new BibDatabase();
         BibEntry entry1 = new BibEntry();
         entry1.setField(StandardField.CROSSREF, "entry2");
@@ -999,70 +999,70 @@ public class BibtexKeyGeneratorTest {
     }
 
     @Test
-    public void generateKeyStripsColonFromTitle() throws Exception {
+    public void generateKeyStripsColonFromTitle() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "Green Scheduling of: Whatever");
         assertEquals("GreenSchedulingOfWhatever", BibtexKeyGenerator.generateKey(entry, "title"));
     }
 
     @Test
-    public void generateKeyStripsApostropheFromTitle() throws Exception {
+    public void generateKeyStripsApostropheFromTitle() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "Green Scheduling of `Whatever`");
         assertEquals("GreenSchedulingofWhatever", BibtexKeyGenerator.generateKey(entry, "title"));
     }
 
     @Test
-    public void generateKeyWithOneModifier() throws Exception {
+    public void generateKeyWithOneModifier() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "The Interesting Title");
         assertEquals("theinterestingtitle", BibtexKeyGenerator.generateKey(entry, "title:lower"));
     }
 
     @Test
-    public void generateKeyWithTwoModifiers() throws Exception {
+    public void generateKeyWithTwoModifiers() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "The Interesting Title");
         assertEquals("theinterestingtitle", BibtexKeyGenerator.generateKey(entry, "title:lower:(_)"));
     }
 
     @Test
-    public void generateKeyWithTitleCapitalizeModifier() throws Exception {
+    public void generateKeyWithTitleCapitalizeModifier() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "the InTeresting title longer than THREE words");
         assertEquals("TheInterestingTitleLongerThanThreeWords", BibtexKeyGenerator.generateKey(entry, "title:capitalize"));
     }
 
     @Test
-    public void generateKeyWithShortTitleCapitalizeModifier() throws Exception {
+    public void generateKeyWithShortTitleCapitalizeModifier() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "the InTeresting title longer than THREE words");
         assertEquals("InterestingTitleLonger", BibtexKeyGenerator.generateKey(entry, "shorttitle:capitalize"));
     }
 
     @Test
-    public void generateKeyWithTitleTitleCaseModifier() throws Exception {
+    public void generateKeyWithTitleTitleCaseModifier() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "A title WITH some of The key words");
         assertEquals("ATitlewithSomeoftheKeyWords", BibtexKeyGenerator.generateKey(entry, "title:titlecase"));
     }
 
     @Test
-    public void generateKeyWithShortTitleTitleCaseModifier() throws Exception {
+    public void generateKeyWithShortTitleTitleCaseModifier() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "the InTeresting title longer than THREE words");
         assertEquals("InterestingTitleLonger", BibtexKeyGenerator.generateKey(entry, "shorttitle:titlecase"));
     }
 
     @Test
-    public void generateKeyWithTitleSentenceCaseModifier() throws Exception {
+    public void generateKeyWithTitleSentenceCaseModifier() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "A title WITH some of The key words");
         assertEquals("Atitlewithsomeofthekeywords", BibtexKeyGenerator.generateKey(entry, "title:sentencecase"));
     }
 
     @Test
-    public void generateKeyWithAuthUpperYearShortTitleCapitalizeModifier() throws Exception {
+    public void generateKeyWithAuthUpperYearShortTitleCapitalizeModifier() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.AUTHOR, AUTHOR_STRING_FIRSTNAME_FULL_LASTNAME_FULL_COUNT_1);
         entry.setField(StandardField.YEAR, "2019");
@@ -1071,7 +1071,7 @@ public class BibtexKeyGeneratorTest {
     }
 
     @Test
-    public void generateKeyWithYearAuthUpperTitleSentenceCaseModifier() throws Exception {
+    public void generateKeyWithYearAuthUpperTitleSentenceCaseModifier() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.AUTHOR, AUTHOR_STRING_FIRSTNAME_FULL_LASTNAME_FULL_COUNT_3);
         entry.setField(StandardField.YEAR, "2019");
@@ -1080,7 +1080,7 @@ public class BibtexKeyGeneratorTest {
     }
 
     @Test
-    public void generateKeyWithMinusInCitationStyleOutsideAField() throws Exception {
+    public void generateKeyWithMinusInCitationStyleOutsideAField() {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.AUTHOR, AUTHOR_STRING_FIRSTNAME_FULL_LASTNAME_FULL_COUNT_1);
         entry.setField(StandardField.YEAR, "2019");

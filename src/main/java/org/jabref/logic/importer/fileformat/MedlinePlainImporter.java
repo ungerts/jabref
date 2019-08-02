@@ -72,7 +72,7 @@ public class MedlinePlainImporter extends Importer {
     }
 
     @Override
-    public ParserResult importDatabase(BufferedReader reader) throws IOException {
+    public ParserResult importDatabase(BufferedReader reader) {
         List<BibEntry> bibitems = new ArrayList<>();
 
         //use optional here, so that no exception will be thrown if the file is empty

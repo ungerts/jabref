@@ -13,7 +13,7 @@ public class FileLinkTest {
     private FileLinkPreferences prefs;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         prefs = mock(FileLinkPreferences.class);
     }
 

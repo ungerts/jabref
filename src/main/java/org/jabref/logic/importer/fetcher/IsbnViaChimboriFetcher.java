@@ -35,7 +35,7 @@ public class IsbnViaChimboriFetcher extends AbstractIsbnFetcher {
      * @return null, because the identifier is passed using form data. This method is not used.
      */
     @Override
-    public URL getURLForID(String identifier) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForID(String identifier) {
         return null;
     }
 

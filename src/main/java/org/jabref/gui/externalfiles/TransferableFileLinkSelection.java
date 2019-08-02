@@ -51,7 +51,7 @@ public class TransferableFileLinkSelection implements Transferable {
     }
 
     @Override
-    public Object getTransferData(DataFlavor dataFlavor) throws UnsupportedFlavorException, IOException {
+    public Object getTransferData(DataFlavor dataFlavor) {
         //if (dataFlavor.equals(DataFlavor.javaFileListFlavor))
         return fileList;
         //else

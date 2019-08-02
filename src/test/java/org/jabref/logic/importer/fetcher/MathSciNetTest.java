@@ -27,7 +27,7 @@ class MathSciNetTest {
     private BibEntry ratiuEntry;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         ImportFormatPreferences importFormatPreferences = mock(ImportFormatPreferences.class);
         when(importFormatPreferences.getFieldContentParserPreferences()).thenReturn(
                 mock(FieldContentParserPreferences.class));

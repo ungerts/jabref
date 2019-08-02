@@ -48,13 +48,13 @@ public class RisImporter extends Importer {
     }
 
     @Override
-    public boolean isRecognizedFormat(BufferedReader reader) throws IOException {
+    public boolean isRecognizedFormat(BufferedReader reader) {
         // Our strategy is to look for the "TY  - *" line.
         return reader.lines().anyMatch(line -> RECOGNIZED_FORMAT_PATTERN.matcher(line).find());
     }
 
     @Override
-    public ParserResult importDatabase(BufferedReader reader) throws IOException {
+    public ParserResult importDatabase(BufferedReader reader) {
         List<BibEntry> bibitems = new ArrayList<>();
 
         //use optional here, so that no exception will be thrown if the file is empty

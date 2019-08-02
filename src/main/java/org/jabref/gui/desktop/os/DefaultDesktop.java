@@ -29,12 +29,12 @@ public class DefaultDesktop implements NativeDesktop {
     }
 
     @Override
-    public void openConsole(String absolutePath) throws IOException {
+    public void openConsole(String absolutePath) {
         LOGGER.error("This feature is not supported by your Operating System.");
     }
 
     @Override
-    public void openPdfWithParameters(String filePath, List<String> parameters) throws IOException {
+    public void openPdfWithParameters(String filePath, List<String> parameters) {
         //TODO imlement default
     }
 

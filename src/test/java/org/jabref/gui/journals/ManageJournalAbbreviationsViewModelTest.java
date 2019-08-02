@@ -93,7 +93,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void addFileIncreasesCounterOfOpenFilesAndHasNoAbbreviations() throws Exception {
+    void addFileIncreasesCounterOfOpenFilesAndHasNoAbbreviations() {
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(emptyTestFile));
         viewModel.addNewFile();
 
@@ -102,7 +102,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void addDuplicatedFileResultsInErrorDialog() throws Exception {
+    void addDuplicatedFileResultsInErrorDialog() {
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(testFile1Entries));
         viewModel.addNewFile();
         viewModel.addNewFile();
@@ -110,7 +110,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void testOpenDuplicatedFileResultsInAnException() throws Exception {
+    void testOpenDuplicatedFileResultsInAnException() {
         when(dialogService.showFileOpenDialog(any())).thenReturn(Optional.of(testFile1Entries));
         viewModel.openFile();
         viewModel.openFile();
@@ -118,7 +118,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void testSelectLastJournalFileSwitchesFilesAndTheirAbbreviations() throws Exception {
+    void testSelectLastJournalFileSwitchesFilesAndTheirAbbreviations() {
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(emptyTestFile));
         viewModel.addNewFile();
         viewModel.selectLastJournalFile();
@@ -131,7 +131,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void testOpenValidFileContainsTheSpecificEntryAndEnoughAbbreviations() throws Exception {
+    void testOpenValidFileContainsTheSpecificEntryAndEnoughAbbreviations() {
         Abbreviation testAbbreviation = new Abbreviation("Test Entry", "TE");
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(testFile3Entries));
         viewModel.addNewFile();
@@ -144,7 +144,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void testRemoveLastListSetsCurrentFileAndCurrentAbbreviationToNull() throws Exception {
+    void testRemoveLastListSetsCurrentFileAndCurrentAbbreviationToNull() {
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(testFile1Entries));
         viewModel.addNewFile();
         viewModel.removeCurrentFile();
@@ -156,7 +156,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void testMixedFileUsage() throws Exception {
+    void testMixedFileUsage() {
         Abbreviation testAbbreviation = new Abbreviation("Entry", "E");
         Abbreviation testAbbreviation2 = new Abbreviation("EntryEntry", "EE");
 
@@ -213,7 +213,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void testBuiltInListsStandardIEEEIncludesAllBuiltIEEEAbbreviations() throws Exception {
+    void testBuiltInListsStandardIEEEIncludesAllBuiltIEEEAbbreviations() {
         when(abbreviationPreferences.useIEEEAbbreviations()).thenReturn(true);
         viewModel.addBuiltInLists();
         viewModel.selectLastJournalFile();
@@ -228,7 +228,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void testcurrentFilePropertyChangeActiveFile() throws Exception {
+    void testcurrentFilePropertyChangeActiveFile() {
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(testFile1Entries));
         viewModel.addNewFile();
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(testFile3Entries));
@@ -276,7 +276,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void testAddDuplicatedAbbreviationResultsInException() throws JabRefException {
+    void testAddDuplicatedAbbreviationResultsInException() {
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(testFile3Entries));
         viewModel.addNewFile();
         viewModel.selectLastJournalFile();
@@ -321,7 +321,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void testEditAbbreviationToExistingOneResultsInException() throws Exception {
+    void testEditAbbreviationToExistingOneResultsInException() {
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(testFile3Entries));
         viewModel.addNewFile();
         viewModel.selectLastJournalFile();
@@ -336,7 +336,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void testEditAbbreviationToEmptyNameResultsInException() throws Exception {
+    void testEditAbbreviationToEmptyNameResultsInException() {
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(testFile3Entries));
         viewModel.addNewFile();
         viewModel.selectLastJournalFile();
@@ -349,7 +349,7 @@ class ManageJournalAbbreviationsViewModelTest {
     }
 
     @Test
-    void testEditAbbreviationToEmptyAbbreviationResultsInException() throws Exception {
+    void testEditAbbreviationToEmptyAbbreviationResultsInException() {
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(testFile3Entries));
         viewModel.addNewFile();
         viewModel.selectLastJournalFile();
@@ -451,15 +451,15 @@ class ManageJournalAbbreviationsViewModelTest {
         return file;
     }
 
-    private void addAbbrevaition(Abbreviation testAbbreviation) throws Exception {
+    private void addAbbrevaition(Abbreviation testAbbreviation) {
         viewModel.addAbbreviation(testAbbreviation.getName(), testAbbreviation.getAbbreviation());
     }
 
-    private void editAbbreviation(Abbreviation testAbbreviation) throws Exception {
+    private void editAbbreviation(Abbreviation testAbbreviation) {
         viewModel.editAbbreviation(testAbbreviation.getName(), testAbbreviation.getAbbreviation());
     }
 
-    private void addFourTestFileToViewModelAndPreferences() throws Exception {
+    private void addFourTestFileToViewModelAndPreferences() {
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(testFile1Entries));
         viewModel.addNewFile();
         when(dialogService.showFileSaveDialog(any())).thenReturn(Optional.of(testFile3Entries));

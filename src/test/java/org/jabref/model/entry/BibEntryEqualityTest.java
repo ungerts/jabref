@@ -11,27 +11,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BibEntryEqualityTest {
     @Test
-    public void identicObjectsareEqual() throws Exception {
+    public void identicObjectsareEqual() {
         BibEntry e1 = new BibEntry();
         BibEntry e2 = e1;
         assertEquals(e1, e2);
     }
 
     @Test
-    public void compareToNullObjectIsFalse() throws Exception {
+    public void compareToNullObjectIsFalse() {
         BibEntry e1 = new BibEntry();
         assertNotEquals(null, e1);
     }
 
     @Test
-    public void compareToDifferentClassIsFalse() throws Exception {
+    public void compareToDifferentClassIsFalse() {
         BibEntry e1 = new BibEntry();
         Object e2 = new Object();
         assertNotEquals(e1, e2);
     }
 
     @Test
-    public void compareIsTrueWhenIdAndFieldsAreEqual() throws Exception {
+    public void compareIsTrueWhenIdAndFieldsAreEqual() {
         BibEntry e1 = new BibEntry();
         e1.setId("1");
         e1.setField(new UnknownField("key"), "value");

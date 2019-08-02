@@ -428,14 +428,13 @@ class OOBibBase {
      * @throws WrappedTargetException
      * @throws BibEntryNotFoundException
      * @throws CreationException
-     * @throws IOException
      * @throws PropertyVetoException
      * @throws UnknownPropertyException
      */
     public List<String> refreshCiteMarkers(List<BibDatabase> databases, OOBibStyle style)
         throws WrappedTargetException, IllegalArgumentException, NoSuchElementException,
-        UndefinedCharacterFormatException, UnknownPropertyException, PropertyVetoException, IOException,
-        CreationException, BibEntryNotFoundException {
+        UndefinedCharacterFormatException, UnknownPropertyException, PropertyVetoException,
+            CreationException, BibEntryNotFoundException {
         try {
             return refreshCiteMarkersInternal(databases, style);
         } catch (DisposedException ex) {

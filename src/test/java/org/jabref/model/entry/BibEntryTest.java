@@ -33,28 +33,28 @@ public class BibEntryTest {
     }
 
     @Test
-    public void getFieldIsCaseInsensitive() throws Exception {
+    public void getFieldIsCaseInsensitive() {
         entry.setField(new UnknownField("TeSt"), "value");
 
         assertEquals(Optional.of("value"), entry.getField(new UnknownField("tEsT")));
     }
 
     @Test
-    public void getFieldWorksWithBibFieldAsWell() throws Exception {
+    public void getFieldWorksWithBibFieldAsWell() {
         entry.setField(StandardField.AUTHOR, "value");
 
         assertEquals(Optional.of("value"), entry.getField(new BibField(StandardField.AUTHOR, FieldPriority.IMPORTANT).getField()));
     }
 
     @Test
-    public void setFieldWorksWithBibFieldAsWell() throws Exception {
+    public void setFieldWorksWithBibFieldAsWell() {
         entry.setField(new BibField(StandardField.AUTHOR, FieldPriority.IMPORTANT).getField(), "value");
 
         assertEquals(Optional.of("value"), entry.getField(StandardField.AUTHOR));
     }
 
     @Test
-    public void clonedBibentryHasUniqueID() throws Exception {
+    public void clonedBibentryHasUniqueID() {
         BibEntry entry = new BibEntry();
         BibEntry entryClone = (BibEntry) entry.clone();
 

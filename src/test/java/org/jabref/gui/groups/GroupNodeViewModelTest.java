@@ -36,7 +36,7 @@ public class GroupNodeViewModelTest {
     private TaskExecutor taskExecutor;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         stateManager = mock(StateManager.class);
         when(stateManager.getSelectedEntries()).thenReturn(FXCollections.emptyObservableList());
         databaseContext = new BibDatabaseContext();
@@ -47,24 +47,24 @@ public class GroupNodeViewModelTest {
     }
 
     @Test
-    public void getDisplayNameConvertsLatexToUnicode() throws Exception {
+    public void getDisplayNameConvertsLatexToUnicode() {
         GroupNodeViewModel viewModel = getViewModelForGroup(
                 new WordKeywordGroup("\\beta", GroupHierarchyType.INDEPENDENT, StandardField.TITLE, "search", true, ',', false));
         assertEquals("β", viewModel.getDisplayName());
     }
 
     @Test
-    public void alwaysMatchedByEmptySearchString() throws Exception {
+    public void alwaysMatchedByEmptySearchString() {
         assertTrue(viewModel.isMatchedBy(""));
     }
 
     @Test
-    public void isMatchedIfContainsPartOfSearchString() throws Exception {
+    public void isMatchedIfContainsPartOfSearchString() {
         assertTrue(viewModel.isMatchedBy("est"));
     }
 
     @Test
-    public void treeOfAutomaticKeywordGroupIsCombined() throws Exception {
+    public void treeOfAutomaticKeywordGroupIsCombined() {
         BibEntry entryOne = new BibEntry().withField(StandardField.KEYWORDS, "A > B > B1, A > C");
         BibEntry entryTwo = new BibEntry().withField(StandardField.KEYWORDS, "A > D, E");
         BibEntry entryThree = new BibEntry().withField(StandardField.KEYWORDS, "A > B > B2");
@@ -93,7 +93,7 @@ public class GroupNodeViewModelTest {
     }
 
     @Test
-    public void draggedOnTopOfGroupAddsBeforeIt() throws Exception {
+    public void draggedOnTopOfGroupAddsBeforeIt() {
         GroupNodeViewModel rootViewModel = getViewModelForGroup(new WordKeywordGroup("root", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A", true, ',', true));
         WordKeywordGroup groupA = new WordKeywordGroup("A", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A", true, ',', true);
         WordKeywordGroup groupB = new WordKeywordGroup("B", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A > B", true, ',', true);
@@ -108,7 +108,7 @@ public class GroupNodeViewModelTest {
     }
 
     @Test
-    public void draggedOnBottomOfGroupAddsAfterIt() throws Exception {
+    public void draggedOnBottomOfGroupAddsAfterIt() {
         GroupNodeViewModel rootViewModel = getViewModelForGroup(new WordKeywordGroup("root", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A", true, ',', true));
         WordKeywordGroup groupA = new WordKeywordGroup("A", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A", true, ',', true);
         WordKeywordGroup groupB = new WordKeywordGroup("B", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A > B", true, ',', true);
@@ -123,7 +123,7 @@ public class GroupNodeViewModelTest {
     }
 
     @Test
-    public void draggedOnBottomOfGroupAddsAfterItWhenSourceGroupWasBefore() throws Exception {
+    public void draggedOnBottomOfGroupAddsAfterItWhenSourceGroupWasBefore() {
         GroupNodeViewModel rootViewModel = getViewModelForGroup(new WordKeywordGroup("root", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A", true, ',', true));
         WordKeywordGroup groupA = new WordKeywordGroup("A", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A", true, ',', true);
         WordKeywordGroup groupB = new WordKeywordGroup("B", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A > B", true, ',', true);
@@ -138,7 +138,7 @@ public class GroupNodeViewModelTest {
     }
 
     @Test
-    public void draggedOnTopOfGroupAddsBeforeItWhenSourceGroupWasBefore() throws Exception {
+    public void draggedOnTopOfGroupAddsBeforeItWhenSourceGroupWasBefore() {
         GroupNodeViewModel rootViewModel = getViewModelForGroup(new WordKeywordGroup("root", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A", true, ',', true));
         WordKeywordGroup groupA = new WordKeywordGroup("A", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A", true, ',', true);
         WordKeywordGroup groupB = new WordKeywordGroup("B", GroupHierarchyType.INCLUDING, StandardField.KEYWORDS, "A > B", true, ',', true);

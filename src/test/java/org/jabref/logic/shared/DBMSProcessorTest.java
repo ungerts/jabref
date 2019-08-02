@@ -113,7 +113,7 @@ class DBMSProcessorTest {
 
     @ParameterizedTest
     @MethodSource("getTestingDatabaseSystems")
-    void testGetEntriesByIdList(DBMSType dbmsType, DBMSConnection dbmsConnection, DBMSProcessor dbmsProcessor) throws OfflineLockException, SQLException {
+    void testGetEntriesByIdList(DBMSType dbmsType, DBMSConnection dbmsConnection, DBMSProcessor dbmsProcessor) throws SQLException {
         dbmsProcessor.setupSharedDatabase();
         BibEntry firstEntry = getBibEntryExample();
         firstEntry.setId("1");
@@ -131,7 +131,7 @@ class DBMSProcessorTest {
 
     @ParameterizedTest
     @MethodSource("getTestingDatabaseSystems")
-    void testUpdateNewerEntry(DBMSType dbmsType, DBMSConnection dbmsConnection, DBMSProcessor dbmsProcessor) throws OfflineLockException, SQLException {
+    void testUpdateNewerEntry(DBMSType dbmsType, DBMSConnection dbmsConnection, DBMSProcessor dbmsProcessor) throws SQLException {
         dbmsProcessor.setupSharedDatabase();
         BibEntry bibEntry = getBibEntryExample();
 

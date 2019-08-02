@@ -43,7 +43,7 @@ class RemoteCommunicationTest {
     }
 
     @Test
-    void pingReturnsTrue() throws IOException, InterruptedException {
+    void pingReturnsTrue() {
         assertTrue(client.ping());
     }
 

@@ -374,7 +374,7 @@ public class RepecNepImporter extends Importer {
     }
 
     @Override
-    public ParserResult importDatabase(BufferedReader reader) throws IOException {
+    public ParserResult importDatabase(BufferedReader reader) {
         Objects.requireNonNull(reader);
 
         List<BibEntry> bibitems = new ArrayList<>();

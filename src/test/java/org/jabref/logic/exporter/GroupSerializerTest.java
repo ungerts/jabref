@@ -36,7 +36,7 @@ class GroupSerializerTest {
     private GroupSerializer groupSerializer;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         groupSerializer = new GroupSerializer();
     }
 
@@ -123,7 +123,7 @@ class GroupSerializerTest {
     }
 
     @Test
-    void getTreeAsStringInSimpleTree() throws Exception {
+    void getTreeAsStringInSimpleTree() {
         GroupTreeNode root = GroupTreeNodeTest.getRoot();
         GroupTreeNodeTest.getNodeInSimpleTree(root);
 
@@ -137,7 +137,7 @@ class GroupSerializerTest {
     }
 
     @Test
-    void getTreeAsStringInComplexTree() throws Exception {
+    void getTreeAsStringInComplexTree() {
         GroupTreeNode root = GroupTreeNodeTest.getRoot();
         GroupTreeNodeTest.getNodeInComplexTree(root);
 

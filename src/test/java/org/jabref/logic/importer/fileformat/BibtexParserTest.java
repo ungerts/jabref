@@ -71,7 +71,7 @@ class BibtexParserTest {
     }
 
     @Test
-    void parseWithNullThrowsNullPointerException() throws Exception {
+    void parseWithNullThrowsNullPointerException() {
         Executable toBeTested = () -> parser.parse(null);
 
         assertThrows(NullPointerException.class, toBeTested);
@@ -1378,7 +1378,7 @@ class BibtexParserTest {
     }
 
     @Test
-    void integrationTestGroupTree() throws IOException, ParseException {
+    void integrationTestGroupTree() throws IOException {
         ParserResult result = parser.parse(new StringReader("@comment{jabref-meta: groupsversion:3;}" + OS.NEWLINE
                 + "@comment{jabref-meta: groupstree:" + OS.NEWLINE + "0 AllEntriesGroup:;" + OS.NEWLINE
                 + "1 KeywordGroup:Fréchet\\;0\\;keywords\\;FrechetSpace\\;0\\;1\\;;" + OS.NEWLINE

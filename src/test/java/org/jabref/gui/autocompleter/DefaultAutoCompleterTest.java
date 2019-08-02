@@ -24,7 +24,7 @@ public class DefaultAutoCompleterTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         autoCompleter = new WordSuggestionProvider(StandardField.TITLE);
     }
 

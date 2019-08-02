@@ -52,14 +52,14 @@ public class FreeCiteImporter extends Importer {
     }
 
     @Override
-    public boolean isRecognizedFormat(BufferedReader reader) throws IOException {
+    public boolean isRecognizedFormat(BufferedReader reader) {
         Objects.requireNonNull(reader);
         // TODO: We don't know how to recognize text files, therefore we return "false"
         return false;
     }
 
     @Override
-    public ParserResult importDatabase(BufferedReader reader) throws IOException {
+    public ParserResult importDatabase(BufferedReader reader) {
         try (Scanner scan = new Scanner(reader)) {
             String text = scan.useDelimiter("\\A").next();
             return importEntries(text);

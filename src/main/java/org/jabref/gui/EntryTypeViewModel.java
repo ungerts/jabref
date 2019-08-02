@@ -99,7 +99,7 @@ public class EntryTypeViewModel {
         private String searchID = "";
 
         @Override
-        protected Optional<BibEntry> call() throws InterruptedException, FetcherException {
+        protected Optional<BibEntry> call() throws FetcherException {
             Optional<BibEntry> bibEntry = Optional.empty();
 
             searchingProperty().setValue(true);

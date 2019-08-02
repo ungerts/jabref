@@ -43,7 +43,7 @@ public class OSX implements NativeDesktop {
     }
 
     @Override
-    public void openPdfWithParameters(String filePath, List<String> parameters) throws IOException {
+    public void openPdfWithParameters(String filePath, List<String> parameters) {
         //TODO implement
     }
 

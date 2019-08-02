@@ -19,7 +19,7 @@ public class FieldValueSuggestionProviderTest {
     private FieldValueSuggestionProvider autoCompleter;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         autoCompleter = new FieldValueSuggestionProvider(StandardField.TITLE);
     }
 

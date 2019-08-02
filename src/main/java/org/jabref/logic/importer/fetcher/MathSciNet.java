@@ -72,7 +72,7 @@ public class MathSciNet implements SearchBasedParserFetcher, EntryBasedParserFet
     }
 
     @Override
-    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = new URIBuilder("https://mathscinet.ams.org/mathscinet/search/publications.html");
         uriBuilder.addParameter("pg7", "ALLF"); // search all fields
         uriBuilder.addParameter("s7", query); // query
@@ -83,7 +83,7 @@ public class MathSciNet implements SearchBasedParserFetcher, EntryBasedParserFet
     }
 
     @Override
-    public URL getURLForID(String identifier) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForID(String identifier) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = new URIBuilder("https://mathscinet.ams.org/mathscinet/search/publications.html");
         uriBuilder.addParameter("pg1", "MR"); // search MR number
         uriBuilder.addParameter("s1", identifier); // identifier

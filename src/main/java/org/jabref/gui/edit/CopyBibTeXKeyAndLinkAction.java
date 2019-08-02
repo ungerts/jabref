@@ -30,7 +30,7 @@ public class CopyBibTeXKeyAndLinkAction implements BaseAction {
     }
 
     @Override
-    public void action() throws Exception {
+    public void action() {
         List<BibEntry> entries = mainTable.getSelectedEntries();
         if (!entries.isEmpty()) {
             StringBuilder sb = new StringBuilder();

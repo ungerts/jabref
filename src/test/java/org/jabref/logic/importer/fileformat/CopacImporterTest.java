@@ -19,7 +19,7 @@ public class CopacImporterTest {
     private CopacImporter importer;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         importer = new CopacImporter();
     }
 

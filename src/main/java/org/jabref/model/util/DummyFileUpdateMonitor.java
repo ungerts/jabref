@@ -9,7 +9,7 @@ import java.nio.file.Path;
  */
 public class DummyFileUpdateMonitor implements FileUpdateMonitor {
     @Override
-    public void addListenerForFile(Path file, FileUpdateListener listener) throws IOException {
+    public void addListenerForFile(Path file, FileUpdateListener listener) {
 
     }
 

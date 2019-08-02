@@ -27,7 +27,7 @@ public class AstrophysicsDataSystemTest {
     private BibEntry diezSliceTheoremEntry, famaeyMcGaughEntry, sunWelchEntry, xiongSunEntry, ingersollPollardEntry, luceyPaulEntry;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         ImportFormatPreferences importFormatPreferences = mock(ImportFormatPreferences.class);
         when(importFormatPreferences.getFieldContentParserPreferences()).thenReturn(
                 mock(FieldContentParserPreferences.class));

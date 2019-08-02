@@ -154,7 +154,7 @@ public class SpringerFetcher implements SearchBasedParserFetcher {
     }
 
     @Override
-    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = new URIBuilder(API_URL);
         uriBuilder.addParameter("q", query); // Search query
         uriBuilder.addParameter("api_key", API_KEY); // API key

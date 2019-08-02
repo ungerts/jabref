@@ -596,51 +596,51 @@ public class AuthorListTest {
     }
 
     @Test
-    public void parseNameWithBracesAroundFirstName() throws Exception {
+    public void parseNameWithBracesAroundFirstName() {
         //TODO: Be more intelligent and abbreviate the first name correctly
         Author expected = new Author("Tse-tung", "{Tse-tung}.", null, "Mao", null);
         assertEquals(new AuthorList(expected), AuthorList.parse("{Tse-tung} Mao"));
     }
 
     @Test
-    public void parseNameWithBracesAroundLastName() throws Exception {
+    public void parseNameWithBracesAroundLastName() {
         Author expected = new Author("Hans", "H.", null, "van den Bergen", null);
         assertEquals(new AuthorList(expected), AuthorList.parse("{van den Bergen}, Hans"));
     }
 
     @Test
-    public void parseNameWithHyphenInFirstName() throws Exception {
+    public void parseNameWithHyphenInFirstName() {
         Author expected = new Author("Tse-tung", "T.-t.", null, "Mao", null);
         assertEquals(new AuthorList(expected), AuthorList.parse("Tse-tung Mao"));
     }
 
     @Test
-    public void parseNameWithHyphenInLastName() throws Exception {
+    public void parseNameWithHyphenInLastName() {
         Author expected = new Author("Firstname", "F.", null, "Bailey-Jones", null);
         assertEquals(new AuthorList(expected), AuthorList.parse("Firstname Bailey-Jones"));
     }
 
     @Test
-    public void parseNameWithHyphenInLastNameWithInitials() throws Exception {
+    public void parseNameWithHyphenInLastNameWithInitials() {
         Author expected = new Author("E. S.", "E. S.", null, "El-{M}allah", null);
         assertEquals(new AuthorList(expected), AuthorList.parse("E. S. El-{M}allah"));
     }
 
     @Test
-    public void parseNameWithHyphenInLastNameWithEscaped() throws Exception {
+    public void parseNameWithHyphenInLastNameWithEscaped() {
         Author expected = new Author("E. S.", "E. S.", null, "{K}ent-{B}oswell", null);
         assertEquals(new AuthorList(expected), AuthorList.parse("E. S. {K}ent-{B}oswell"));
     }
 
     @Test
-    public void parseNameWithHyphenInLastNameWhenLastNameGivenFirst() throws Exception {
+    public void parseNameWithHyphenInLastNameWhenLastNameGivenFirst() {
         // TODO: Fix abbreviation to be "A."
         Author expected = new Author("ʿAbdallāh", "ʿ.", null, "al-Ṣāliḥ", null);
         assertEquals(new AuthorList(expected), AuthorList.parse("al-Ṣāliḥ, ʿAbdallāh"));
     }
 
     @Test
-    public void parseNameWithBraces() throws Exception {
+    public void parseNameWithBraces() {
         Author expected = new Author("H{e}lene", "H.", null, "Fiaux", null);
         assertEquals(new AuthorList(expected), AuthorList.parse("H{e}lene Fiaux"));
     }
@@ -649,7 +649,7 @@ public class AuthorListTest {
      * This tests the issue described at https://github.com/JabRef/jabref/pull/2669#issuecomment-288519458
      */
     @Test
-    public void correctNamesWithOneComma() throws Exception {
+    public void correctNamesWithOneComma() {
         Author expected = new Author("Alexander der Große", "A. d. G.", null, "Canon der Barbar", null);
         assertEquals(new AuthorList(expected), AuthorList.parse("Canon der Barbar, Alexander der Große"));
 

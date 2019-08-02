@@ -22,12 +22,12 @@ class WebFetchersTest {
     ImportFormatPreferences importFormatPreferences;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         importFormatPreferences = mock(ImportFormatPreferences.class);
     }
 
     @Test
-    void getIdBasedFetchersReturnsAllFetcherDerivingFromIdBasedFetcher() throws Exception {
+    void getIdBasedFetchersReturnsAllFetcherDerivingFromIdBasedFetcher() {
         List<IdBasedFetcher> idFetchers = WebFetchers.getIdBasedFetchers(importFormatPreferences);
 
         Set<Class<? extends IdBasedFetcher>> expected = reflections.getSubTypesOf(IdBasedFetcher.class);
@@ -40,7 +40,7 @@ class WebFetchersTest {
     }
 
     @Test
-    void getEntryBasedFetchersReturnsAllFetcherDerivingFromEntryBasedFetcher() throws Exception {
+    void getEntryBasedFetchersReturnsAllFetcherDerivingFromEntryBasedFetcher() {
         List<EntryBasedFetcher> idFetchers = WebFetchers.getEntryBasedFetchers(importFormatPreferences);
 
         Set<Class<? extends EntryBasedFetcher>> expected = reflections.getSubTypesOf(EntryBasedFetcher.class);
@@ -50,7 +50,7 @@ class WebFetchersTest {
     }
 
     @Test
-    void getSearchBasedFetchersReturnsAllFetcherDerivingFromSearchBasedFetcher() throws Exception {
+    void getSearchBasedFetchersReturnsAllFetcherDerivingFromSearchBasedFetcher() {
         List<SearchBasedFetcher> searchBasedFetchers = WebFetchers.getSearchBasedFetchers(importFormatPreferences);
 
         Set<Class<? extends SearchBasedFetcher>> expected = reflections.getSubTypesOf(SearchBasedFetcher.class);
@@ -59,7 +59,7 @@ class WebFetchersTest {
     }
 
     @Test
-    void getFullTextFetchersReturnsAllFetcherDerivingFromFullTextFetcher() throws Exception {
+    void getFullTextFetchersReturnsAllFetcherDerivingFromFullTextFetcher() {
         List<FulltextFetcher> fullTextFetchers = WebFetchers.getFullTextFetchers(importFormatPreferences);
 
         Set<Class<? extends FulltextFetcher>> expected = reflections.getSubTypesOf(FulltextFetcher.class);
@@ -67,7 +67,7 @@ class WebFetchersTest {
     }
 
     @Test
-    void getIdFetchersReturnsAllFetcherDerivingFromIdFetcher() throws Exception {
+    void getIdFetchersReturnsAllFetcherDerivingFromIdFetcher() {
         List<IdFetcher> idFetchers = WebFetchers.getIdFetchers(importFormatPreferences);
 
         Set<Class<? extends IdFetcher>> expected = reflections.getSubTypesOf(IdFetcher.class);

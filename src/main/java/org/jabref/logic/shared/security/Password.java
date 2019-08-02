@@ -44,7 +44,7 @@ public class Password {
      *
      *  @return Encrypted phrase/password
      */
-    public String encrypt() throws GeneralSecurityException, UnsupportedEncodingException {
+    public String encrypt() throws GeneralSecurityException {
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec);
         return new String(Base64.getEncoder().encode(cipher.doFinal(phrase)), StandardCharsets.UTF_8);
     }
@@ -54,7 +54,7 @@ public class Password {
      *
      *  @return Decrypted phrase/password
      */
-    public String decrypt() throws GeneralSecurityException, UnsupportedEncodingException {
+    public String decrypt() throws GeneralSecurityException {
         cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
         return new String(cipher.doFinal(Base64.getDecoder().decode(phrase)), StandardCharsets.UTF_8);
     }

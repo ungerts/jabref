@@ -78,7 +78,7 @@ public class BibTeXMLImporter extends Importer {
     }
 
     @Override
-    public ParserResult importDatabase(BufferedReader reader) throws IOException {
+    public ParserResult importDatabase(BufferedReader reader) {
         Objects.requireNonNull(reader);
 
         List<BibEntry> bibItems = new ArrayList<>();

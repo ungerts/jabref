@@ -69,7 +69,7 @@ public class ArXiv implements FulltextFetcher, SearchBasedFetcher, IdBasedFetche
     }
 
     @Override
-    public Optional<URL> findFullText(BibEntry entry) throws IOException {
+    public Optional<URL> findFullText(BibEntry entry) {
         Objects.requireNonNull(entry);
 
         try {

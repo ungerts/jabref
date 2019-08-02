@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MetaDataDiffTest {
     @Test
-    public void compareWithSameContentSelectorsDoesNotReportAnyDiffs() throws Exception {
+    public void compareWithSameContentSelectorsDoesNotReportAnyDiffs() {
         MetaData one = new MetaData();
         one.addContentSelector(new ContentSelector(StandardField.AUTHOR, "first", "second"));
         MetaData two = new MetaData();

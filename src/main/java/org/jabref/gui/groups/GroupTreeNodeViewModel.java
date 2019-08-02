@@ -74,7 +74,7 @@ public class GroupTreeNodeViewModel implements Transferable, TreeNode {
 
     @Override
     public Object getTransferData(DataFlavor someFlavor)
-            throws UnsupportedFlavorException, IOException {
+            throws UnsupportedFlavorException {
         if (!isDataFlavorSupported(someFlavor)) {
             throw new UnsupportedFlavorException(someFlavor);
         }

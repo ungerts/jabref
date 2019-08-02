@@ -21,7 +21,7 @@ public class StyleTesterMain extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws JabRefException {
+    public void start(Stage stage) {
         StyleTesterView view = new StyleTesterView();
 
         IconTheme.loadFonts();

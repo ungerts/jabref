@@ -29,7 +29,7 @@ public class EncodingControl extends Control {
     @Override
     public ResourceBundle newBundle(String baseName, Locale locale,
                                     String format, ClassLoader loader, boolean reload)
-            throws IllegalAccessException, InstantiationException,
+            throws
             IOException {
         // The below is a copy of the default implementation.
         String bundleName = toBundleName(baseName, locale);

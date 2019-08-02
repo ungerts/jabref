@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BibDatabaseDiffTest {
 
     @Test
-    public void compareOfEmptyDatabasesReportsNoDifferences() throws Exception {
+    public void compareOfEmptyDatabasesReportsNoDifferences() {
         BibDatabaseDiff diff = BibDatabaseDiff.compare(new BibDatabaseContext(), new BibDatabaseContext());
         assertEquals(Optional.empty(), diff.getPreambleDifferences());
         assertEquals(Optional.empty(), diff.getMetaDataDifferences());

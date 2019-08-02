@@ -39,7 +39,7 @@ public class RfcFetcher implements IdBasedParserFetcher {
     }
 
     @Override
-    public URL getURLForID(String identifier) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForID(String identifier) throws URISyntaxException, MalformedURLException {
         // Add "rfc" prefix if user's search entry was numerical
         String prefixedIdentifier = identifier;
         prefixedIdentifier = (!identifier.toLowerCase().startsWith("rfc")) ? "rfc" + prefixedIdentifier : prefixedIdentifier;

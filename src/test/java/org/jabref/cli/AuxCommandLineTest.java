@@ -27,7 +27,7 @@ public class AuxCommandLineTest {
     private ImportFormatPreferences importFormatPreferences;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         importFormatPreferences = mock(ImportFormatPreferences.class, Answers.RETURNS_DEEP_STUBS);
     }
 

@@ -16,7 +16,7 @@ public class RemoveBracketsTest {
     }
 
     @Test
-    public void testFormat() throws Exception {
+    public void testFormat() {
         assertEquals("some text", formatter.format("{some text}"));
         assertEquals("some text", formatter.format("{some text"));
         assertEquals("some text", formatter.format("some text}"));

@@ -85,12 +85,12 @@ public class ModsImporter extends Importer implements Parser {
     }
 
     @Override
-    public boolean isRecognizedFormat(BufferedReader input) throws IOException {
+    public boolean isRecognizedFormat(BufferedReader input) {
         return input.lines().anyMatch(line -> MODS_PATTERN.matcher(line).find());
     }
 
     @Override
-    public ParserResult importDatabase(BufferedReader input) throws IOException {
+    public ParserResult importDatabase(BufferedReader input) {
         Objects.requireNonNull(input);
 
         List<BibEntry> bibItems = new ArrayList<>();
@@ -489,7 +489,7 @@ public class ModsImporter extends Importer implements Parser {
     }
 
     @Override
-    public List<BibEntry> parseEntries(InputStream inputStream) throws ParseException {
+    public List<BibEntry> parseEntries(InputStream inputStream) {
         try {
             return importDatabase(new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))).getDatabase().getEntries();
         } catch (IOException e) {

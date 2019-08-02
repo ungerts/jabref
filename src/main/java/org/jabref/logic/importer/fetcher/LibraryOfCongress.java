@@ -29,7 +29,7 @@ public class LibraryOfCongress implements IdBasedParserFetcher {
     }
 
     @Override
-    public URL getURLForID(String identifier) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForID(String identifier) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = new URIBuilder("https://lccn.loc.gov/" + identifier + "/mods");
         return uriBuilder.build().toURL();
     }

@@ -40,7 +40,7 @@ public class InspecImporterTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         this.importer = new InspecImporter();
     }
 

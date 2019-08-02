@@ -18,7 +18,7 @@ public class MedlineImporterTest {
     private MedlineImporter importer;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         this.importer = new MedlineImporter();
     }
 

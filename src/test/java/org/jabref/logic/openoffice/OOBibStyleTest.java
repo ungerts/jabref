@@ -492,7 +492,7 @@ public class OOBibStyleTest {
     }
 
     @Test
-    public void testEmptyStringPropertyAndOxfordComma() throws URISyntaxException, IOException {
+    public void testEmptyStringPropertyAndOxfordComma() throws IOException {
         OOBibStyle style = new OOBibStyle("test.jstyle", layoutFormatterPreferences);
         Map<BibEntry, BibDatabase> entryDBMap = new HashMap<>();
         List<BibEntry> entries = new ArrayList<>();

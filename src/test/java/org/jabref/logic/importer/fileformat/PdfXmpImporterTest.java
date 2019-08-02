@@ -83,7 +83,7 @@ public class PdfXmpImporterTest {
 
     @ParameterizedTest
     @MethodSource("invalidFileNames")
-    public void testIsRecognizedFormatReject(String fileName) throws IOException, URISyntaxException {
+    public void testIsRecognizedFormatReject(String fileName) throws IOException {
         ImporterTestEngine.testIsNotRecognizedFormat(importer, fileName);
     }
 

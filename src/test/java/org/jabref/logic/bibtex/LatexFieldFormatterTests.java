@@ -90,14 +90,14 @@ public class LatexFieldFormatterTests {
     }
 
     @Test
-    public void reportUnbalancedBracing() throws Exception {
+    public void reportUnbalancedBracing() {
         String unbalanced = "{";
 
         assertThrows(InvalidFieldValueException.class, () -> formatter.format(unbalanced, new UnknownField("anyfield")));
     }
 
     @Test
-    public void reportUnbalancedBracingWithEscapedBraces() throws Exception {
+    public void reportUnbalancedBracingWithEscapedBraces() {
         String unbalanced = "{\\}";
 
         assertThrows(InvalidFieldValueException.class, () -> formatter.format(unbalanced, new UnknownField("anyfield")));

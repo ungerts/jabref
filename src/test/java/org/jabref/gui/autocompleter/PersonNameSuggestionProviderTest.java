@@ -28,7 +28,7 @@ public class PersonNameSuggestionProviderTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         autoCompleter = new PersonNameSuggestionProvider(StandardField.AUTHOR);
 
         entry = new BibEntry();

@@ -71,13 +71,13 @@ public class OvidImporterTest {
 
     @ParameterizedTest
     @MethodSource("fileNames")
-    public void testIsRecognizedFormatAccept(String fileName) throws IOException, URISyntaxException {
+    public void testIsRecognizedFormatAccept(String fileName) throws IOException {
         ImporterTestEngine.testIsRecognizedFormat(importer, fileName);
     }
 
     @ParameterizedTest
     @MethodSource("invalidFileNames")
-    public void testIsRecognizedFormatRejected(String fileName) throws IOException, URISyntaxException {
+    public void testIsRecognizedFormatRejected(String fileName) throws IOException {
         ImporterTestEngine.testIsNotRecognizedFormat(importer, fileName);
     }
 

@@ -21,7 +21,7 @@ public class TexGroupTest {
     private MetaData metaData;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         metaData = new MetaData();
     }
 

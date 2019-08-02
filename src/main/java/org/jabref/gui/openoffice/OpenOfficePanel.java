@@ -355,7 +355,7 @@ public class OpenOfficePanel {
             Task<Void> taskConnectIfInstalled = new Task<Void>() {
 
                 @Override
-                protected Void call() throws Exception {
+                protected Void call() {
                     updateProgress(ProgressBar.INDETERMINATE_PROGRESS, ProgressBar.INDETERMINATE_PROGRESS);
 
                     boolean installed = officeInstallation.isInstalled();

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class CitationStyleTest {
 
     @Test
-    public void getDefault() throws Exception {
+    public void getDefault() {
         assertNotNull(CitationStyle.getDefault());
     }
 

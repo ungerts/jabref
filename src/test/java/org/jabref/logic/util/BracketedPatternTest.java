@@ -21,7 +21,7 @@ public class BracketedPatternTest {
     private BibEntry dbentry;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         bibentry = new BibEntry();
         bibentry.setField(StandardField.AUTHOR, "O. Kitsune");
         bibentry.setField(StandardField.YEAR, "2017");

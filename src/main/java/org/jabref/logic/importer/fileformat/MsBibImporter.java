@@ -33,7 +33,7 @@ public class MsBibImporter extends Importer {
     private static final String DISABLEEXTERNALDTD = "http://apache.org/xml/features/nonvalidating/load-external-dtd";
 
     @Override
-    public boolean isRecognizedFormat(BufferedReader reader) throws IOException {
+    public boolean isRecognizedFormat(BufferedReader reader) {
         Objects.requireNonNull(reader);
 
         /*
@@ -47,7 +47,7 @@ public class MsBibImporter extends Importer {
             dbuild.setErrorHandler(new ErrorHandler() {
 
                 @Override
-                public void warning(SAXParseException exception) throws SAXException {
+                public void warning(SAXParseException exception) {
                     // ignore warnings
                 }
 
@@ -70,7 +70,7 @@ public class MsBibImporter extends Importer {
     }
 
     @Override
-    public ParserResult importDatabase(BufferedReader reader) throws IOException {
+    public ParserResult importDatabase(BufferedReader reader) {
         Objects.requireNonNull(reader);
 
         MSBibDatabase dbase = new MSBibDatabase();

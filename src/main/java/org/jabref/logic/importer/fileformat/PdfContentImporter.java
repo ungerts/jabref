@@ -188,7 +188,7 @@ public class PdfContentImporter extends Importer {
     }
 
     @Override
-    public ParserResult importDatabase(BufferedReader reader) throws IOException {
+    public ParserResult importDatabase(BufferedReader reader) {
         Objects.requireNonNull(reader);
         throw new UnsupportedOperationException(
                 "PdfContentImporter does not support importDatabase(BufferedReader reader)."
@@ -196,7 +196,7 @@ public class PdfContentImporter extends Importer {
     }
 
     @Override
-    public ParserResult importDatabase(String data) throws IOException {
+    public ParserResult importDatabase(String data) {
         Objects.requireNonNull(data);
         throw new UnsupportedOperationException(
                 "PdfContentImporter does not support importDatabase(String data)."

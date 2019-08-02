@@ -44,7 +44,7 @@ public class CiteSeer implements SearchBasedParserFetcher {
     }
 
     @Override
-    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = new URIBuilder("https://citeseer.ist.psu.edu/search");
         uriBuilder.addParameter("sort", "rlv"); // Sort by relevance
         uriBuilder.addParameter("q", query); // Query

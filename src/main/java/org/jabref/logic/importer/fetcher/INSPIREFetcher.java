@@ -55,7 +55,7 @@ public class INSPIREFetcher implements SearchBasedParserFetcher {
     }
 
     @Override
-    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = new URIBuilder(INSPIRE_HOST);
         uriBuilder.addParameter("p", query); // Query
         //uriBuilder.addParameter("jrec", "1"); // Start index (not needed at the moment)

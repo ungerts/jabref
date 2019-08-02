@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CitationStyleToClipboardWorkerTest {
 
     @Test
-    void processPreviewText() throws Exception {
+    void processPreviewText() {
         String expected = "Article (Smith2016)" + OS.NEWLINE +
                 "Smith, B.; Jones, B. &amp; Williams, J." + OS.NEWLINE +
                 "Taylor, P. (Ed.)" + OS.NEWLINE +
@@ -45,7 +45,7 @@ class CitationStyleToClipboardWorkerTest {
     }
 
     @Test
-    void processPreviewHtml() throws Exception {
+    void processPreviewHtml() {
         String expected = "<font face=\"sans-serif\"><b><i>Article</i><a name=\"Smith2016\"> (Smith2016)</a></b><br>" + OS.NEWLINE +
                 " Smith, B.; Jones, B. &amp; Williams, J.<BR>" + OS.NEWLINE +
                 " Taylor, P. <i>(Ed.)</i><BR>" + OS.NEWLINE +
@@ -97,7 +97,7 @@ class CitationStyleToClipboardWorkerTest {
     }
 
     @Test
-    void processText() throws Exception {
+    void processText() {
         String expected = "[1]B. Smith, B. Jones, and J. Williams, “Title of the test entry,” BibTeX Journal, vol. 34, no. 3, pp. 45–67, Jul. 2016." + OS.NEWLINE +
                 "[1]B. Smith, B. Jones, and J. Williams, “Title of the test entry,” BibTeX Journal, vol. 34, no. 3, pp. 45–67, Jul. 2016." + OS.NEWLINE;
 
@@ -109,7 +109,7 @@ class CitationStyleToClipboardWorkerTest {
     }
 
     @Test
-    void processRtf() throws Exception {
+    void processRtf() {
         String expected = "{\\rtf" + OS.NEWLINE +
                 "[1]\\tab B. Smith, B. Jones, and J. Williams, \\uc0\\u8220{}Title of the test entry,\\uc0\\u8221{} {\\i{}BibTeX Journal}, vol. 34, no. 3, pp. 45\\uc0\\u8211{}67, Jul. 2016." + OS.NEWLINE +
                 "\\line" + OS.NEWLINE +
@@ -124,7 +124,7 @@ class CitationStyleToClipboardWorkerTest {
     }
 
     @Test
-    void processXslFo() throws Exception {
+    void processXslFo() {
         String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + OS.NEWLINE +
                 "<fo:root xmlns:fo=\"http://www.w3.org/1999/XSL/Format\">" + OS.NEWLINE +
                 "   <fo:layout-master-set>" + OS.NEWLINE +
@@ -197,7 +197,7 @@ class CitationStyleToClipboardWorkerTest {
     }
 
     @Test
-    void processHtmlAsHtml() throws Exception {
+    void processHtmlAsHtml() {
         String expected = "<!DOCTYPE html>" + OS.NEWLINE +
                 "<html>" + OS.NEWLINE +
                 "   <head>" + OS.NEWLINE +

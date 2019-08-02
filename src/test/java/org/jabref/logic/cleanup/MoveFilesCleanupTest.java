@@ -65,7 +65,7 @@ class MoveFilesCleanupTest {
     }
 
     @Test
-    void movesFile() throws Exception {
+    void movesFile() {
         when(filePreferences.getFileDirPattern()).thenReturn("");
         cleanup.cleanup(entry);
 
@@ -78,7 +78,7 @@ class MoveFilesCleanupTest {
     }
 
     @Test
-    void movesFileWithMulitpleLinked() throws Exception {
+    void movesFileWithMulitpleLinked() {
         LinkedFile fileField = new LinkedFile("", fileBefore.toAbsolutePath().toString(), "");
         entry.setField(StandardField.FILE, FileFieldWriter.getStringRepresentation(
                 Arrays.asList(new LinkedFile("", "", ""), fileField, new LinkedFile("", "", ""))));
@@ -96,7 +96,7 @@ class MoveFilesCleanupTest {
     }
 
     @Test
-    void movesFileWithFileDirPattern() throws Exception {
+    void movesFileWithFileDirPattern() {
         when(filePreferences.getFileDirPattern()).thenReturn("[entrytype]");
         cleanup.cleanup(entry);
 
@@ -109,7 +109,7 @@ class MoveFilesCleanupTest {
     }
 
     @Test
-    void movesFileWithSubdirectoryPattern() throws Exception {
+    void movesFileWithSubdirectoryPattern() {
         when(filePreferences.getFileDirPattern()).thenReturn("[entrytype]/[year]/[auth]");
         cleanup.cleanup(entry);
 

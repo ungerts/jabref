@@ -24,7 +24,7 @@ public class MsBibExportFormatTest {
     public MSBibExporter msBibExportFormat;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         databaseContext = new BibDatabaseContext();
         charset = StandardCharsets.UTF_8;
         msBibExportFormat = new MSBibExporter();

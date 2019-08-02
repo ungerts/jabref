@@ -217,7 +217,7 @@ class MedlinePlainImporterTest {
     }
 
     @Test
-    void testNullReader() throws IOException {
+    void testNullReader() {
         Executable fail = () -> {
             try (BufferedReader reader = null) {
                 importer.importDatabase(reader);

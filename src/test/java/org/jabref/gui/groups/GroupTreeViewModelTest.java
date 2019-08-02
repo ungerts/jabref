@@ -29,7 +29,7 @@ public class GroupTreeViewModelTest {
     private TaskExecutor taskExecutor;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         databaseContext = new BibDatabaseContext();
         stateManager = new StateManager();
         stateManager.activeDatabaseProperty().setValue(Optional.of(databaseContext));
@@ -38,7 +38,7 @@ public class GroupTreeViewModelTest {
     }
 
     @Test
-    public void rootGroupIsAllEntriesByDefault() throws Exception {
+    public void rootGroupIsAllEntriesByDefault() {
         AllEntriesGroup allEntriesGroup = new AllEntriesGroup("All entries");
         assertEquals(new GroupNodeViewModel(databaseContext, stateManager, taskExecutor, allEntriesGroup, new CustomLocalDragboard()), groupTree.rootGroupProperty().getValue());
     }

@@ -195,7 +195,7 @@ public class IEEE implements FulltextFetcher, SearchBasedParserFetcher {
     }
 
     @Override
-    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = new URIBuilder("https://ieeexploreapi.ieee.org/api/v1/search/articles");
         uriBuilder.addParameter("apikey", "86wnawtvtc986d3wtnqynm8c");
         uriBuilder.addParameter("querytext", query);

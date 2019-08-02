@@ -25,7 +25,7 @@ class ZbMATHTest {
     private BibEntry donaldsonEntry;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         ImportFormatPreferences importFormatPreferences = mock(ImportFormatPreferences.class);
         when(importFormatPreferences.getFieldContentParserPreferences()).thenReturn(
                 mock(FieldContentParserPreferences.class));

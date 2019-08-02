@@ -52,7 +52,7 @@ public class BasePanelTest {
     }
 
     @Test
-    void dividerPositionIsRestoredOnReopenEntryEditor(FxRobot robot) throws Exception {
+    void dividerPositionIsRestoredOnReopenEntryEditor(FxRobot robot) {
         BibEntry entry = new BibEntry();
         bibDatabaseContext.getDatabase().insertEntry(entry);
 

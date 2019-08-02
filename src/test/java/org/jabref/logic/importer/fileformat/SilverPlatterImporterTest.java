@@ -21,7 +21,7 @@ class SilverPlatterImporterTest {
     private Importer testImporter;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         testImporter = new SilverPlatterImporter();
     }
 

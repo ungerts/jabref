@@ -18,7 +18,7 @@ public class EscapeUnderscoresFormatterTest {
      * Check whether the clear formatter really returns the empty string for the empty string
      */
     @Test
-    public void formatReturnsSameTextIfNoUnderscoresPresent() throws Exception {
+    public void formatReturnsSameTextIfNoUnderscoresPresent() {
         assertEquals("Lorem ipsum", formatter.format("Lorem ipsum"));
     }
 
@@ -26,7 +26,7 @@ public class EscapeUnderscoresFormatterTest {
      * Check whether the clear formatter really returns the empty string for some string
      */
     @Test
-    public void formatEscapesUnderscoresIfPresent() throws Exception {
+    public void formatEscapesUnderscoresIfPresent() {
         assertEquals("Lorem\\_ipsum", formatter.format("Lorem_ipsum"));
     }
 

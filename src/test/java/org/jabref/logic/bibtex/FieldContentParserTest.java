@@ -16,7 +16,7 @@ public class FieldContentParserTest {
     private FieldContentParser parser;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         FieldContentParserPreferences prefs = new FieldContentParserPreferences(Collections.emptyList());
         parser = new FieldContentParser(prefs);
     }

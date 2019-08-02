@@ -8,7 +8,7 @@ import org.junit.rules.ExternalResource;
  */
 public class CatchExceptionsFromThread extends ExternalResource {
     @Override
-    protected void before() throws Throwable {
+    protected void before() {
         Thread.setDefaultUncaughtExceptionHandler((thread, exception) -> {
             // We simply rethrow the exception (as a RuntimeException) so that JUnit picks it up
             throw new RuntimeException(exception);

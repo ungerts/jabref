@@ -23,7 +23,7 @@ public class ConvertLegacyExplicitGroupsTest {
     private ExplicitGroup group;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         action = new ConvertLegacyExplicitGroups();
 
         entry = new BibEntry();
@@ -33,7 +33,7 @@ public class ConvertLegacyExplicitGroupsTest {
     }
 
     @Test
-    public void performActionWritesGroupMembershipInEntry() throws Exception {
+    public void performActionWritesGroupMembershipInEntry() {
         ParserResult parserResult = generateParserResult(GroupTreeNode.fromGroup(group));
 
         action.performMigration(parserResult);
@@ -42,7 +42,7 @@ public class ConvertLegacyExplicitGroupsTest {
     }
 
     @Test
-    public void performActionClearsLegacyKeys() throws Exception {
+    public void performActionClearsLegacyKeys() {
         ParserResult parserResult = generateParserResult(GroupTreeNode.fromGroup(group));
 
         action.performMigration(parserResult);
@@ -51,7 +51,7 @@ public class ConvertLegacyExplicitGroupsTest {
     }
 
     @Test
-    public void performActionWritesGroupMembershipInEntryForComplexGroupTree() throws Exception {
+    public void performActionWritesGroupMembershipInEntryForComplexGroupTree() {
         GroupTreeNode root = GroupTreeNode.fromGroup(new AllEntriesGroup(""));
         root.addSubgroup(new ExplicitGroup("TestGroup2", GroupHierarchyType.INCLUDING, ','));
         root.addSubgroup(group);

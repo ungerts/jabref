@@ -19,7 +19,7 @@ public class UpdateFieldTest {
     private BibEntry entry;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         entry = new BibEntry();
         entry.setChanged(false);
     }

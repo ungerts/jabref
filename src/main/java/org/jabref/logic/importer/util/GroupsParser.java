@@ -184,7 +184,7 @@ public class GroupsParser {
      * @param s The String representation obtained from
      *          KeywordGroup.toString()
      */
-    private static KeywordGroup keywordGroupFromString(String s, Character keywordSeparator) throws ParseException {
+    private static KeywordGroup keywordGroupFromString(String s, Character keywordSeparator) {
         if (!s.startsWith(MetadataSerializationConfiguration.KEYWORD_GROUP_ID)) {
             throw new IllegalArgumentException("KeywordGroup cannot be created from \"" + s + "\".");
         }

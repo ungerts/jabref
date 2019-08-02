@@ -530,7 +530,7 @@ public abstract class DBMSProcessor {
      *
      * @param data JabRef meta data as map
      */
-    public void setSharedMetaData(Map<String, String> data) throws SQLException {
+    public void setSharedMetaData(Map<String, String> data) {
         StringBuilder updateQuery = new StringBuilder()
                     .append("UPDATE ")
                     .append(escape("METADATA"))

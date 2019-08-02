@@ -614,7 +614,7 @@ public class TreeNodeTest {
     }
 
     @Test
-    public void findChildrenWithSameName() throws Exception {
+    public void findChildrenWithSameName() {
         TreeNodeTestData.TreeNodeMock root = new TreeNodeTestData.TreeNodeMock("A");
         TreeNodeTestData.TreeNodeMock childB = root.addChild(new TreeNodeTestData.TreeNodeMock("B"));
         TreeNodeTestData.TreeNodeMock node = childB.addChild(new TreeNodeTestData.TreeNodeMock("A"));

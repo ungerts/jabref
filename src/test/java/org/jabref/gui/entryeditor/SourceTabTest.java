@@ -59,7 +59,7 @@ public class SourceTabTest {
     }
 
     @Test
-    void switchingFromSourceTabDoesNotThrowException(FxRobot robot) throws Exception {
+    void switchingFromSourceTabDoesNotThrowException(FxRobot robot) {
         BibEntry entry = new BibEntry();
         entry.setField(new UnknownField("test"), "testvalue");
 

@@ -124,7 +124,7 @@ class RemoteSetupTest {
     }
 
     @Test
-    void pingReturnsFalseForNoServerListening() throws IOException, InterruptedException {
+    void pingReturnsFalseForNoServerListening() {
         final int port = 34567;
 
         assertFalse(new RemoteClient(port).ping());

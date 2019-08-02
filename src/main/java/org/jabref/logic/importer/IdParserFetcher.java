@@ -33,7 +33,7 @@ public interface IdParserFetcher<T extends Identifier> extends IdFetcher<T> {
      *
      * @param entry the entry to look information for
      */
-    URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException, FetcherException;
+    URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException;
 
     /**
      * Returns the parser used to convert the response to a list of {@link BibEntry}.
@@ -65,7 +65,7 @@ public interface IdParserFetcher<T extends Identifier> extends IdFetcher<T> {
      *                       the result)
      * @param fetchedEntries list of entries returned by the web service
      */
-    Optional<T> extractIdentifier(BibEntry inputEntry, List<BibEntry> fetchedEntries) throws FetcherException;
+    Optional<T> extractIdentifier(BibEntry inputEntry, List<BibEntry> fetchedEntries);
 
     @Override
     default Optional<T> findIdentifier(BibEntry entry) throws FetcherException {

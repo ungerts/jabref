@@ -19,7 +19,7 @@ class CiteSeerTest {
     CiteSeer fetcher;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         fetcher = new CiteSeer();
     }
 

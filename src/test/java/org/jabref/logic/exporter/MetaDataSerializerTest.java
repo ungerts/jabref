@@ -32,7 +32,7 @@ public class MetaDataSerializerTest {
     }
 
     @Test
-    public void serializeNewMetadataReturnsEmptyMap() throws Exception {
+    public void serializeNewMetadataReturnsEmptyMap() {
         assertEquals(Collections.emptyMap(), MetaDataSerializer.getSerializedStringMap(metaData, pattern));
     }
 

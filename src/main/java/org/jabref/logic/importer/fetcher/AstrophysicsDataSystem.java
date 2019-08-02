@@ -72,14 +72,14 @@ public class AstrophysicsDataSystem implements IdBasedParserFetcher, SearchBased
     }
 
     @Override
-    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = getBaseUrl(API_QUERY_URL);
         uriBuilder.addParameter("qsearch", query);
         return uriBuilder.build().toURL();
     }
 
     @Override
-    public URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = getBaseUrl(API_ENTRY_URL);
 
         // Search astronomy + physics + arXiv db
@@ -109,7 +109,7 @@ public class AstrophysicsDataSystem implements IdBasedParserFetcher, SearchBased
     }
 
     @Override
-    public URL getURLForID(String identifier) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForID(String identifier) throws URISyntaxException, MalformedURLException {
         String key = identifier.replaceAll(patternRemoveDOI, "");
         URIBuilder uriBuilder = new URIBuilder(API_DOI_URL + key);
         uriBuilder.addParameter("data_type", "BIBTEXPLUS");

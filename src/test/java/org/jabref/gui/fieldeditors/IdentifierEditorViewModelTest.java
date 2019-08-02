@@ -17,12 +17,12 @@ public class IdentifierEditorViewModelTest {
     private IdentifierEditorViewModel viewModel;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         viewModel = new IdentifierEditorViewModel(StandardField.DOI, new WordSuggestionProvider(StandardField.DOI), new CurrentThreadTaskExecutor(), mock(DialogService.class), mock(FieldCheckers.class));
     }
 
     @Test
-    public void validIdentifierIsNotPresentIsTrueForEmptyText() throws Exception {
+    public void validIdentifierIsNotPresentIsTrueForEmptyText() {
         assertTrue(viewModel.validIdentifierIsNotPresentProperty().get());
     }
 }

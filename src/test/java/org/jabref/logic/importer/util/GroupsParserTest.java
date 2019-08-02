@@ -33,7 +33,7 @@ class GroupsParserTest {
     private MetaData metaData;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         fileMonitor = new DummyFileUpdateMonitor();
         metaData = new MetaData();
     }
@@ -62,7 +62,7 @@ class GroupsParserTest {
     }
 
     @Test
-    void fromStringThrowsParseExceptionForNotEscapedGroupName() throws Exception {
+    void fromStringThrowsParseExceptionForNotEscapedGroupName() {
         assertThrows(ParseException.class, () -> GroupsParser.fromString("ExplicitGroup:slit\\\\;0\\;mertsch_slit2_2007\\;;", ',', fileMonitor, metaData));
     }
 
@@ -127,7 +127,7 @@ class GroupsParserTest {
     }
 
     @Test
-    void fromStringUnknownGroupThrowsException() throws Exception {
+    void fromStringUnknownGroupThrowsException() {
         assertThrows(ParseException.class, () -> GroupsParser.fromString("0 UnknownGroup:myUnknownGroup;0;;1;;;;", ',', fileMonitor, metaData));
     }
 }

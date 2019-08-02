@@ -36,7 +36,7 @@ public class JavaVersionTest {
     }
 
     @Test
-    public void isJava9() throws Exception {
+    public void isJava9() {
         // Check that all valid java versions below 9 are recognized as not java 9
         for (String versionString : java) {
             final JavaVersion java8 = new JavaVersion(versionString);
@@ -54,7 +54,7 @@ public class JavaVersionTest {
     }
 
     @Test
-    public void isAtLeast() throws Exception {
+    public void isAtLeast() {
         final JavaVersion java8 = new JavaVersion("1.8");
         for (String version8 : java) {
             assertTrue(java8.isAtLeast(version8));

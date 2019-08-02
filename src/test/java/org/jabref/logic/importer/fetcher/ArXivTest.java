@@ -180,7 +180,7 @@ public class ArXivTest {
     }
 
     @Test
-    public void searchWithMalformedIdThrowsException() throws Exception {
+    public void searchWithMalformedIdThrowsException() {
         assertThrows(FetcherException.class, () -> finder.performSearchById("123412345"));
     }
 

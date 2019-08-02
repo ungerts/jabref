@@ -49,7 +49,7 @@ public class CrossRef implements IdParserFetcher<DOI>, EntryBasedParserFetcher, 
     }
 
     @Override
-    public URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = new URIBuilder(API_URL);
         entry.getLatexFreeField(StandardField.TITLE).ifPresent(title -> uriBuilder.addParameter("query.title", title));
         entry.getLatexFreeField(StandardField.AUTHOR).ifPresent(author -> uriBuilder.addParameter("query.author", author));
@@ -62,14 +62,14 @@ public class CrossRef implements IdParserFetcher<DOI>, EntryBasedParserFetcher, 
     }
 
     @Override
-    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = new URIBuilder(API_URL);
         uriBuilder.addParameter("query", query);
         return uriBuilder.build().toURL();
     }
 
     @Override
-    public URL getURLForID(String identifier) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForID(String identifier) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = new URIBuilder(API_URL + "/" + identifier);
         return uriBuilder.build().toURL();
     }
@@ -163,7 +163,7 @@ public class CrossRef implements IdParserFetcher<DOI>, EntryBasedParserFetcher, 
     }
 
     @Override
-    public Optional<DOI> extractIdentifier(BibEntry inputEntry, List<BibEntry> fetchedEntries) throws FetcherException {
+    public Optional<DOI> extractIdentifier(BibEntry inputEntry, List<BibEntry> fetchedEntries) {
 
         final String entryTitle = REMOVE_BRACES_FORMATTER.format(inputEntry.getLatexFreeField(StandardField.TITLE).orElse(""));
         final StringSimilarity stringSimilarity = new StringSimilarity();

@@ -50,7 +50,7 @@ public class ZbMATH implements SearchBasedParserFetcher {
     */
 
     @Override
-    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForQuery(String query) throws URISyntaxException, MalformedURLException {
         URIBuilder uriBuilder = new URIBuilder("https://zbmath.org/bibtexoutput/");
         uriBuilder.addParameter("q", query); // search all fields
         uriBuilder.addParameter("start", "0"); // start index

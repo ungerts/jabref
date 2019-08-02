@@ -21,7 +21,7 @@ public class CrossRefTest {
     private BibEntry barrosEntry;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         fetcher = new CrossRef();
 
         barrosEntry = new BibEntry();

@@ -69,7 +69,7 @@ public class ProgressInputStream extends FilterInputStream {
     }
 
     @Override
-    public void reset() throws IOException {
+    public void reset() {
         throw new UnsupportedOperationException();
     }
 

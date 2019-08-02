@@ -92,20 +92,18 @@ public class IdentifierEditorViewModel extends AbstractEditorViewModel {
     }
 
     public void lookupIdentifier(BibEntry entry) {
-        WebFetchers.getIdFetcherForField(field).ifPresent(idFetcher -> {
-            BackgroundTask
-                    .wrap(() -> idFetcher.findIdentifier(entry))
-                    .onRunning(() -> identifierLookupInProgress.setValue(true))
-                    .onFinished(() -> identifierLookupInProgress.setValue(false))
-                    .onSuccess(identifier -> {
-                        if (identifier.isPresent()) {
-                            entry.setField(field, identifier.get().getNormalized());
-                        } else {
-                            dialogService.notify(Localization.lang("No %0 found", field.getDisplayName()));
-                        }
-                    })
-                    .onFailure(dialogService::showErrorDialogAndWait)
-                    .executeWith(taskExecutor);
-        });
+        WebFetchers.getIdFetcherForField(field).ifPresent(idFetcher -> BackgroundTask
+                .wrap(() -> idFetcher.findIdentifier(entry))
+                .onRunning(() -> identifierLookupInProgress.setValue(true))
+                .onFinished(() -> identifierLookupInProgress.setValue(false))
+                .onSuccess(identifier -> {
+                    if (identifier.isPresent()) {
+                        entry.setField(field, identifier.get().getNormalized());
+                    } else {
+                        dialogService.notify(Localization.lang("No %0 found", field.getDisplayName()));
+                    }
+                })
+                .onFailure(dialogService::showErrorDialogAndWait)
+                .executeWith(taskExecutor));
     }
 }

@@ -20,9 +20,7 @@ public class CopySingleFileAction {
     private LinkedFile linkedFile;
     private DialogService dialogService;
     private BibDatabaseContext databaseContext;
-    private final BiFunction<Path, Path, Path> resolvePathFilename = (path, file) -> {
-        return path.resolve(file.getFileName());
-    };
+    private final BiFunction<Path, Path, Path> resolvePathFilename = (path, file) -> path.resolve(file.getFileName());
 
     public CopySingleFileAction(LinkedFile linkedFile, DialogService dialogService, BibDatabaseContext databaseContext) {
         this.linkedFile = linkedFile;

@@ -33,9 +33,7 @@ public class ImportSettingsTab implements PrefsTab {
         selectFileNamePattern.getItems().addAll(FXCollections.observableArrayList(DEFAULT_FILENAMEPATTERNS));
         selectFileNamePattern.setValue(Localization.lang("Choose pattern"));
 
-        selectFileNamePattern.setOnAction(e -> {
-            fileNamePattern.setText(selectFileNamePattern.getValue());
-        });
+        selectFileNamePattern.setOnAction(e -> fileNamePattern.setText(selectFileNamePattern.getValue()));
 
         Label defaultImportStyle = new Label(Localization.lang("Default import style for drag and drop of PDFs"));
         defaultImportStyle.getStyleClass().add("sectionHeader");

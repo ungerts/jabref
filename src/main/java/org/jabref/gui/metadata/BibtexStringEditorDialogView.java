@@ -87,9 +87,7 @@ public class BibtexStringEditorDialogView extends BaseDialog<Void> {
                 cell.getRowValue().setLabel(cell.getNewValue());
             }
         });
-        colContent.setOnEditCommit((CellEditEvent<BibtexStringViewModel, String> cell) -> {
-            cell.getRowValue().setContent(cell.getNewValue());
-        });
+        colContent.setOnEditCommit((CellEditEvent<BibtexStringViewModel, String> cell) -> cell.getRowValue().setContent(cell.getNewValue()));
 
         tblStrings.itemsProperty().bindBidirectional(viewModel.allStringsProperty());
         tblStrings.setEditable(true);

@@ -63,9 +63,7 @@ class XmpPrefsTab extends Pane implements PrefsTab {
                 .withOnMouseClickedEvent(item -> evt -> delete())
                 .install(deleteIconColumn);
 
-        column.setOnEditCommit((CellEditEvent<XMPPrivacyFilter, String> cell) -> {
-            cell.getRowValue().setField(cell.getNewValue());
-        });
+        column.setOnEditCommit((CellEditEvent<XMPPrivacyFilter, String> cell) -> cell.getRowValue().setField(cell.getNewValue()));
 
         tableView.getColumns().setAll(column, deleteIconColumn);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

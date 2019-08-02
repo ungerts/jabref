@@ -156,12 +156,8 @@ public class GlobalSearchBar extends HBox {
 
         this.setAlignment(Pos.CENTER_LEFT);
 
-        EasyBind.subscribe(Globals.stateManager.activeSearchQueryProperty(), searchQuery -> {
-            searchQuery.ifPresent(query -> {
-                updateResults(Globals.stateManager.getSearchResultSize().intValue(), SearchDescribers.getSearchDescriberFor(query).getDescription(),
-                              query.isGrammarBasedSearch());
-            });
-        });
+        EasyBind.subscribe(Globals.stateManager.activeSearchQueryProperty(), searchQuery -> searchQuery.ifPresent(query -> updateResults(Globals.stateManager.getSearchResultSize().intValue(), SearchDescribers.getSearchDescriberFor(query).getDescription(),
+                          query.isGrammarBasedSearch())));
     }
 
     private void toggleSearchModeAndSearch() {

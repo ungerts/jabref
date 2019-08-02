@@ -90,19 +90,15 @@ public class NameFormatterTab extends Pane implements PrefsTab {
         firstCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         firstCol.setCellFactory(TextFieldTableCell.forTableColumn());
         firstCol.setOnEditCommit(
-                                 (TableColumn.CellEditEvent<NameFormatterViewModel, String> t) -> {
-                                     t.getTableView().getItems().get(
-                                                                     t.getTablePosition().getRow())
-                                      .setName(t.getNewValue());
-                                 });
+                                 (TableColumn.CellEditEvent<NameFormatterViewModel, String> t) -> t.getTableView().getItems().get(
+                                                                 t.getTablePosition().getRow())
+                                  .setName(t.getNewValue()));
         lastCol.setCellValueFactory(new PropertyValueFactory<>("format"));
         lastCol.setCellFactory(TextFieldTableCell.forTableColumn());
         lastCol.setOnEditCommit(
-                                (TableColumn.CellEditEvent<NameFormatterViewModel, String> t) -> {
-                                    t.getTableView().getItems().get(
-                                                                    t.getTablePosition().getRow())
-                                     .setFormat(t.getNewValue());
-                                });
+                                (TableColumn.CellEditEvent<NameFormatterViewModel, String> t) -> t.getTableView().getItems().get(
+                                                                t.getTablePosition().getRow())
+                                 .setFormat(t.getNewValue()));
         firstCol.setPrefWidth(140);
         lastCol.setPrefWidth(200);
         table.setItems(data);

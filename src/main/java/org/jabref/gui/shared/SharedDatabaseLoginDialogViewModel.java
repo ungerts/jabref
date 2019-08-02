@@ -87,9 +87,7 @@ public class SharedDatabaseLoginDialogViewModel extends AbstractViewModel {
         this.frame = frame;
         this.dialogService = dialogService;
 
-        EasyBind.subscribe(selectedDBMSType, selected -> {
-            port.setValue(Integer.toString(selected.getDefaultPort()));
-        });
+        EasyBind.subscribe(selectedDBMSType, selected -> port.setValue(Integer.toString(selected.getDefaultPort())));
 
         Predicate<String> notEmpty = input -> (input != null) && !input.trim().isEmpty();
         Predicate<String> fileExists = input -> Files.exists(Paths.get(input));
@@ -271,9 +269,7 @@ public class SharedDatabaseLoginDialogViewModel extends AbstractViewModel {
                                                                                                .withInitialDirectory(Globals.prefs.get(JabRefPreferences.WORKING_DIRECTORY))
                                                                                                .build();
         Optional<Path> exportPath = dialogService.showFileSaveDialog(fileDialogConfiguration);
-        exportPath.ifPresent(path -> {
-            folder.setValue(path.toString());
-        });
+        exportPath.ifPresent(path -> folder.setValue(path.toString()));
     }
 
     public void showOpenKeystoreFileDialog() {
@@ -284,9 +280,7 @@ public class SharedDatabaseLoginDialogViewModel extends AbstractViewModel {
                                                                                                .withInitialDirectory(Globals.prefs.get(JabRefPreferences.WORKING_DIRECTORY))
                                                                                                .build();
         Optional<Path> keystorePath = dialogService.showFileOpenDialog(fileDialogConfiguration);
-        keystorePath.ifPresent(path -> {
-            keystore.setValue(path.toString());
-        });
+        keystorePath.ifPresent(path -> keystore.setValue(path.toString()));
     }
 
     public StringProperty databaseproperty() {

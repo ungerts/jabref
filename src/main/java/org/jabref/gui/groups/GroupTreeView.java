@@ -241,9 +241,7 @@ public class GroupTreeView {
                 }
                 event.consume();
             });
-            row.setOnDragExited(event -> {
-                removePseudoClasses(row, dragOverBottom, dragOverCenter, dragOverTop);
-            });
+            row.setOnDragExited(event -> removePseudoClasses(row, dragOverBottom, dragOverCenter, dragOverTop));
 
             row.setOnDragDropped(event -> {
                 Dragboard dragboard = event.getDragboard();

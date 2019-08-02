@@ -110,13 +110,9 @@ public class SharedDatabaseLoginDialogView extends BaseDialog<Void> {
             visualizer.initVisualization(viewModel.portValidation(), port, true);
             visualizer.initVisualization(viewModel.userValidation(), user, true);
 
-            EasyBind.subscribe(autosave.selectedProperty(), selected -> {
-                visualizer.initVisualization(viewModel.folderValidation(), folder, true);
-            });
+            EasyBind.subscribe(autosave.selectedProperty(), selected -> visualizer.initVisualization(viewModel.folderValidation(), folder, true));
 
-            EasyBind.subscribe(useSSL.selectedProperty(), selected -> {
-                visualizer.initVisualization(viewModel.keystoreValidation(), fileKeystore, true);
-            });
+            EasyBind.subscribe(useSSL.selectedProperty(), selected -> visualizer.initVisualization(viewModel.keystoreValidation(), fileKeystore, true));
         });
     }
 

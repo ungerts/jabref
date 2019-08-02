@@ -294,9 +294,7 @@ public class JabRefFrame extends BorderPane {
 
                 @Override
                 public void run() {
-                    SwingUtilities.invokeLater(() -> {
-                        DefaultTaskExecutor.runInJavaFXThread(JabRefFrame.this::showTrackingNotification);
-                    });
+                    SwingUtilities.invokeLater(() -> DefaultTaskExecutor.runInJavaFXThread(JabRefFrame.this::showTrackingNotification));
                 }
             }, 60000); // run in one minute
         }

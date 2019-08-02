@@ -70,9 +70,7 @@ public class ManageCitationsDialogView extends BaseDialog<Void> {
 
         citationsTableView.itemsProperty().bindBidirectional(viewModel.citationsProperty());
 
-        extraInfo.setOnEditCommit((CellEditEvent<CitationEntryViewModel, String> cell) -> {
-            cell.getRowValue().setExtraInfo(cell.getNewValue());
-        });
+        extraInfo.setOnEditCommit((CellEditEvent<CitationEntryViewModel, String> cell) -> cell.getRowValue().setExtraInfo(cell.getNewValue()));
         extraInfo.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 

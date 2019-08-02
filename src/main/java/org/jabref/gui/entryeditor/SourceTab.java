@@ -221,20 +221,18 @@ public class SourceTab extends EntryEditorTab {
             if (!onFocus) {
                 storeSource(entry, codeArea.textProperty().getValue());
             }
-        }, fields -> {
-            DefaultTaskExecutor.runAndWaitInJavaFXThread(() -> {
-                codeArea.clear();
-                try {
-                    codeArea.appendText(getSourceString(entry, mode, fieldFormatterPreferences));
-                    highlightSearchPattern();
-                } catch (IOException ex) {
-                    codeArea.setEditable(false);
-                    codeArea.appendText(ex.getMessage() + "\n\n" +
-                                        Localization.lang("Correct the entry, and reopen editor to display/edit source."));
-                    LOGGER.debug("Incorrect entry", ex);
-                }
-            });
-        });
+        }, fields -> DefaultTaskExecutor.runAndWaitInJavaFXThread(() -> {
+            codeArea.clear();
+            try {
+                codeArea.appendText(getSourceString(entry, mode, fieldFormatterPreferences));
+                highlightSearchPattern();
+            } catch (IOException ex) {
+                codeArea.setEditable(false);
+                codeArea.appendText(ex.getMessage() + "\n\n" +
+                                    Localization.lang("Correct the entry, and reopen editor to display/edit source."));
+                LOGGER.debug("Incorrect entry", ex);
+            }
+        }));
 
     }
 

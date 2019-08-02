@@ -42,9 +42,7 @@ public class CopyFilesTask extends Task<List<CopyFilesResultItemViewModel>> {
     private int numberSucessful;
     private int totalFilesCounter;
 
-    private final BiFunction<Path, Path, Path> resolvePathFilename = (path, file) -> {
-        return path.resolve(file.getFileName());
-    };
+    private final BiFunction<Path, Path, Path> resolvePathFilename = (path, file) -> path.resolve(file.getFileName());
 
     public CopyFilesTask(BibDatabaseContext databaseContext, List<BibEntry> entries, Path path) {
         this.databaseContext = databaseContext;

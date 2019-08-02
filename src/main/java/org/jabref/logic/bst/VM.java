@@ -471,9 +471,7 @@ public class VM implements Warn {
          *
          * @PREAMBLE strings read from the database files.
          */
-        buildInFunctions.put("preamble$", context -> {
-            stack.push(preamble);
-        });
+        buildInFunctions.put("preamble$", context -> stack.push(preamble));
 
         /**
          * Pops the top (string) literal, removes nonalphanumeric characters

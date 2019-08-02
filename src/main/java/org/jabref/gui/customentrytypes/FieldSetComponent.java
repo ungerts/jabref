@@ -327,7 +327,7 @@ class FieldSetComponent extends JPanel {
     /**
      * FocusListener to select the first entry in the list of fields when they are focused
      */
-    protected class FieldListFocusListener<T> implements FocusListener {
+    protected static class FieldListFocusListener<T> implements FocusListener {
 
         private final JList<T> list;
 

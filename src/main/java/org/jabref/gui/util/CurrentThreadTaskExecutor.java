@@ -58,7 +58,7 @@ public class CurrentThreadTaskExecutor implements TaskExecutor {
         // Nothing to do here
     }
 
-    private class FailedFuture<T> implements Future<T> {
+    private static class FailedFuture<T> implements Future<T> {
         private final Throwable exception;
 
         FailedFuture(Throwable exception) {

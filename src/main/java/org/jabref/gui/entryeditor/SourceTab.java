@@ -141,7 +141,7 @@ public class SourceTab extends EntryEditorTab {
     /* Work around for different input methods.
      * https://github.com/FXMisc/RichTextFX/issues/146
      */
-    private class InputMethodRequestsObject implements InputMethodRequests {
+    private static class InputMethodRequestsObject implements InputMethodRequests {
 
         @Override
         public String getSelectedText() {

@@ -228,7 +228,7 @@ public abstract class BackgroundTask<V> {
         return this;
     }
 
-    class BackgroundProgress {
+    static class BackgroundProgress {
 
         private final double workDone;
         private final double max;

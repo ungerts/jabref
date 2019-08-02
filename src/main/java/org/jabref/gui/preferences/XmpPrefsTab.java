@@ -149,7 +149,7 @@ class XmpPrefsTab extends Pane implements PrefsTab {
         return Localization.lang("XMP-metadata");
     }
 
-    private class XMPPrivacyFilter {
+    private static class XMPPrivacyFilter {
 
         private final SimpleStringProperty field;
 

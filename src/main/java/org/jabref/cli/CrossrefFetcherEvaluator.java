@@ -49,42 +49,38 @@ public class CrossrefFetcherEvaluator {
             ExecutorService executorService = Executors.newFixedThreadPool(5);
 
             for (BibEntry entry : entries) {
-                executorService.execute(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Optional<DOI> origDOI = entry.getField(StandardField.DOI).flatMap(DOI::parse);
-                        if (origDOI.isPresent()) {
-                            dois.incrementAndGet();
-                            try {
-                                Optional<DOI> crossrefDOI = new CrossRef().findIdentifier(entry);
-                                if (crossrefDOI.isPresent()) {
-                                    doiFound.incrementAndGet();
-                                    if (origDOI.get().getDOI().equalsIgnoreCase(crossrefDOI.get().getDOI())) {
-                                        doiIdentical.incrementAndGet();
-                                    } else {
-                                        System.out.println("DOI not identical for : " + entry);
-                                    }
+                executorService.execute(() -> {
+                    Optional<DOI> origDOI = entry.getField(StandardField.DOI).flatMap(DOI::parse);
+                    if (origDOI.isPresent()) {
+                        dois.incrementAndGet();
+                        try {
+                            Optional<DOI> crossrefDOI = new CrossRef().findIdentifier(entry);
+                            if (crossrefDOI.isPresent()) {
+                                doiFound.incrementAndGet();
+                                if (origDOI.get().getDOI().equalsIgnoreCase(crossrefDOI.get().getDOI())) {
+                                    doiIdentical.incrementAndGet();
                                 } else {
-                                    System.out.println("DOI not found for: " + entry);
+                                    System.out.println("DOI not identical for : " + entry);
                                 }
-                            } catch (FetcherException e) {
-                                e.printStackTrace();
+                            } else {
+                                System.out.println("DOI not found for: " + entry);
                             }
-
-                        } else {
-                            try {
-                                Optional<DOI> crossrefDOI = new CrossRef().findIdentifier(entry);
-                                if (crossrefDOI.isPresent()) {
-                                    System.out.println("New DOI found for: " + entry);
-                                    doiNew.incrementAndGet();
-                                }
-                            } catch (FetcherException e) {
-                                e.printStackTrace();
-                            }
+                        } catch (FetcherException e) {
+                            e.printStackTrace();
                         }
-                        countDownLatch.countDown();
+
+                    } else {
+                        try {
+                            Optional<DOI> crossrefDOI = new CrossRef().findIdentifier(entry);
+                            if (crossrefDOI.isPresent()) {
+                                System.out.println("New DOI found for: " + entry);
+                                doiNew.incrementAndGet();
+                            }
+                        } catch (FetcherException e) {
+                            e.printStackTrace();
+                        }
                     }
+                    countDownLatch.countDown();
                 });
 
             }

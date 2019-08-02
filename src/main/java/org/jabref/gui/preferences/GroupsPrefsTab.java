@@ -33,12 +33,7 @@ class GroupsPrefsTab extends Pane implements PrefsTab {
         this.prefs = prefs;
         builder.setVgap(7);
 
-        keywordSeparator.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                keywordSeparator.selectAll();
-            }
-        });
+        keywordSeparator.setOnAction(event -> keywordSeparator.selectAll());
 
         multiSelectionModeIntersection.setText(Localization.lang("Display only entries belonging to all selected groups."));
         multiSelectionModeUnion.setText(Localization.lang("Display all entries belonging to one or more of the selected groups."));

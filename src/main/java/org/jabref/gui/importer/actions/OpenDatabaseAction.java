@@ -77,7 +77,6 @@ public class OpenDatabaseAction extends SimpleCommand {
 
     @Override
     public void execute() {
-        List<Path> filesToOpen = new ArrayList<>();
 
         FileDialogConfiguration fileDialogConfiguration = new FileDialogConfiguration.Builder()
                                                                                                .addExtensionFilter(StandardFileType.BIBTEX_DB)
@@ -86,7 +85,7 @@ public class OpenDatabaseAction extends SimpleCommand {
                                                                                                .build();
 
         List<Path> chosenFiles = dialogService.showFileOpenDialogAndGetMultipleFiles(fileDialogConfiguration);
-        filesToOpen.addAll(chosenFiles);
+        List<Path> filesToOpen = new ArrayList<>(chosenFiles);
 
         openFiles(filesToOpen, true);
     }

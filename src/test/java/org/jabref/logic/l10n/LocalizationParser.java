@@ -33,8 +33,6 @@ public class LocalizationParser {
 
         Set<String> keysInJavaFiles = entries.stream()
                                              .map(LocalizationEntry::getKey)
-                                             .distinct()
-                                             .sorted()
                                              .collect(Collectors.toSet());
 
         Set<String> englishKeys;

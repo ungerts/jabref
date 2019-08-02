@@ -2111,8 +2111,7 @@ public class JabRefPreferences implements PreferencesService {
 
     private void saveCustomEntryTypes(BibDatabaseMode bibDatabaseMode) {
         List<BibEntryType> customBiblatexBibTexTypes = Globals.entryTypesManager.getAllTypes(bibDatabaseMode).stream()
-                                                                                .filter(type -> type instanceof BibEntryType)
-                                                                                .map(entryType -> entryType).collect(Collectors.toList());
+                                                                                .filter(type -> type instanceof BibEntryType).collect(Collectors.toList());
 
         storeBibEntryTypes(customBiblatexBibTexTypes, bibDatabaseMode);
 

@@ -136,7 +136,7 @@ public class FieldComparator implements Comparator<BibEntry> {
             } else if (i2.isPresent()) {
                 // The second one was parseable, but not the first one.
                 // This means we consider one > two
-                return 1 * multiplier;
+                return multiplier;
             }
             // Else none of them were parseable, and we can fall back on comparing strings.
         }

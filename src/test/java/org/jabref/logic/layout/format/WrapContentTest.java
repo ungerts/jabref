@@ -5,6 +5,7 @@ import org.jabref.logic.layout.ParamLayoutFormatter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class WrapContentTest {
 
@@ -40,7 +41,7 @@ public class WrapContentTest {
     public void testFormatNullExpectNothingAdded() {
         ParamLayoutFormatter a = new WrapContent();
         a.setArgument("Eds.,Ed.");
-        assertEquals(null, a.format(null));
+        assertNull(a.format(null));
     }
 
     @Test

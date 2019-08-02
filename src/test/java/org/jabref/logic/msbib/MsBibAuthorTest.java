@@ -5,6 +5,7 @@ import org.jabref.model.entry.Author;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class MsBibAuthorTest {
 
@@ -27,7 +28,7 @@ public class MsBibAuthorTest {
 
         Author author = new Author("Gustav", null, null, "Bach", null);
         MsBibAuthor msBibAuthor = new MsBibAuthor(author);
-        assertEquals(null, msBibAuthor.getMiddleName());
+        assertNull(msBibAuthor.getMiddleName());
     }
 
     @Test
@@ -35,7 +36,7 @@ public class MsBibAuthorTest {
 
         Author author = new Author(null, null, null, "Bach", null);
         MsBibAuthor msBibAuthor = new MsBibAuthor(author);
-        assertEquals(null, msBibAuthor.getMiddleName());
+        assertNull(msBibAuthor.getMiddleName());
     }
 
     @Test

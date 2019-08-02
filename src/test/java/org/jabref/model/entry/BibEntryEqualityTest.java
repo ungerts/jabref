@@ -14,20 +14,20 @@ public class BibEntryEqualityTest {
     public void identicObjectsareEqual() throws Exception {
         BibEntry e1 = new BibEntry();
         BibEntry e2 = e1;
-        assertTrue(e1.equals(e2));
+        assertEquals(e1, e2);
     }
 
     @Test
     public void compareToNullObjectIsFalse() throws Exception {
         BibEntry e1 = new BibEntry();
-        assertFalse(e1.equals(null));
+        assertNotEquals(null, e1);
     }
 
     @Test
     public void compareToDifferentClassIsFalse() throws Exception {
         BibEntry e1 = new BibEntry();
         Object e2 = new Object();
-        assertFalse(e1.equals(e2));
+        assertNotEquals(e1, e2);
     }
 
     @Test

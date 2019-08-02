@@ -5,6 +5,7 @@ import org.jabref.logic.layout.LayoutFormatter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class DOIStripTest {
 
@@ -13,7 +14,7 @@ public class DOIStripTest {
         LayoutFormatter lf = new DOIStrip();
 
         assertEquals("", lf.format(""));
-        assertEquals(null, lf.format(null));
+        assertNull(lf.format(null));
 
         assertEquals("10.1000/ISBN1-900512-44-0", lf.format("10.1000/ISBN1-900512-44-0"));
         assertEquals("10.1000/ISBN1-900512-44-0",

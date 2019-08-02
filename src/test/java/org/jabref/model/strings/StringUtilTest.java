@@ -8,11 +8,7 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StringUtilTest {
 
@@ -140,7 +136,7 @@ class StringUtilTest {
         assertEquals("]", StringUtil.stripBrackets("]"));
         assertEquals("", StringUtil.stripBrackets("[]"));
         assertEquals("f[]f", StringUtil.stripBrackets("f[]f"));
-        assertEquals(null, StringUtil.stripBrackets(null));
+        assertNull(StringUtil.stripBrackets(null));
     }
 
     @Test

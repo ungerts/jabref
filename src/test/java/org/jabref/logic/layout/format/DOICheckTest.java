@@ -5,6 +5,7 @@ import org.jabref.logic.layout.LayoutFormatter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class DOICheckTest {
 
@@ -13,7 +14,7 @@ public class DOICheckTest {
         LayoutFormatter lf = new DOICheck();
 
         assertEquals("", lf.format(""));
-        assertEquals(null, lf.format(null));
+        assertNull(lf.format(null));
 
         assertEquals("https://doi.org/10.1000/ISBN1-900512-44-0", lf.format("10.1000/ISBN1-900512-44-0"));
         assertEquals("https://doi.org/10.1000/ISBN1-900512-44-0",

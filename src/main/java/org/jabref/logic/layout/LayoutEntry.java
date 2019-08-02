@@ -253,9 +253,9 @@ class LayoutEntry {
         Optional<String> field;
         if (type == LayoutHelper.IS_GROUP_START) {
             field = bibtex.getResolvedFieldOrAlias(FieldFactory.parseField(text), database);
-        } else if (text.matches(".*(;|(\\&+)).*")) {
+        } else if (text.matches(".*(;|(&+)).*")) {
             // split the strings along &, && or ; for AND formatter
-            String[] parts = text.split("\\s*(;|(\\&+))\\s*");
+            String[] parts = text.split("\\s*(;|(&+))\\s*");
             field = Optional.empty();
             for (String part : parts) {
                 field = bibtex.getResolvedFieldOrAlias(FieldFactory.parseField(part), database);

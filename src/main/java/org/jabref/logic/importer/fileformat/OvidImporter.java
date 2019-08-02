@@ -28,16 +28,16 @@ import org.jabref.model.entry.field.UnknownField;
 public class OvidImporter extends Importer {
 
     private static final Pattern OVID_SOURCE_PATTERN = Pattern
-            .compile("Source ([ \\w&\\-,:]+)\\.[ ]+([0-9]+)\\(([\\w\\-]+)\\):([0-9]+\\-?[0-9]+?)\\,.*([0-9][0-9][0-9][0-9])");
+            .compile("Source ([ \\w&\\-,:]+)\\.[ ]+([0-9]+)\\(([\\w\\-]+)\\):([0-9]+-?[0-9]+?),.*([0-9][0-9][0-9][0-9])");
 
     private static final Pattern OVID_SOURCE_PATTERN_NO_ISSUE = Pattern
-            .compile("Source ([ \\w&\\-,:]+)\\.[ ]+([0-9]+):([0-9]+\\-?[0-9]+?)\\,.*([0-9][0-9][0-9][0-9])");
+            .compile("Source ([ \\w&\\-,:]+)\\.[ ]+([0-9]+):([0-9]+-?[0-9]+?),.*([0-9][0-9][0-9][0-9])");
 
     private static final Pattern OVID_SOURCE_PATTERN_2 = Pattern.compile(
-            "([ \\w&\\-,]+)\\. Vol ([0-9]+)\\(([\\w\\-]+)\\) ([A-Za-z]+) ([0-9][0-9][0-9][0-9]), ([0-9]+\\-?[0-9]+)");
+            "([ \\w&\\-,]+)\\. Vol ([0-9]+)\\(([\\w\\-]+)\\) ([A-Za-z]+) ([0-9][0-9][0-9][0-9]), ([0-9]+-?[0-9]+)");
 
     private static final Pattern INCOLLECTION_PATTERN = Pattern.compile(
-            "(.+)\\(([0-9][0-9][0-9][0-9])\\)\\. ([ \\w&\\-,:]+)\\.[ ]+\\(pp. ([0-9]+\\-?[0-9]+?)\\).[A-Za-z0-9, ]+pp\\. "
+            "(.+)\\(([0-9][0-9][0-9][0-9])\\)\\. ([ \\w&\\-,:]+)\\.[ ]+\\(pp. ([0-9]+-?[0-9]+?)\\).[A-Za-z0-9, ]+pp\\. "
                     + "([\\w, ]+): ([\\w, ]+)");
     private static final Pattern BOOK_PATTERN = Pattern.compile(
             "\\(([0-9][0-9][0-9][0-9])\\)\\. [A-Za-z, ]+([0-9]+) pp\\. ([\\w, ]+): ([\\w, ]+)");
@@ -115,7 +115,7 @@ public class OvidImporter extends Importer {
                     h.put(StandardField.AUTHOR, content);
 
                 } else if (fieldName.startsWith("Title")) {
-                    content = content.replaceAll("\\[.+\\]", "").trim();
+                    content = content.replaceAll("\\[.+]", "").trim();
                     if (content.endsWith(".")) {
                         content = content.substring(0, content.length() - 1);
                     }
@@ -231,7 +231,7 @@ public class OvidImporter extends Importer {
     private static String fixNames(String content) {
         String names;
         if (content.indexOf(';') > 0) { //LN FN; [LN FN;]*
-            names = content.replaceAll("[^\\.A-Za-z,;\\- ]", "").replace(";", " and");
+            names = content.replaceAll("[^.A-Za-z,;\\- ]", "").replace(";", " and");
         } else if (content.indexOf("  ") > 0) {
             String[] sNames = content.split("  ");
             StringBuilder sb = new StringBuilder();

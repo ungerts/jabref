@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class BracesCorrector {
 
-    private static final Pattern PATTERN_ESCAPED_CURLY_BRACES = Pattern.compile("(\\\\\\{)|(\\\\\\})");
+    private static final Pattern PATTERN_ESCAPED_CURLY_BRACES = Pattern.compile("(\\\\\\{)|(\\\\})");
     //private static final Pattern PATTERN_ESCAPED_CLOSING_CURLY_BRACE = Pattern.compile("");
 
     public static String apply(String input) {

@@ -22,7 +22,7 @@ public class StringUtil {
     public static final String SPECIAL_COMMAND_CHARS = "\"`^~'=.|";
     // contains all possible line breaks, not omitting any break such as "\\n"
     private static final Pattern LINE_BREAKS = Pattern.compile("\\r\\n|\\r|\\n");
-    private static final Pattern BRACED_TITLE_CAPITAL_PATTERN = Pattern.compile("\\{[A-Z]+\\}");
+    private static final Pattern BRACED_TITLE_CAPITAL_PATTERN = Pattern.compile("\\{[A-Z]+}");
     private static final UnicodeToReadableCharMap UNICODE_CHAR_MAP = new UnicodeToReadableCharMap();
 
     public static String booleanToBinaryString(boolean expression) {

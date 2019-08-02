@@ -23,7 +23,7 @@ public class NormalizePagesFormatter extends Formatter {
     // "startpage" and "endpage" are named groups. See http://stackoverflow.com/a/415635/873282 for a documentation
     private static final Pattern PAGES_DETECT_PATTERN = Pattern.compile("\\A(?<startpage>(\\d+:)?\\d+)(?:-{1,2}(?<endpage>(\\d+:)?\\d+))?\\Z");
 
-    private static final String REJECT_LITERALS = "[^a-zA-Z0-9,\\-\\+,:]";
+    private static final String REJECT_LITERALS = "[^a-zA-Z0-9,\\-+,:]";
     private static final String PAGES_REPLACE_PATTERN = "${startpage}--${endpage}";
     private static final String SINGLE_PAGE_REPLACE_PATTERN = "$1";
 

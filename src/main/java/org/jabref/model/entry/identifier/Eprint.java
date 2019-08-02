@@ -35,7 +35,7 @@ public class Eprint implements Identifier {
             + "|"                               // old id
             + ".+"                              // archive
             + "(\\.\\w{2})?"                    // optional subject class
-            + "\\/"                             // divider
+            + "/"                             // divider
             + "\\d{7}"                          // number
             + ")";                              // end group \1
     private static final String HTTP_EXP = "https?://[^\\s]+?" + EPRINT_EXP;

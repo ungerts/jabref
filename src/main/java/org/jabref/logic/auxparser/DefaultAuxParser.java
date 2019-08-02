@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
 public class DefaultAuxParser implements AuxParser {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAuxParser.class);
 
-    private static final Pattern CITE_PATTERN = Pattern.compile("\\\\(citation|abx@aux@cite)\\{(.+)\\}");
-    private static final Pattern INPUT_PATTERN = Pattern.compile("\\\\@input\\{(.+)\\}");
+    private static final Pattern CITE_PATTERN = Pattern.compile("\\\\(citation|abx@aux@cite)\\{(.+)}");
+    private static final Pattern INPUT_PATTERN = Pattern.compile("\\\\@input\\{(.+)}");
 
     private final BibDatabase masterDatabase;
 

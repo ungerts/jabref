@@ -28,7 +28,7 @@ import com.google.common.collect.MultimapBuilder;
  */
 public class ConvertMarkingToGroups implements PostOpenMigration {
 
-    private static final Pattern MARKING_PATTERN = Pattern.compile("\\[(.*):(\\d+)\\]");
+    private static final Pattern MARKING_PATTERN = Pattern.compile("\\[(.*):(\\d+)]");
 
     @Override
     public void performMigration(ParserResult parserResult) {

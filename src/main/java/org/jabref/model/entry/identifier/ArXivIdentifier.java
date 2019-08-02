@@ -28,7 +28,7 @@ public class ArXivIdentifier implements Identifier {
     }
 
     public static Optional<ArXivIdentifier> parse(String value) {
-        Pattern identifierPattern = Pattern.compile("(arxiv|arXiv)?\\s?:?\\s?(?<id>\\d{4}.\\d{4,5}(v\\d+)?)\\s?(\\[(?<classification>\\S+)\\])?");
+        Pattern identifierPattern = Pattern.compile("(arxiv|arXiv)?\\s?:?\\s?(?<id>\\d{4}.\\d{4,5}(v\\d+)?)\\s?(\\[(?<classification>\\S+)])?");
         Matcher identifierMatcher = identifierPattern.matcher(value);
         if (identifierMatcher.matches()) {
             String id = identifierMatcher.group("id");

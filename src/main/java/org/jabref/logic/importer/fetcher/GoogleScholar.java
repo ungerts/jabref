@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class GoogleScholar implements FulltextFetcher, SearchBasedFetcher {
     private static final Logger LOGGER = LoggerFactory.getLogger(GoogleScholar.class);
 
-    private static final Pattern LINK_TO_BIB_PATTERN = Pattern.compile("(https:\\/\\/scholar.googleusercontent.com\\/scholar.bib[^\"]*)");
+    private static final Pattern LINK_TO_BIB_PATTERN = Pattern.compile("(https://scholar.googleusercontent.com/scholar.bib[^\"]*)");
 
     private static final String BASIC_SEARCH_URL = "https://scholar.google.com/scholar?";
     private static final String SEARCH_IN_TITLE_URL = "https://scholar.google.com//scholar?";

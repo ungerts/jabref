@@ -490,7 +490,7 @@ public class GvkParser implements Parser {
     }
 
     private String removeSortCharacters(String input) {
-        return input.replaceAll("\\@", "");
+        return input.replaceAll("@", "");
     }
 
 }

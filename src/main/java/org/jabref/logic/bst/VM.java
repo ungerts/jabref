@@ -46,7 +46,7 @@ public class VM implements Warn {
 
     public static final Integer TRUE = 1;
 
-    private static final Pattern ADD_PERIOD_PATTERN = Pattern.compile("([^\\.\\?\\!\\}\\s])(\\}|\\s)*$");
+    private static final Pattern ADD_PERIOD_PATTERN = Pattern.compile("([^.?!}\\s])(}|\\s)*$");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VM.class);
 

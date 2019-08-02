@@ -13,7 +13,7 @@ public class RegexFormatter extends Formatter {
 
     public static final String KEY = "regex";
     private static final Pattern PATTERN_ESCAPED_OPENING_CURLY_BRACE = Pattern.compile("\\\\\\{");
-    private static final Pattern PATTERN_ESCAPED_CLOSING_CURLY_BRACE = Pattern.compile("\\\\\\}");
+    private static final Pattern PATTERN_ESCAPED_CLOSING_CURLY_BRACE = Pattern.compile("\\\\}");
     // RegEx to match {...}
     // \\ is required to have the { interpreted as character
     // ? is required to disable the aggressive match

@@ -41,7 +41,7 @@ public class BracketedPattern {
 
     private static final String STARTING_CAPITAL_PATTERN = "[^A-Z]";
     private static final int CHARS_OF_FIRST = 5;
-    private static final Pattern REGEX_PATTERN = Pattern.compile(".*\\(\\{([A-Z]+)\\}\\).*");
+    private static final Pattern REGEX_PATTERN = Pattern.compile(".*\\(\\{([A-Z]+)}\\).*");
 
     private final String pattern;
 
@@ -376,8 +376,8 @@ public class BracketedPattern {
             if ("abbr".equals(modifier)) {
                 // Abbreviate - that is,
                 StringBuilder abbreviateSB = new StringBuilder();
-                String[] words = resultingLabel.replaceAll("[\\{\\}']", "")
-                                               .split("[\\(\\) \r\n\"]");
+                String[] words = resultingLabel.replaceAll("[{}']", "")
+                                               .split("[() \r\n\"]");
                 for (String word : words) {
                     if (!word.isEmpty()) {
                         abbreviateSB.append(word.charAt(0));
@@ -1139,12 +1139,12 @@ public class BracketedPattern {
 
         String result = content;
         // Replace umlaut with '?e'
-        result = result.replaceAll("\\{\\\\\"([a-zA-Z])\\}", "$1e");
-        result = result.replaceAll("\\\\\"\\{([a-zA-Z])\\}", "$1e");
+        result = result.replaceAll("\\{\\\\\"([a-zA-Z])}", "$1e");
+        result = result.replaceAll("\\\\\"\\{([a-zA-Z])}", "$1e");
         result = result.replaceAll("\\\\\"([a-zA-Z])", "$1e");
         // Remove diacritics
-        result = result.replaceAll("\\{\\\\.([a-zA-Z])\\}", "$1");
-        result = result.replaceAll("\\\\.\\{([a-zA-Z])\\}", "$1");
+        result = result.replaceAll("\\{\\\\.([a-zA-Z])}", "$1");
+        result = result.replaceAll("\\\\.\\{([a-zA-Z])}", "$1");
         result = result.replaceAll("\\\\.([a-zA-Z])", "$1");
         return result;
     }
@@ -1160,9 +1160,9 @@ public class BracketedPattern {
      */
     private static String unifyDiacritics(String content) {
         return content.replaceAll(
-                "\\$\\\\ddot\\{\\\\mathrm\\{([^\\}])\\}\\}\\$",
+                "\\$\\\\ddot\\{\\\\mathrm\\{([^}])}}\\$",
                 "{\\\"$1}").replaceAll(
-                        "(\\\\[^\\-a-zA-Z])\\{?([a-zA-Z])\\}?",
+                        "(\\\\[^\\-a-zA-Z])\\{?([a-zA-Z])}?",
                         "{$1$2}");
     }
 
@@ -1265,7 +1265,7 @@ public class BracketedPattern {
 
         String result = content;
         result = unifyDiacritics(result);
-        result = result.replaceAll("^\\{", "").replaceAll("\\}$", "");
+        result = result.replaceAll("^\\{", "").replaceAll("}$", "");
         Matcher matcher = REGEX_PATTERN.matcher(result);
         if (matcher.matches()) {
             return matcher.group(1);
@@ -1285,7 +1285,7 @@ public class BracketedPattern {
             List<String> part = new ArrayList<>();
 
             // Cleanup: remove unnecessary words.
-            for (String k : parts[index].replaceAll("\\{[A-Z]+\\}", "").split("[ \\-_]")) {
+            for (String k : parts[index].replaceAll("\\{[A-Z]+}", "").split("[ \\-_]")) {
                 if ((!(k.isEmpty()) // remove empty
                         && !ignore.contains(k.toLowerCase(Locale.ENGLISH)) // remove ignored words
                         && (k.charAt(k.length() - 1) != '.')

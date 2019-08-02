@@ -28,7 +28,7 @@ class RegExpBasedFileFinder implements FileFinder {
 
     private static final Pattern ESCAPE_PATTERN = Pattern.compile("([^\\\\])\\\\([^\\\\])");
 
-    private static final Pattern SQUARE_BRACKETS_PATTERN = Pattern.compile("\\[.*?\\]");
+    private static final Pattern SQUARE_BRACKETS_PATTERN = Pattern.compile("\\[.*?]");
     private final String regExp;
     private final Character keywordDelimiter;
 

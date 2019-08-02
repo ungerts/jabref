@@ -338,7 +338,7 @@ public class IsiImporter extends Importer {
 
     public static String parseMonth(String value) {
 
-        String[] parts = value.split("\\s|\\-");
+        String[] parts = value.split("\\s|-");
         for (String part1 : parts) {
             Optional<Month> month = Month.getMonthByShortName(part1.toLowerCase(Locale.ROOT));
             if (month.isPresent()) {

@@ -46,10 +46,8 @@ public class FieldFactory {
     }
 
     public static OrFields parseOrFields(String fieldNames) {
-        Set<Field> fields = Arrays.stream(fieldNames.split(FieldFactory.FIELD_OR_SEPARATOR))
-                     .map(FieldFactory::parseField)
-                     .collect(Collectors.toSet());
-        return new OrFields(fields);
+        return Arrays.stream(fieldNames.split(FieldFactory.FIELD_OR_SEPARATOR))
+                .map(FieldFactory::parseField).distinct().collect(Collectors.toCollection(OrFields::new));
     }
 
     public static Set<OrFields> parseOrFieldsList(String fieldNames) {

@@ -68,7 +68,7 @@ public class ISIDOREFetcher implements PagedSearchBasedParserFetcher {
                 }
 
                 pushbackInputStream.unread(data);
-                DocumentBuilder builder = this.DOCUMENT_BUILDER_FACTORY.newDocumentBuilder();
+                DocumentBuilder builder = DOCUMENT_BUILDER_FACTORY.newDocumentBuilder();
                 Document document = builder.parse(pushbackInputStream);
 
                 // Assuming the root element represents an entry

@@ -22,7 +22,7 @@ public class ContentSelectors {
     private final SortedSet<ContentSelector> contentSelectors;
 
     public ContentSelectors() {
-        contentSelectors = new TreeSet<>(new Comparator<ContentSelector>() {
+        contentSelectors = new TreeSet<>(new Comparator<>() {
             @Override
             public int compare(ContentSelector o1, ContentSelector o2) {
                 // First, check the field name

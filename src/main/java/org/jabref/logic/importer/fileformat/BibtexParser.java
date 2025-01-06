@@ -775,7 +775,7 @@ public class BibtexParser implements Parser {
             }
             if (character == '"') {
                 StringBuilder text = parseQuotedFieldExactly();
-                value.append(text.toString());
+                value.append(text);
             } else if (character == '{') {
                 // Value is a string enclosed in brackets. There can be pairs
                 // of brackets inside a field, so we need to count the

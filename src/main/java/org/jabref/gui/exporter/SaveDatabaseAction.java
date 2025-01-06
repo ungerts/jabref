@@ -188,7 +188,7 @@ public class SaveDatabaseAction {
             Path savePath = selectedPath.get();
             // Workaround for linux systems not adding file extension
             if (!savePath.getFileName().toString().toLowerCase().endsWith(".bib")) {
-                savePath = Path.of(savePath.toString() + ".bib");
+                savePath = Path.of(savePath + ".bib");
                 if (!Files.notExists(savePath)) {
                     if (!dialogService.showConfirmationDialogAndWait(Localization.lang("Overwrite file"), Localization.lang("'%0' exists. Overwrite file?", savePath.getFileName()))) {
                         return Optional.empty();

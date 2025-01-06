@@ -167,9 +167,9 @@ class IacrEprintFetcherTest {
     void searchByIdWithOldHtmlFormatWithoutDateCheck(String id) throws FetcherException {
         Optional<BibEntry> fetchedEntry = fetcher.performSearchById(id);
         assertTrue(fetchedEntry.isPresent(), "Expected to get an entry for id " + id);
-        assertNotEquals(Optional.empty(), fetchedEntry.get().getField(StandardField.DATE), "Expected non empty date field, entry is\n" + fetchedEntry.toString());
-        assertEquals(10, fetchedEntry.get().getField(StandardField.DATE).get().length(), "Expected yyyy-MM-dd date format, entry is\n" + fetchedEntry.toString());
-        assertNotEquals(Optional.empty(), fetchedEntry.get().getField(StandardField.ABSTRACT), "Expected non empty abstract field, entry is\n" + fetchedEntry.toString());
+        assertNotEquals(Optional.empty(), fetchedEntry.get().getField(StandardField.DATE), "Expected non empty date field, entry is\n" + fetchedEntry);
+        assertEquals(10, fetchedEntry.get().getField(StandardField.DATE).get().length(), "Expected yyyy-MM-dd date format, entry is\n" + fetchedEntry);
+        assertNotEquals(Optional.empty(), fetchedEntry.get().getField(StandardField.ABSTRACT), "Expected non empty abstract field, entry is\n" + fetchedEntry);
     }
 
     /**

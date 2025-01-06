@@ -116,7 +116,7 @@ public class FileAnnotation {
      */
     private String abbreviateAnnotationName(final String annotationName) {
         if (annotationName.length() > ABBREVIATED_ANNOTATION_NAME_LENGTH) {
-            return annotationName.subSequence(0, ABBREVIATED_ANNOTATION_NAME_LENGTH).toString() + "...";
+            return annotationName.subSequence(0, ABBREVIATED_ANNOTATION_NAME_LENGTH) + "...";
         }
         return annotationName;
     }

@@ -105,7 +105,7 @@ public class UnlinkedFilesDialogViewModelTest {
         List<Path> fileList = checkedFileListProperty.stream()
                                                      .map(item -> item.getValue().getPath())
                                                      .filter(path -> path.toFile().isFile())
-                                                     .map(path -> directory.relativize(path))
+                                                     .map(directory::relativize)
                                                      .collect(Collectors.toList());
         assertEquals(
                 List.of(directory.relativize(file1), directory.relativize(file2)),

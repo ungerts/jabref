@@ -48,7 +48,7 @@ public class DocbookExporterTest {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "Peptidomics of the larval {{{D}rosophila melanogaster}} central nervous system.");
 
-        List<BibEntry> entries = Arrays.asList(entry);
+        List<BibEntry> entries = List.of(entry);
 
         exportFormat.export(databaseContext, tmpFile, entries);
 
@@ -64,7 +64,7 @@ public class DocbookExporterTest {
         BibEntry entry = new BibEntry();
         entry.setField(StandardField.TITLE, "Insect neuropeptide bursicon homodimers induce innate immune and stress genes during molting by activating the {NF}-$\\kappa$B transcription factor Relish.");
 
-        List<BibEntry> entries = Arrays.asList(entry);
+        List<BibEntry> entries = List.of(entry);
 
         exportFormat.export(databaseContext, tmpFile, entries);
 

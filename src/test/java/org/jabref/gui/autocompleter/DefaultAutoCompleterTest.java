@@ -3,6 +3,7 @@ package org.jabref.gui.autocompleter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import org.jabref.model.database.BibDatabase;
 import org.jabref.model.entry.BibEntry;
@@ -63,7 +64,7 @@ class DefaultAutoCompleterTest {
         database.insertEntry(entry);
 
         Collection<String> result = autoCompleter.provideSuggestions(getRequest("testValue"));
-        assertEquals(Arrays.asList("testValue"), result);
+        assertEquals(List.of("testValue"), result);
     }
 
     @Test
@@ -73,7 +74,7 @@ class DefaultAutoCompleterTest {
         database.insertEntry(entry);
 
         Collection<String> result = autoCompleter.provideSuggestions(getRequest("test"));
-        assertEquals(Arrays.asList("testValue"), result);
+        assertEquals(List.of("testValue"), result);
     }
 
     @Test
@@ -83,7 +84,7 @@ class DefaultAutoCompleterTest {
         database.insertEntry(entry);
 
         Collection<String> result = autoCompleter.provideSuggestions(getRequest("testvalue"));
-        assertEquals(Arrays.asList("testValue"), result);
+        assertEquals(List.of("testValue"), result);
     }
 
     @Test

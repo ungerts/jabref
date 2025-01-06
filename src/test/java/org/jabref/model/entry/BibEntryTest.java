@@ -252,7 +252,7 @@ class BibEntryTest {
         List<LinkedFile> files = entry.getFiles();
         files.add(new LinkedFile("", Path.of(""), ""));
         entry.setFiles(files);
-        assertEquals(Arrays.asList(new LinkedFile("", Path.of(""), "")), entry.getFiles());
+        assertEquals(List.of(new LinkedFile("", Path.of(""), "")), entry.getFiles());
     }
 
     @Test

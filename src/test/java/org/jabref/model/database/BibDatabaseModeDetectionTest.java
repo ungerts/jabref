@@ -19,7 +19,7 @@ class BibDatabaseModeDetectionTest {
 
     @Test
     void detectBiblatex() {
-        List<BibEntry> entries = Arrays.asList(new BibEntry(StandardEntryType.MvBook));
+        List<BibEntry> entries = List.of(new BibEntry(StandardEntryType.MvBook));
 
         assertEquals(BibDatabaseMode.BIBLATEX, BibDatabaseModeDetection.inferMode(new BibDatabase(entries)));
     }
@@ -28,7 +28,7 @@ class BibDatabaseModeDetectionTest {
     void detectUndistinguishableAsBibtex() {
         BibEntry entry = new BibEntry(StandardEntryType.Article);
         entry.setField(StandardField.TITLE, "My cool paper");
-        List<BibEntry> entries = Arrays.asList(entry);
+        List<BibEntry> entries = List.of(entry);
 
         assertEquals(BibDatabaseMode.BIBTEX, BibDatabaseModeDetection.inferMode(new BibDatabase(entries)));
     }
@@ -47,7 +47,7 @@ class BibDatabaseModeDetectionTest {
     @Test
     void detectUnknownTypeAsBibtex() {
         BibEntry entry = new BibEntry(UNKNOWN_TYPE);
-        List<BibEntry> entries = Arrays.asList(entry);
+        List<BibEntry> entries = List.of(entry);
 
         assertEquals(BibDatabaseMode.BIBTEX, BibDatabaseModeDetection.inferMode(new BibDatabase(entries)));
     }

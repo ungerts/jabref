@@ -89,7 +89,7 @@ public class UnitsToLatexFormatter extends Formatter {
                 prefixUnitCombinations.add(prefix + unit);
             }
         }
-        Collections.sort(prefixUnitCombinations, new StringLengthComparator()); // Sort based on string length
+        prefixUnitCombinations.sort(new StringLengthComparator()); // Sort based on string length
     }
 
     @Override

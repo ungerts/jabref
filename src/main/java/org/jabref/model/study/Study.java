@@ -97,26 +97,15 @@ public class Study {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-
-        Study otherStudy = (Study) other;
-
-        return Objects.equals(authors, otherStudy.authors) &&
-                Objects.equals(title, otherStudy.title) &&
-                Objects.equals(researchQuestions, otherStudy.researchQuestions) &&
-                Objects.equals(queries, otherStudy.queries) &&
-                Objects.equals(databases, otherStudy.databases);
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Study study = (Study) o;
+        return Objects.equals(authors, study.authors) && Objects.equals(title, study.title) && Objects.equals(researchQuestions, study.researchQuestions) && Objects.equals(queries, study.queries) && Objects.equals(databases, study.databases);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this);
+        return Objects.hash(authors, title, researchQuestions, queries, databases);
     }
 }
 

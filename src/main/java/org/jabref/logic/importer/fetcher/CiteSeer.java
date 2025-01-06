@@ -55,38 +55,34 @@ public class CiteSeer implements SearchBasedFetcher, FulltextFetcher {
     @Override
     public List<BibEntry> performSearch(QueryNode luceneQuery) throws FetcherException {
         // ADR-0014
-        try {
-            JSONElement payload = getPayloadJSON(luceneQuery);
-            HttpResponse<JsonNode> httpResponse = Unirest.post(API_URL)
-                                                         .header("authority", BASE_URL)
-                                                         .header("accept", "application/json, text/plain, */*")
-                                                         .header("content-type", "application/json;charset=UTF-8")
-                                                         .header("origin", "https://" + BASE_URL)
-                                                         .body(payload)
-                                                         .asJson();
-            if (!httpResponse.isSuccess()) {
-                LOGGER.debug("No success");
-                // TODO: body needs to be added to the exception, but we currently only have JSON available, but the error is most probably simple text (or HTML)
-                SimpleHttpResponse simpleHttpResponse = new SimpleHttpResponse(httpResponse.getStatus(), httpResponse.getStatusText(), "");
-                throw new FetcherException(API_URL, simpleHttpResponse);
-            }
-
-            JsonNode requestResponse = httpResponse.getBody();
-            Optional<JSONArray> jsonResponse = Optional.ofNullable(requestResponse)
-                                                       .map(JsonNode::getObject)
-                                                       .map(response -> response.optJSONArray("response"));
-
-            if (jsonResponse.isEmpty()) {
-                LOGGER.debug("No entries found for query: {}", luceneQuery);
-                return List.of();
-            }
-
-            CiteSeerParser parser = new CiteSeerParser();
-            List<BibEntry> fetchedEntries = parser.parseCiteSeerResponse(jsonResponse.orElse(new JSONArray()));
-            return fetchedEntries;
-        } catch (ParseException ex) {
-            throw new FetcherException("An internal parser error occurred while parsing CiteSeer entries", ex);
+        JSONElement payload = getPayloadJSON(luceneQuery);
+        HttpResponse<JsonNode> httpResponse = Unirest.post(API_URL)
+                                                     .header("authority", BASE_URL)
+                                                     .header("accept", "application/json, text/plain, */*")
+                                                     .header("content-type", "application/json;charset=UTF-8")
+                                                     .header("origin", "https://" + BASE_URL)
+                                                     .body(payload)
+                                                     .asJson();
+        if (!httpResponse.isSuccess()) {
+            LOGGER.debug("No success");
+            // TODO: body needs to be added to the exception, but we currently only have JSON available, but the error is most probably simple text (or HTML)
+            SimpleHttpResponse simpleHttpResponse = new SimpleHttpResponse(httpResponse.getStatus(), httpResponse.getStatusText(), "");
+            throw new FetcherException(API_URL, simpleHttpResponse);
         }
+
+        JsonNode requestResponse = httpResponse.getBody();
+        Optional<JSONArray> jsonResponse = Optional.ofNullable(requestResponse)
+                                                   .map(JsonNode::getObject)
+                                                   .map(response -> response.optJSONArray("response"));
+
+        if (jsonResponse.isEmpty()) {
+            LOGGER.debug("No entries found for query: {}", luceneQuery);
+            return List.of();
+        }
+
+        CiteSeerParser parser = new CiteSeerParser();
+        List<BibEntry> fetchedEntries = parser.parseCiteSeerResponse(jsonResponse.orElse(new JSONArray()));
+        return fetchedEntries;
     }
 
     private JSONElement getPayloadJSON(QueryNode luceneQuery) {
@@ -96,7 +92,7 @@ public class CiteSeer implements SearchBasedFetcher, FulltextFetcher {
     }
 
     @Override
-    public Optional<URL> findFullText(BibEntry entry) throws IOException, FetcherException {
+    public Optional<URL> findFullText(BibEntry entry) throws IOException {
         Objects.requireNonNull(entry);
 
         // does not use a valid DOI, but Cite Seer's id / hash available for each entry

@@ -61,7 +61,7 @@ public class RuleBasedPlainCitationParser implements PlainCitationParser {
     private String journalOrPublisher = "";
 
     @Override
-    public Optional<BibEntry> parsePlainCitation(String text) throws FetcherException {
+    public Optional<BibEntry> parsePlainCitation(String text) {
         String inputWithoutUrls = findUrls(text);
         String inputWithoutAuthors = findAuthors(inputWithoutUrls);
         String inputWithoutYear = findYear(inputWithoutAuthors);

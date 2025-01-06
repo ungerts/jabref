@@ -82,7 +82,7 @@ class MedraTest {
     }
 
     @Test
-    void performNonExistent() throws FetcherException {
+    void performNonExistent() {
         assertThrows(FetcherServerException.class, () -> fetcher.performSearchById("10.1016/j.bjoms.2007.08.004"));
     }
 

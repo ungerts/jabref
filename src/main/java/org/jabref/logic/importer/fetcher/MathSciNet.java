@@ -77,7 +77,7 @@ public class MathSciNet implements SearchBasedParserFetcher, EntryBasedParserFet
      * without subscription and, moreover, is optimized for finding a publication based on partial information.
      */
     @Override
-    public URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException {
         Optional<String> mrNumberInEntry = entry.getField(StandardField.MR_NUMBER);
         if (mrNumberInEntry.isPresent()) {
             // We are lucky and already know the id, so use it instead

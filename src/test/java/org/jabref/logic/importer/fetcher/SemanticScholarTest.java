@@ -121,7 +121,7 @@ public class SemanticScholarTest implements PagedSearchFetcherTest {
     }
 
     @Test
-    void getURLForQueryWithLucene() throws QueryNodeParseException, MalformedURLException, FetcherException, URISyntaxException {
+    void getURLForQueryWithLucene() throws QueryNodeParseException, MalformedURLException, URISyntaxException {
         String query = "Software engineering";
         SyntaxParser parser = new StandardSyntaxParser();
         URL url = fetcher.getURLForQuery(parser.parse(query, "default"), 0);

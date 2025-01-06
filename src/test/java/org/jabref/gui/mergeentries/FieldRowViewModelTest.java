@@ -37,7 +37,7 @@ public class FieldRowViewModelTest {
     BibEntryPreferences bibEntryPreferences = mock(BibEntryPreferences.class);
 
     @BeforeEach
-    void setup() throws ParseException {
+    void setup() {
         leftEntry = new BibEntry(StandardEntryType.Article)
                 .withCitationKey("LajnDiezScheinEtAl2012")
                 .withField(StandardField.AUTHOR, "Lajn, A and Diez, T and Schein, F and Frenzel, H and von Wenckstern, H and Grundmann, M")

@@ -52,7 +52,7 @@ public class CompositeSearchBasedFetcher implements SearchBasedFetcher {
     }
 
     @Override
-    public List<BibEntry> performSearch(QueryNode luceneQuery) throws FetcherException {
+    public List<BibEntry> performSearch(QueryNode luceneQuery) {
         // All entries have to be converted into one format, this is necessary for the format conversion
         return fetchers.parallelStream()
                        .flatMap(searchBasedFetcher -> {

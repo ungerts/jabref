@@ -27,7 +27,7 @@ public interface EntryBasedParserFetcher extends EntryBasedFetcher, ParserFetche
      *
      * @param entry the entry to look information for
      */
-    URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException, FetcherException;
+    URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException;
 
     /**
      * Returns the parser used to convert the response to a list of {@link BibEntry}.

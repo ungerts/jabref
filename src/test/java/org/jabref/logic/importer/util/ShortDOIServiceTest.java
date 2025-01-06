@@ -30,7 +30,7 @@ class ShortDOIServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenDOIWasNotFound() throws ShortDOIServiceException {
+    void shouldThrowExceptionWhenDOIWasNotFound() {
         assertThrows(ShortDOIServiceException.class, () -> sut.getShortDOI(notExistingDoi));
     }
 }

@@ -45,16 +45,11 @@ public class Highlighter {
         }
 
         Document document = Jsoup.parse(htmlText);
-        try {
-            highlightTextNodes(document.body(), searchTermsPattern.get());
-            return document.outerHtml();
-        } catch (InvalidTokenOffsetsException e) {
-            LOGGER.debug("Error highlighting search terms in HTML", e);
-            return htmlText;
-        }
+        highlightTextNodes(document.body(), searchTermsPattern.get());
+        return document.outerHtml();
     }
 
-    private static void highlightTextNodes(Element element, String searchPattern) throws InvalidTokenOffsetsException {
+    private static void highlightTextNodes(Element element, String searchPattern) {
         for (Node node : element.childNodes()) {
             if (node instanceof TextNode textNode) {
                 String highlightedText = highlightNode(textNode.text(), searchPattern);

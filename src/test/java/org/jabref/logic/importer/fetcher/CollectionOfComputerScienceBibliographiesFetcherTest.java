@@ -46,7 +46,7 @@ class CollectionOfComputerScienceBibliographiesFetcherTest {
     }
 
     @Test
-    void getUrlForQueryReturnsCorrectUrl() throws MalformedURLException, URISyntaxException, FetcherException, QueryNodeParseException {
+    void getUrlForQueryReturnsCorrectUrl() throws MalformedURLException, URISyntaxException, QueryNodeParseException {
         String query = "java jdk";
         URL url = fetcher.getURLForQuery(new StandardSyntaxParser().parse(query, AbstractQueryTransformer.NO_EXPLICIT_FIELD));
         assertEquals("http://liinwww.ira.uka.de/bibliography/rss?query=java+jdk&sort=score", url.toString());

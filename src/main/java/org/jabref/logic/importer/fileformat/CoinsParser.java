@@ -34,7 +34,7 @@ public class CoinsParser implements Parser {
     private final Pattern AUTHOR = Pattern.compile("&amp;rft.au=([^&]+)");
 
     @Override
-    public List<BibEntry> parseEntries(InputStream inputStream) throws ParseException {
+    public List<BibEntry> parseEntries(InputStream inputStream) {
         String data = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining(OS.NEWLINE));
         BibEntry entry = new BibEntry();
 

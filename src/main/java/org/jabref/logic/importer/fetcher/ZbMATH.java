@@ -48,7 +48,7 @@ public class ZbMATH implements SearchBasedParserFetcher, IdBasedParserFetcher, E
     }
 
     @Override
-    public URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException, FetcherException {
+    public URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException {
         Optional<String> zblidInEntry = entry.getField(StandardField.ZBL_NUMBER);
         if (zblidInEntry.isPresent()) {
             // zbmath id is already present

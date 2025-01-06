@@ -17,7 +17,7 @@ import kong.unirest.core.json.JSONObject;
 
 public class CiteSeerParser {
 
-    public List<BibEntry> parseCiteSeerResponse(JSONArray jsonResponse) throws ParseException {
+    public List<BibEntry> parseCiteSeerResponse(JSONArray jsonResponse) {
         List<BibEntry> response = new ArrayList<>();
         CookieHandler.setDefault(new CookieManager());
         for (int i = 0; i < jsonResponse.length(); ++i) {

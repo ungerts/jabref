@@ -83,7 +83,7 @@ class DoiToBibtexConverterComIsbnFetcherTest extends AbstractIsbnFetcherTest {
     }
 
     @Test
-    void searchByIdFailedWithShortISBN() throws FetcherException {
+    void searchByIdFailedWithShortISBN() {
         assertThrows(FetcherClientException.class, () -> fetcher.performSearchById("0321356683"));
     }
 }

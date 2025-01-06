@@ -100,7 +100,7 @@ class CiteSeerQueryTransformerTest extends InfixTransformerTest<CiteSeerQueryTra
         assertEquals(authorsExpected, authorsActual);
     }
 
-    private static Stream<Arguments> getJSONWithYearVariations() throws FetcherException {
+    private static Stream<Arguments> getJSONWithYearVariations() {
         String baseString = "title:Ericksen-Leslie page:1 pageSize:20 must_have_pdf:false sortBy:relevance";
         List<String> withYearAndYearRange = List.of(
                 StringUtil.join(new String[]{baseString, "year:2020"}, " ", 0, 2),

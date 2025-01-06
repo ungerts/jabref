@@ -48,7 +48,7 @@ public interface SearchBasedParserFetcher extends SearchBasedFetcher, ParserFetc
         URL urlForQuery;
         try {
             urlForQuery = getURLForQuery(luceneQuery);
-        } catch (URISyntaxException | MalformedURLException | FetcherException e) {
+        } catch (URISyntaxException | MalformedURLException e) {
             throw new FetcherException("Search URI crafted from complex search query is malformed", e);
         }
         return getBibEntries(urlForQuery);
@@ -78,5 +78,5 @@ public interface SearchBasedParserFetcher extends SearchBasedFetcher, ParserFetc
      *
      * @param luceneQuery the root node of the lucene query
      */
-    URL getURLForQuery(QueryNode luceneQuery) throws URISyntaxException, MalformedURLException, FetcherException;
+    URL getURLForQuery(QueryNode luceneQuery) throws URISyntaxException, MalformedURLException;
 }

@@ -150,7 +150,7 @@ class CrossRefTest {
      * reveal fetching error on crossref performSearchById
      */
     @Test
-    void performSearchValidReturnNothingDOI() throws FetcherException {
+    void performSearchValidReturnNothingDOI() {
         assertThrows(FetcherClientException.class, () -> fetcher.performSearchById("10.1392/BC1.0"));
     }
 }

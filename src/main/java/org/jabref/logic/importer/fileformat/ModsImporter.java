@@ -629,7 +629,7 @@ public class ModsImporter extends Importer implements Parser {
     }
 
     @Override
-    public List<BibEntry> parseEntries(InputStream inputStream) throws ParseException {
+    public List<BibEntry> parseEntries(InputStream inputStream) {
         try {
             return importDatabase(new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))).getDatabase().getEntries();
         } catch (IOException e) {

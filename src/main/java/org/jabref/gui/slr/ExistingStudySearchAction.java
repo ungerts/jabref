@@ -116,7 +116,7 @@ public class ExistingStudySearchAction extends SimpleCommand {
                     preferences,
                     new BibEntryTypesManager(),
                     fileUpdateMonitor);
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             LOGGER.error("Error during reading of study definition file.", e);
             dialogService.showErrorDialogAndWait(Localization.lang("Error during reading of study definition file."), e);
             return;

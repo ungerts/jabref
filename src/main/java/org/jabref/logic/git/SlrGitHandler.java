@@ -91,7 +91,7 @@ public class SlrGitHandler extends GitHandler {
      * @param patch the patch (diff) as a string
      * @return Returns a map where each file has its path as a key and the string contains the hunk of new results
      */
-    Map<Path, String> parsePatchForAddedEntries(String patch) throws IOException, GitAPIException {
+    Map<Path, String> parsePatchForAddedEntries(String patch) throws IOException {
         String[] tokens = patch.split("\n");
         // Tracks for each file the related diff. Represents each file by its relative path
         Map<Path, String> diffsPerFile = new HashMap<>();

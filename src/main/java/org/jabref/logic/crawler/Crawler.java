@@ -36,7 +36,7 @@ public class Crawler {
                    SlrGitHandler gitHandler,
                    CliPreferences preferences,
                    BibEntryTypesManager bibEntryTypesManager,
-                   FileUpdateMonitor fileUpdateMonitor) throws IllegalArgumentException, IOException, ParseException {
+                   FileUpdateMonitor fileUpdateMonitor) throws IllegalArgumentException, IOException {
         this.studyRepository = new StudyRepository(
                 studyRepositoryRoot,
                 gitHandler,

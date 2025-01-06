@@ -115,7 +115,7 @@ public class GrobidPlainCitationParserTest {
 
     @ParameterizedTest
     @MethodSource("provideInvalidInput")
-    void grobidPerformSearchWithInvalidDataTest(String invalidInput) throws FetcherException {
+    void grobidPerformSearchWithInvalidDataTest(String invalidInput) {
         assertThrows(FetcherException.class, () ->
                 grobidPlainCitationParser.parsePlainCitation("invalidInput"), "performSearch should throw an FetcherException.");
     }

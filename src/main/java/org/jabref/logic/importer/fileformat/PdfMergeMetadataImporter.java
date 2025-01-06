@@ -171,7 +171,7 @@ public class PdfMergeMetadataImporter extends PdfImporter {
         }
 
         @Override
-        public List<BibEntry> performSearch(BibEntry entry) throws FetcherException {
+        public List<BibEntry> performSearch(BibEntry entry) {
             for (LinkedFile file : entry.getFiles()) {
                 Optional<Path> filePath = file.findIn(databaseContext, filePreferences);
                 if (filePath.isPresent()) {

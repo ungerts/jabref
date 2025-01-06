@@ -32,7 +32,7 @@ public interface IdParserFetcher<T extends Identifier> extends IdFetcher<T>, Par
      *
      * @param entry the entry to look information for
      */
-    URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException, FetcherException;
+    URL getURLForEntry(BibEntry entry) throws URISyntaxException, MalformedURLException;
 
     /**
      * Returns the parser used to convert the response to a list of {@link BibEntry}.
@@ -46,7 +46,7 @@ public interface IdParserFetcher<T extends Identifier> extends IdFetcher<T>, Par
      *                       the result)
      * @param fetchedEntries list of entries returned by the web service
      */
-    Optional<T> extractIdentifier(BibEntry inputEntry, List<BibEntry> fetchedEntries) throws FetcherException;
+    Optional<T> extractIdentifier(BibEntry inputEntry, List<BibEntry> fetchedEntries);
 
     @Override
     default Optional<T> findIdentifier(BibEntry entry) throws FetcherException {
@@ -69,9 +69,6 @@ public interface IdParserFetcher<T extends Identifier> extends IdFetcher<T>, Par
             fetchedEntries.forEach(this::doPostCleanup);
 
             return extractIdentifier(entry, fetchedEntries);
-        } catch (FileNotFoundException e) {
-            LOGGER.debug("Id not found");
-            return Optional.empty();
         } catch (IOException e) {
             // check for the case where we already have a FetcherException from UrlDownload
             if (e.getCause() instanceof FetcherException fe) {

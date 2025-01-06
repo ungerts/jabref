@@ -552,10 +552,9 @@ class LayoutEntry {
         while (i < c.length) {
             int start = i;
             if (Character.isJavaIdentifierStart(c[i])) {
-                i++;
-                while ((i < c.length) && (Character.isJavaIdentifierPart(c[i]) || (c[i] == '.'))) {
+                do {
                     i++;
-                }
+                } while ((i < c.length) && (Character.isJavaIdentifierPart(c[i]) || (c[i] == '.')));
                 if ((i < c.length) && (c[i] == '(')) {
                     String method = calls.substring(start, i);
 

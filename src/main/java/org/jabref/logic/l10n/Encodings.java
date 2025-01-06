@@ -15,10 +15,8 @@ public class Encodings {
     }
 
     static {
-        List<String> encodingsStringList = encodingsList.stream().map(Charset::displayName).distinct()
-                                                        .collect(Collectors.toList());
         ENCODINGS = encodingsList.toArray(new Charset[encodingsList.size()]);
-        ENCODINGS_DISPLAYNAMES = encodingsStringList.toArray(new String[encodingsStringList.size()]);
+        ENCODINGS_DISPLAYNAMES = encodingsList.stream().map(Charset::displayName).distinct().toArray(String[]::new);
     }
 
     public static List<Charset> getCharsets() {

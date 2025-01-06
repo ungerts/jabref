@@ -72,7 +72,6 @@ public class MainTableFieldValueFormatter {
         }
 
         return switch (displayStyle) {
-            default -> nameToFormat;
             case FIRSTNAME_LASTNAME -> authors.latexFree().getAsFirstLastNames(
                     abbreviationStyle == AbbreviationStyle.FULL,
                     false);
@@ -80,6 +79,7 @@ public class MainTableFieldValueFormatter {
                     abbreviationStyle == AbbreviationStyle.FULL,
                     false);
             case NATBIB -> authors.latexFree().getAsNatbib();
+            default -> nameToFormat;
         };
     }
 }

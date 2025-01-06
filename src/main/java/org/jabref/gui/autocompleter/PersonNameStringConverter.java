@@ -28,11 +28,11 @@ public class PersonNameStringConverter extends StringConverter<Author> {
                 autoCompFF = false;
                 autoCompLF = true;
                 break;
-            default:
             case BOTH:
                 autoCompFF = true;
                 autoCompLF = true;
                 break;
+            default:
         }
 
         autoCompleteFirstNameMode = preferences.getFirstNameMode();

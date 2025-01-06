@@ -16,26 +16,26 @@ eclipse {
                 entries.findAll { isModule(it) }.each { //this was already necessary to build modular projects
                     it.entryAttributes['module'] = 'true'
                 }
-                def controlsfx = entries.find { isControlsfx(it) };
-                controlsfx.entryAttributes['add-exports'] = 'org.controlsfx.controls/impl.org.controlsfx.skin=org.jabref:org.controlsfx.controls/org.controlsfx.control.textfield=org.jabref:org.controlsfx.controls/impl.org.controlsfx.autocompletion=org.jabref';
-                controlsfx.entryAttributes['add-opens'] = 'org.controlsfx.controls/impl.org.controlsfx.skin=org.jabref:org.controlsfx.controls/org.controlsfx.control.textfield=org.jabref:org.controlsfx.controls/impl.org.controlsfx.autocompletion=org.jabref';
+                def controlsfx = entries.find { isControlsfx(it) }
+                controlsfx.entryAttributes['add-exports'] = 'org.controlsfx.controls/impl.org.controlsfx.skin=org.jabref:org.controlsfx.controls/org.controlsfx.control.textfield=org.jabref:org.controlsfx.controls/impl.org.controlsfx.autocompletion=org.jabref'
+                controlsfx.entryAttributes['add-opens'] = 'org.controlsfx.controls/impl.org.controlsfx.skin=org.jabref:org.controlsfx.controls/org.controlsfx.control.textfield=org.jabref:org.controlsfx.controls/impl.org.controlsfx.autocompletion=org.jabref'
 
                 entries.findAll { isSource(it) && isTestScope(it) }.each { //mark test source folders
                     it.entryAttributes['test'] = 'true'
                 }
 
-                def javafxcontrols = entries.find { isJavafxControls(it) };
-                javafxcontrols.entryAttributes['add-exports'] = 'javafx.controls/com.sun.javafx.scene.control=org.jabref:javafx.controls/com.sun.javafx.scene.control.behavior=org.jabref:javafx.controls/javafx.scene.control=org.jabref';
-                javafxcontrols.entryAttributes['add-opens'] = 'javafx.controls/com.sun.javafx.scene.control=org.jabref:javafx.controls/com.sun.javafx.scene.control.behavior=org.jabref:javafx.controls/javafx.scene.control=org.jabref:javafx.controls/javafx.scene.control.skin=org.controlsfx.controls';
+                def javafxcontrols = entries.find { isJavafxControls(it) }
+                javafxcontrols.entryAttributes['add-exports'] = 'javafx.controls/com.sun.javafx.scene.control=org.jabref:javafx.controls/com.sun.javafx.scene.control.behavior=org.jabref:javafx.controls/javafx.scene.control=org.jabref'
+                javafxcontrols.entryAttributes['add-opens'] = 'javafx.controls/com.sun.javafx.scene.control=org.jabref:javafx.controls/com.sun.javafx.scene.control.behavior=org.jabref:javafx.controls/javafx.scene.control=org.jabref:javafx.controls/javafx.scene.control.skin=org.controlsfx.controls'
 
-                def javafxgraphics = entries.find { isJavafxGraphics(it) };
-                javafxgraphics.entryAttributes['add-opens'] = 'javafx.graphics/javafx.scene=org.controlsfx.controls';
+                def javafxgraphics = entries.find { isJavafxGraphics(it) }
+                javafxgraphics.entryAttributes['add-opens'] = 'javafx.graphics/javafx.scene=org.controlsfx.controls'
 
-                def javafxbase = entries.find { isJavafxBase(it) };
-                javafxbase.entryAttributes['add-exports'] = 'javafx.base/com.sun.javafx.event=org.controlsfx.controls:';
+                def javafxbase = entries.find { isJavafxBase(it) }
+                javafxbase.entryAttributes['add-exports'] = 'javafx.base/com.sun.javafx.event=org.controlsfx.controls:'
 
-                def javafxfxml = entries.find { isJavafxFXML(it) };
-                javafxfxml.entryAttributes['add-opens'] = 'javafx.fxml/javafx.fxml=org.jabref';
+                def javafxfxml = entries.find { isJavafxFXML(it) }
+                javafxfxml.entryAttributes['add-opens'] = 'javafx.fxml/javafx.fxml=org.jabref'
 
                 entries.findAll { isLibrary(it) && isTestScope(it) }.each { //mark test source files
                     it.entryAttributes['test'] = 'true'
@@ -49,24 +49,24 @@ eclipse {
     }
 }
 
-boolean isLibrary(entry) { return entry.properties.kind.equals('lib') }
+boolean isLibrary(entry) { return entry.properties.kind == 'lib' }
 
 boolean isTestScope(entry) { return !entry.entryAttributes.get('gradle_used_by_scope').contains('main') }
 
 boolean isModule(entry) {
-    isLibrary(entry) && !isTestScope(entry);
+    isLibrary(entry) && !isTestScope(entry)
 } //a test-scope library should be put on the classpath instead of the modulepath
-boolean isSource(entry) { return entry.properties.kind.equals('src'); }
+boolean isSource(entry) { return entry.properties.kind == 'src' }
 
-boolean isControlsfx(entry) { return entry.properties.path.contains('controlsfx'); }
+boolean isControlsfx(entry) { return entry.properties.path.contains('controlsfx') }
 
-boolean isJavafxControls(entry) { return entry.properties.path.contains('javafx-controls'); }
+boolean isJavafxControls(entry) { return entry.properties.path.contains('javafx-controls') }
 
-boolean isJavafxGraphics(entry) { return entry.properties.path.contains('javafx-graphics'); }
+boolean isJavafxGraphics(entry) { return entry.properties.path.contains('javafx-graphics') }
 
-boolean isJavafxBase(entry) { return entry.properties.path.contains('javafx-base'); }
+boolean isJavafxBase(entry) { return entry.properties.path.contains('javafx-base') }
 
-boolean isJavafxFXML(entry) { return entry.properties.path.contains('javafx-fxml'); }
+boolean isJavafxFXML(entry) { return entry.properties.path.contains('javafx-fxml') }
 
 // add formatter and cleanup settings to Eclipse settings
 // see http://stackoverflow.com/a/27461890/873282

@@ -181,30 +181,29 @@ public class LocalizationParser {
         Collection<String> result = new ArrayList<>();
 
         // Afterburner ViewLoader forces a controller factory, but we do not need any controller
-        MockedStatic<ViewLoader> viewLoader = Mockito.mockStatic(ViewLoader.class, Answers.RETURNS_DEEP_STUBS);
 
         // Record which keys are requested; we pretend that we have all keys
-        ResourceBundle registerUsageResourceBundle = new ResourceBundle() {
-            @Override
-            protected Object handleGetObject(String key) {
-                // Here, we get the key without the percent sign at the beginning.
-                // All the "magic" is done at "loader.load()" called below.
-                result.add(key);
-                return "test";
-            }
 
-            @Override
-            public Enumeration<String> getKeys() {
-                return null;
-            }
+        try (MockedStatic<ViewLoader> viewLoader = Mockito.mockStatic(ViewLoader.class, Answers.RETURNS_DEEP_STUBS)) {
+            ResourceBundle registerUsageResourceBundle = new ResourceBundle() {
+                @Override
+                protected Object handleGetObject(String key) {
+                    // Here, we get the key without the percent sign at the beginning.
+                    // All the "magic" is done at "loader.load()" called below.
+                    result.add(key);
+                    return "test";
+                }
 
-            @Override
-            public boolean containsKey(String key) {
-                return true;
-            }
-        };
+                @Override
+                public Enumeration<String> getKeys() {
+                    return null;
+                }
 
-        try {
+                @Override
+                public boolean containsKey(String key) {
+                    return true;
+                }
+            };
             FXMLLoader loader = new FXMLLoader(path.toUri().toURL(), registerUsageResourceBundle);
             // We don't want to initialize controller
             loader.setControllerFactory(Mockito::mock);
@@ -214,8 +213,6 @@ public class LocalizationParser {
             loader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
-        } finally {
-            viewLoader.close();
         }
 
         return result.stream()

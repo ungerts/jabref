@@ -140,7 +140,7 @@ public class AtomicFileOutputStream extends FilterOutputStream {
      * Overridden because of cleanup actions in case of an error
      */
     @Override
-    public void write(byte b[], int off, int len) throws IOException {
+    public void write(byte[] b, int off, int len) throws IOException {
         try {
             out.write(b, off, len);
         } catch (IOException exception) {

@@ -98,7 +98,7 @@ public class AiChatLogic {
     private void rebuildChatMemory(List<ChatMessage> chatMessages) {
         this.chatMemory = TokenWindowChatMemory
                 .builder()
-                .maxTokens(aiPreferences.getContextWindowSize(), new OpenAiTokenizer())
+                .maxTokens(aiPreferences.getContextWindowSize(), new OpenAiTokenizer(aiPreferences.getOpenAiChatModel()))
                 .build();
 
         chatMessages.stream().filter(chatMessage -> !(chatMessage instanceof ErrorMessage)).forEach(chatMemory::add);
@@ -166,7 +166,7 @@ public class AiChatLogic {
         // This is crazy, but langchain4j {@link ChatMemory} does not allow to remove single messages.
         ChatMemory tempChatMemory = TokenWindowChatMemory
                 .builder()
-                .maxTokens(aiPreferences.getContextWindowSize(), new OpenAiTokenizer())
+                .maxTokens(aiPreferences.getContextWindowSize(), new OpenAiTokenizer(aiPreferences.getOpenAiChatModel()))
                 .build();
 
         chatMemory.messages().forEach(tempChatMemory::add);

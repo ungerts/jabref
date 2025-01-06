@@ -94,7 +94,7 @@ class BackupManagerTest {
         for (int i = 0; i < 10; i++) {
             Path changesBibBak = Path.of(BackupManagerTest.class.getResource("changes.bib").toURI());
             Path directory = backupDir;
-            String timeSuffix = "2020-02-03--00.00.0" + Integer.toString(i);
+            String timeSuffix = "2020-02-03--00.00.0" + i;
             String fileName = BackupFileUtil.getUniqueFilePrefix(noChangesBib) + "--no-changes.bib--" + timeSuffix + ".bak";
             target = directory.resolve(fileName);
             Files.copy(changesBibBak, target, StandardCopyOption.REPLACE_EXISTING);

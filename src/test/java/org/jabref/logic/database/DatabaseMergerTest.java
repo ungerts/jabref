@@ -135,7 +135,7 @@ class DatabaseMergerTest {
         new DatabaseMerger(importFormatPreferences.bibEntryPreferences().getKeywordSeparator()).mergeStrings(target, source);
         List<BibtexString> resultStringsSorted = target.getStringValues()
                 .stream()
-                .sorted(new BibtexStringComparator(false)::compare)
+                .sorted(new BibtexStringComparator(false))
                 .collect(Collectors.toList());
 
         assertEquals(List.of(targetString1, targetString2), resultStringsSorted);

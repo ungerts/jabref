@@ -73,7 +73,7 @@ public abstract class BibliographyConsistencyCheckResultWriter implements Closea
     }
 
     private List<String> getColumnNames() {
-        List<String> result = new ArrayList(columnCount + 2);
+        List<String> result = new ArrayList<>(columnCount + 2);
         result.add("entry type");
         result.add("citation key");
         allReportedFields.forEach(field -> {
@@ -83,7 +83,7 @@ public abstract class BibliographyConsistencyCheckResultWriter implements Closea
     }
 
     protected List<String> getFindingsAsList(BibEntry bibEntry, String entryType, Set<Field> requiredFields, Set<Field> optionalFields) {
-        List<String> result = new ArrayList(columnCount + 2);
+        List<String> result = new ArrayList<>(columnCount + 2);
         result.add(entryType);
         result.add(bibEntry.getCitationKey().orElse(""));
         allReportedFields.forEach(field -> {

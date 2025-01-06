@@ -78,11 +78,10 @@ public class FileFieldParser {
             if (!escaped && (c == '\\')) {
                 if (windowsPath) {
                     charactersOfCurrentElement.append(c);
-                    continue;
                 } else {
                     escaped = true;
-                    continue;
                 }
+                continue;
             } else if (!escaped && (c == '&') && !inXmlChar) {
                 // Check if we are entering an XML special character construct such
                 // as "&#44;", because we need to know in order to ignore the semicolon.

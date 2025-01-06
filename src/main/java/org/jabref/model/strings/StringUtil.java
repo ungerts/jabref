@@ -401,9 +401,7 @@ public class StringUtil {
     public static boolean isInCurlyBrackets(String toCheck) {
         int count = 0;
         int brackets = 0;
-        if ((toCheck == null) || toCheck.isEmpty()) {
-            return false;
-        } else {
+        if ((toCheck != null) && !toCheck.isEmpty()) {
             if ((toCheck.charAt(0) == '{') && (toCheck.charAt(toCheck.length() - 1) == '}')) {
                 for (char c : toCheck.toCharArray()) {
                     if (c == '{') {
@@ -418,8 +416,8 @@ public class StringUtil {
 
                 return count == 1;
             }
-            return false;
         }
+        return false;
     }
 
     public static boolean isInSquareBrackets(String toCheck) {

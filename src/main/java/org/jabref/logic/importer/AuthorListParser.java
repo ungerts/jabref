@@ -325,9 +325,6 @@ public class AuthorListParser {
                     }
                 }
                 firstPartEnd = lastPartStart;
-                if (firstPartEnd > 0) {
-                    firstPartStart = 0;
-                }
             } else { // 'von part' is present
                 if (lastStart >= 0) {
                     lastPartEnd = tokens.size();
@@ -338,9 +335,9 @@ public class AuthorListParser {
                 }
                 vonPartStart = vonStart;
                 firstPartEnd = vonPartStart;
-                if (firstPartEnd > 0) {
-                    firstPartStart = 0;
-                }
+            }
+            if (firstPartEnd > 0) {
+                firstPartStart = 0;
             }
         } else {
             // commas are present: it affects only 'first part' and 'junior part'

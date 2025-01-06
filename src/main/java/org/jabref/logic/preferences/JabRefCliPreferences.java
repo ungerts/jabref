@@ -472,12 +472,7 @@ public class JabRefCliPreferences implements CliPreferences {
         defaults.put(USE_CUSTOM_DOI_URI, Boolean.FALSE);
         defaults.put(BASE_DOI_URI, "https://doi.org");
 
-        if (OS.OS_X) {
-            defaults.put(FONT_FAMILY, "SansSerif");
-        } else {
-            // Linux
-            defaults.put(FONT_FAMILY, "SansSerif");
-        }
+        defaults.put(FONT_FAMILY, "SansSerif");
 
         defaults.put(KEY_PATTERN_REGEX, "");
         defaults.put(KEY_PATTERN_REPLACEMENT, "");

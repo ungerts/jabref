@@ -296,13 +296,12 @@ public class LayoutHelper {
                         // get field name
                         doBracketedOptionField();
 
-                        return;
                     } else {
                         // get field name
                         doBracketedField(LayoutHelper.IS_OPTION_FIELD);
 
-                        return;
                     }
+                    return;
                 } else if ("filename".equalsIgnoreCase(name)) {
                     // Print the name of the database BIB file.
                     // This is only supported in begin/end layouts, not in

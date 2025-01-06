@@ -210,21 +210,17 @@ public class OOTextIntoOO {
                     for (OOPair<String, String> pair : attributes) {
                         String key = pair.a;
                         String value = pair.b;
-                        switch (key) {
-                            case "oo:ParaStyleName":
-                                // <p oo:ParaStyleName="Standard">
-                                if (StringUtil.isNullOrEmpty(value)) {
-                                    LOGGER.debug("oo:ParaStyleName inherited");
-                                } else {
-                                    if (setParagraphStyle(cursor, value)) {
-                                        // Presumably tested already:
-                                        LOGGER.debug("oo:ParaStyleName=\"%s\" failed".formatted(value));
-                                    }
+                        if (key.equals("oo:ParaStyleName")) {// <p oo:ParaStyleName="Standard">
+                            if (StringUtil.isNullOrEmpty(value)) {
+                                LOGGER.debug("oo:ParaStyleName inherited");
+                            } else {
+                                if (setParagraphStyle(cursor, value)) {
+                                    // Presumably tested already:
+                                    LOGGER.debug("oo:ParaStyleName=\"%s\" failed".formatted(value));
                                 }
-                                break;
-                            default:
-                                LOGGER.warn("Unexpected attribute '%s' for <%s>".formatted(key, tagName));
-                                break;
+                            }
+                        } else {
+                            LOGGER.warn("Unexpected attribute '%s' for <%s>".formatted(key, tagName));
                         }
                     }
                     break;
@@ -232,9 +228,10 @@ public class OOTextIntoOO {
                     for (OOPair<String, String> pair : attributes) {
                         String key = pair.a;
                         String value = pair.b;
-                        switch (key) {
-                            case "target" -> UnoCrossRef.insertReferenceToPageNumberOfReferenceMark(doc, value, cursor);
-                            default -> LOGGER.warn("Unexpected attribute '%s' for <%s>".formatted(key, tagName));
+                        if (key.equals("target")) {
+                            UnoCrossRef.insertReferenceToPageNumberOfReferenceMark(doc, value, cursor);
+                        } else {
+                            LOGGER.warn("Unexpected attribute '%s' for <%s>".formatted(key, tagName));
                         }
                     }
                     break;

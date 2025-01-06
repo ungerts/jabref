@@ -1159,10 +1159,8 @@ public class MedlineImporter extends Importer implements Parser {
             reader.next();
             if (isStartXMLEvent(reader)) {
                 String elementName = reader.getName().getLocalPart();
-                switch (elementName) {
-                    case "Author" -> {
-                        parseAuthor(reader, authorNames);
-                    }
+                if (elementName.equals("Author")) {
+                    parseAuthor(reader, authorNames);
                 }
             }
 

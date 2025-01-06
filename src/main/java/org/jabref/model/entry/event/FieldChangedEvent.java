@@ -4,6 +4,8 @@ import org.jabref.model.FieldChange;
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.field.Field;
 
+import java.util.Objects;
+
 /**
  * <code>FieldChangedEvent</code> is fired when a field of <code>BibEntry</code> has been modified, removed or added.
  */
@@ -60,7 +62,7 @@ public class FieldChangedEvent extends EntryChangedEvent {
 
     private int computeMajorCharacterChange(String oldValue, String newValue) {
         // We do == because of performance reasons
-        if (oldValue == newValue) {
+        if (Objects.equals(oldValue, newValue)) {
             return 0;
         } else if ((oldValue == null) && (newValue != null)) {
             return newValue.length();

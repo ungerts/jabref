@@ -239,8 +239,7 @@ public class PreferencesMigrations {
                                                  JabRefCliPreferences prefs, Preferences mainPrefsNode) {
         String preferenceFileNamePattern = mainPrefsNode.get(JabRefCliPreferences.IMPORT_FILENAMEPATTERN, null);
 
-        if ((preferenceFileNamePattern != null) &&
-                oldStylePattern.equals(preferenceFileNamePattern)) {
+        if (oldStylePattern.equals(preferenceFileNamePattern)) {
             // Upgrade the old-style File Name pattern to new one:
             mainPrefsNode.put(JabRefCliPreferences.IMPORT_FILENAMEPATTERN, newStylePattern);
             LOGGER.info("migrated old style {} value \"{}\" to new value \"{}\" in the preference file", JabRefCliPreferences.IMPORT_FILENAMEPATTERN, oldStylePattern, newStylePattern);

@@ -49,24 +49,24 @@ eclipse {
     }
 }
 
-boolean isLibrary(entry) { return entry.properties.kind == 'lib' }
+static boolean isLibrary(entry) { return entry.properties.kind == 'lib' }
 
-boolean isTestScope(entry) { return !entry.entryAttributes.get('gradle_used_by_scope').contains('main') }
+static boolean isTestScope(entry) { return !entry.entryAttributes.get('gradle_used_by_scope').contains('main') }
 
 boolean isModule(entry) {
     isLibrary(entry) && !isTestScope(entry)
 } //a test-scope library should be put on the classpath instead of the modulepath
-boolean isSource(entry) { return entry.properties.kind == 'src' }
+static boolean isSource(entry) { return entry.properties.kind == 'src' }
 
-boolean isControlsfx(entry) { return entry.properties.path.contains('controlsfx') }
+static boolean isControlsfx(entry) { return entry.properties.path.contains('controlsfx') }
 
-boolean isJavafxControls(entry) { return entry.properties.path.contains('javafx-controls') }
+static boolean isJavafxControls(entry) { return entry.properties.path.contains('javafx-controls') }
 
-boolean isJavafxGraphics(entry) { return entry.properties.path.contains('javafx-graphics') }
+static boolean isJavafxGraphics(entry) { return entry.properties.path.contains('javafx-graphics') }
 
-boolean isJavafxBase(entry) { return entry.properties.path.contains('javafx-base') }
+static boolean isJavafxBase(entry) { return entry.properties.path.contains('javafx-base') }
 
-boolean isJavafxFXML(entry) { return entry.properties.path.contains('javafx-fxml') }
+static boolean isJavafxFXML(entry) { return entry.properties.path.contains('javafx-fxml') }
 
 // add formatter and cleanup settings to Eclipse settings
 // see http://stackoverflow.com/a/27461890/873282

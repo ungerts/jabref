@@ -583,7 +583,7 @@ run {
 
     if (project.hasProperty('component')){
         if (component == 'httpserver'){
-            main = 'org.jabref.http.server.Server'
+            mainClass = 'org.jabref.http.server.Server'
         }
     }
 }
@@ -624,7 +624,7 @@ testlogger {
 }
 
 tasks.withType(Test).configureEach {
-    reports.html.outputLocation.set(file("${reporting.baseDir}/${name}"))
+    reports.html.outputLocation.set(file("${reporting.getBaseDirectory()}/${name}"))
     // Enable parallel tests (on desktop).
     // See https://docs.gradle.org/8.1/userguide/performance.html#execute_tests_in_parallel for details.
     if (!providers.environmentVariable("CI").isPresent()) {
@@ -671,7 +671,7 @@ tasks.register('guiTest', Test) {
 // Test result tasks
 tasks.register('copyTestResources', Copy) {
     from "${projectDir}/src/test/resources"
-    into "${buildDir}/classes/test"
+    into "${layout.buildDirectory}/classes/test"
 }
 processTestResources.dependsOn copyTestResources
 
@@ -742,7 +742,7 @@ modernizer {
 
 // Release tasks
 tasks.register('deleteInstallerTemp', Delete) {
-    delete "$buildDir/installer"
+    delete "$layout.buildDirectory/installer"
 }
 
 jpackage.dependsOn deleteInstallerTemp
@@ -866,7 +866,7 @@ jlink {
                     '--win-shortcut',
                     '--win-menu',
                     '--win-menu-group', "JabRef",
-                    '--temp', "$buildDir/installer",
+                    '--temp', "$layout.buildDirectory/installer",
                     '--resource-dir', "${projectDir}/buildres/windows",
                     '--license-file', "${projectDir}/buildres/LICENSE_with_Privacy.md",
                     '--file-associations', "${projectDir}/buildres/windows/bibtexAssociations.properties"
@@ -919,7 +919,7 @@ if (OperatingSystem.current().isWindows()) {
             from("${projectDir}/buildres/windows") {
                 include "jabref-firefox.json", "jabref-chrome.json", "JabRefHost.bat", "JabRefHost.ps1"
             }
-            into "$buildDir/distribution/JabRef"
+            into "$layout.buildDirectory/distribution/JabRef"
         }
     }
 }
@@ -930,7 +930,7 @@ if (OperatingSystem.current().isLinux()) {
             from("${projectDir}/buildres/linux") {
                 include "native-messaging-host/**", "jabrefHost.py"
             }
-            into "$buildDir/distribution/JabRef/lib"
+            into "$layout.buildDirectory/distribution/JabRef/lib"
         }
     }
 }
@@ -941,7 +941,7 @@ if (OperatingSystem.current().isMacOsX()) {
             from("${projectDir}/buildres/mac") {
                 include "native-messaging-host/**", "jabrefHost.py"
             }
-            into "$buildDir/distribution/JabRef.app/Contents/Resources"
+            into "$layout.buildDirectory/distribution/JabRef.app/Contents/Resources"
         }
     }
 }

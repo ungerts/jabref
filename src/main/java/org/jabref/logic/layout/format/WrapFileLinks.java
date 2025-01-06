@@ -130,7 +130,7 @@ public class WrapFileLinks extends AbstractParamLayoutFormatter {
                 } else if (WrapFileLinks.ESCAPE_SEQ.containsKey(c)) {
                     // Ok, we have the code. Add the previous string (if any) and
                     // the entry indicated by the escape sequence:
-                    if (sb.length() > 0) {
+                    if (!sb.isEmpty()) {
                         l.add(new FormatEntry(sb.toString()));
                         // Clear the buffer:
                         sb = new StringBuilder();
@@ -151,7 +151,7 @@ public class WrapFileLinks extends AbstractParamLayoutFormatter {
             }
         }
         // Finished scanning the string. If we collected text at the end, add an entry for it:
-        if (sb.length() > 0) {
+        if (!sb.isEmpty()) {
             l.add(new FormatEntry(sb.toString()));
         }
 

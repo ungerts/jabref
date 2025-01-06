@@ -295,7 +295,7 @@ public class BracketedPattern {
 
         if (!foundClosingBracket) {
             LOGGER.warn("Missing closing bracket ']' in '{}'", pattern);
-        } else if (bracketContent.length() == 0) {
+        } else if (bracketContent.isEmpty()) {
             LOGGER.warn("Found empty brackets \"[]\" in '{}'", pattern);
         }
         return bracketContent.toString();
@@ -632,7 +632,7 @@ public class BracketedPattern {
             }
 
             // If we get here, the word was accepted.
-            if (stringBuilder.length() > 0) {
+            if (!stringBuilder.isEmpty()) {
                 stringBuilder.append(' ');
             }
             stringBuilder.append(word);
@@ -659,7 +659,7 @@ public class BracketedPattern {
                 // Camelize the word
                 word = word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1);
 
-                if (stringBuilder.length() > 0) {
+                if (!stringBuilder.isEmpty()) {
                     stringBuilder.append(' ');
                 }
                 stringBuilder.append(word);
@@ -687,7 +687,7 @@ public class BracketedPattern {
                 // Camelize the word
                 word = word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1);
 
-                if (stringBuilder.length() > 0) {
+                if (!stringBuilder.isEmpty()) {
                     stringBuilder.append(' ');
                 }
                 stringBuilder.append(word);

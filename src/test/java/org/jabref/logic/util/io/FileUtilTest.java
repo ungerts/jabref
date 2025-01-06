@@ -423,6 +423,7 @@ class FileUtilTest {
         assertEquals(Optional.of(testFile.toAbsolutePath()), FileUtil.find("files/test.pdf", firstFilesPath));
     }
 
+    @org.junit.Test
     public void testCTemp() {
         String fileName = "c:\\temp.pdf";
         if (OS.WINDOWS) {

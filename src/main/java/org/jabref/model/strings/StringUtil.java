@@ -594,13 +594,8 @@ public class StringUtil {
      * @return String with n copies of c
      */
     public static String repeat(int n, char c) {
-        StringBuilder resultSB = new StringBuilder(n);
 
-        for (int i = 0; i < n; i++) {
-            resultSB.append(c);
-        }
-
-        return resultSB.toString();
+        return String.valueOf(c).repeat(Math.max(0, n));
     }
 
     public static boolean isNullOrEmpty(String toTest) {

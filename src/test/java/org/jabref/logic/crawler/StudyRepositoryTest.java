@@ -144,8 +144,7 @@ class StudyRepositoryTest {
     @Test
     void mergedResultsPersistedCorrectly() throws Exception {
         List<QueryResult> mockResults = getMockResults();
-        List<BibEntry> expected = new ArrayList<>();
-        expected.addAll(getArXivQuantumMockResults());
+        List<BibEntry> expected = new ArrayList<>(getArXivQuantumMockResults());
         expected.add(getSpringerQuantumMockResults().get(1));
         expected.add(getSpringerQuantumMockResults().get(2));
 

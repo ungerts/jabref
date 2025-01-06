@@ -385,7 +385,7 @@ public class BstFunctions {
         }
         Object o1 = stack.pop();
 
-        if (!((o1 instanceof String s) && (((String) o1).length() == 1))) {
+        if (!((o1 instanceof String s) && (s.length() == 1))) {
             throw new BstVMException("Can only perform chr.to.int$ on string with length 1 (line %d)".formatted(ctx.start.getLine()));
         }
 

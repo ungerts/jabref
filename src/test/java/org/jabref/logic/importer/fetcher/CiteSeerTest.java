@@ -89,8 +89,8 @@ class CiteSeerTest {
         while (fetchedEntriesIter.hasNext()) {
             BibEntry laterEntry = fetchedEntriesIter.next();
             if (recentEntry.hasField(StandardField.YEAR) && laterEntry.hasField(StandardField.YEAR)) {
-                Integer recentYear = Integer.parseInt(recentEntry.getField(StandardField.YEAR).orElse("0"));
-                Integer laterYear = Integer.parseInt(laterEntry.getField(StandardField.YEAR).orElse("0"));
+                int recentYear = Integer.parseInt(recentEntry.getField(StandardField.YEAR).orElse("0"));
+                int laterYear = Integer.parseInt(laterEntry.getField(StandardField.YEAR).orElse("0"));
                 assertFalse(recentYear < laterYear);
             }
             recentEntry = laterEntry;

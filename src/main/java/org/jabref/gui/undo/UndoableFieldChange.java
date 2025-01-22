@@ -30,7 +30,7 @@ public class UndoableFieldChange extends AbstractUndoableJabRefEdit {
     }
 
     public UndoableFieldChange(FieldChange change) {
-        this(change.getEntry(), change.getField(), change.getOldValue(), change.getNewValue());
+        this(change.entry(), change.field(), change.oldValue(), change.newValue());
     }
 
     @Override

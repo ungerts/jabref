@@ -14,10 +14,7 @@ import java.util.Optional;
 
 import org.jabref.logic.util.StandardFileType;
 import org.jabref.model.database.BibDatabaseContext;
-import org.jabref.model.entry.Author;
-import org.jabref.model.entry.AuthorList;
-import org.jabref.model.entry.BibEntry;
-import org.jabref.model.entry.Date;
+import org.jabref.model.entry.*;
 import org.jabref.model.entry.field.BiblatexSoftwareField;
 import org.jabref.model.entry.field.Field;
 import org.jabref.model.entry.field.StandardField;
@@ -141,7 +138,7 @@ public class CffExporter extends Exporter {
         if (main.hasField(StandardField.RELATED)) {
             main.getEntryLinkList(StandardField.RELATED, databaseContext.getDatabase())
                 .stream()
-                .map(link -> link.getLinkedEntry())
+                .map(ParsedEntryLink::getLinkedEntry)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .forEach(entry -> {

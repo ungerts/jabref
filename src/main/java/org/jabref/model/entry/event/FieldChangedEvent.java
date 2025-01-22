@@ -47,10 +47,10 @@ public class FieldChangedEvent extends EntryChangedEvent {
      * @param location Location affected by this event
      */
     public FieldChangedEvent(FieldChange fieldChange, EntriesEventSource location) {
-        super(fieldChange.getEntry(), location);
-        this.field = fieldChange.getField();
-        this.newValue = fieldChange.getNewValue();
-        this.oldValue = fieldChange.getOldValue();
+        super(fieldChange.entry(), location);
+        this.field = fieldChange.field();
+        this.newValue = fieldChange.newValue();
+        this.oldValue = fieldChange.oldValue();
         this.majorCharacterChange = computeMajorCharacterChange(oldValue, newValue);
     }
 

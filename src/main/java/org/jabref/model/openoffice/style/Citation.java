@@ -66,7 +66,7 @@ public class Citation implements ComparableCitation, CitationMarkerEntry, Citati
 
     @Override
     public Optional<BibEntry> getBibEntry() {
-        return db.map(citationLookupResult -> citationLookupResult.entry);
+        return db.map(citationLookupResult -> citationLookupResult.entry());
     }
 
     public static Optional<CitationLookupResult> lookup(BibDatabase database, String key) {
@@ -136,17 +136,17 @@ public class Citation implements ComparableCitation, CitationMarkerEntry, Citati
      * Setters for CitationGroups.distribute()
      */
     public static void setLookupResult(OOPair<Citation, Optional<CitationLookupResult>> pair) {
-        Citation citation = pair.a;
-        citation.db = pair.b;
+        Citation citation = pair.a();
+        citation.db = pair.b();
     }
 
     public static void setNumber(OOPair<Citation, Optional<Integer>> pair) {
-        Citation citation = pair.a;
-        citation.number = pair.b;
+        Citation citation = pair.a();
+        citation.number = pair.b();
     }
 
     public static void setUniqueLetter(OOPair<Citation, Optional<String>> pair) {
-        Citation citation = pair.a;
-        citation.uniqueLetter = pair.b;
+        Citation citation = pair.a();
+        citation.uniqueLetter = pair.b();
     }
 }

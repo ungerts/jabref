@@ -17,7 +17,7 @@ public class UndoableKeyChange extends AbstractUndoableJabRefEdit {
     private final String newValue;
 
     public UndoableKeyChange(FieldChange change) {
-        this(change.getEntry(), change.getOldValue(), change.getNewValue());
+        this(change.entry(), change.oldValue(), change.newValue());
     }
 
     public UndoableKeyChange(BibEntry entry, String oldValue, String newValue) {

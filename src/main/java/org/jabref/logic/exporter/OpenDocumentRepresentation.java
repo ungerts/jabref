@@ -51,7 +51,7 @@ class OpenDocumentRepresentation {
             entryList.addAll(entries);
         }
 
-        Collections.sort(entryList, new FieldComparatorStack<>(comparators));
+        entryList.sort(new FieldComparatorStack<>(comparators));
         this.entries = entryList;
     }
 

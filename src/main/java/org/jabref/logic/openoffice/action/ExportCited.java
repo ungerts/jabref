@@ -60,8 +60,8 @@ public class ExportCited {
             if (citation.getLookupResult().isEmpty()) {
                 unresolvedKeys.add(citation.citationKey);
             } else {
-                BibEntry entry = citation.getLookupResult().get().entry;
-                BibDatabase loopDatabase = citation.getLookupResult().get().database;
+                BibEntry entry = citation.getLookupResult().get().entry();
+                BibDatabase loopDatabase = citation.getLookupResult().get().database();
 
                 // If entry found
                 BibEntry clonedEntry = (BibEntry) entry.clone();

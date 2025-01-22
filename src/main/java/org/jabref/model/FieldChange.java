@@ -8,39 +8,13 @@ import org.jabref.model.entry.field.Field;
 /**
  * This class is used in the instance of a field being modified, removed or added.
  */
-public class FieldChange {
-
-    private final BibEntry entry;
-    private final Field field;
-    private final String oldValue;
-    private final String newValue;
+public record FieldChange(BibEntry entry, Field field, String oldValue, String newValue) {
 
     public FieldChange(BibEntry entry, Field field, String oldValue, String newValue) {
         this.entry = Objects.requireNonNull(entry);
         this.field = Objects.requireNonNull(field);
         this.oldValue = oldValue;
         this.newValue = newValue;
-    }
-
-    public BibEntry getEntry() {
-        return this.entry;
-    }
-
-    public Field getField() {
-        return this.field;
-    }
-
-    public String getOldValue() {
-        return this.oldValue;
-    }
-
-    public String getNewValue() {
-        return this.newValue;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(entry, field, newValue, oldValue);
     }
 
     @Override

@@ -126,9 +126,9 @@ public class DuplicateResolverDialog extends BaseDialog<DuplicateResolverResult>
         // Retrieves the previous window state and sets the new dialog window size and position to match it
         DialogWindowState state = stateManager.getDialogWindowState(getClass().getSimpleName());
         if (state != null) {
-            this.getDialogPane().setPrefSize(state.getWidth(), state.getHeight());
-            this.setX(state.getX());
-            this.setY(state.getY());
+            this.getDialogPane().setPrefSize(state.width(), state.height());
+            this.setX(state.x());
+            this.setY(state.y());
         }
 
         BorderPane borderPane = new BorderPane(threeWayMerge);

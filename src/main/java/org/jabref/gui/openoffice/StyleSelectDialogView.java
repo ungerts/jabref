@@ -172,13 +172,12 @@ public class StyleSelectDialogView extends BaseDialog<OOStyle> {
         });
 
         availableListView.setItems(viewModel.getAvailableLayouts());
-        searchBox.textProperty().addListener((observable, oldValue, newValue) ->
+        searchBox.textProperty().addListener((_, _, newValue) ->
                 viewModel.setAvailableLayoutsFilter(newValue));
 
         viewModel.setSelectedTab(tabPane.getSelectionModel().getSelectedItem());
-        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            viewModel.setSelectedTab(newValue);
-        });
+        tabPane.getSelectionModel().selectedItemProperty().addListener((_, _, newValue) ->
+                viewModel.setSelectedTab(newValue));
 
         availableListView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -196,9 +195,7 @@ public class StyleSelectDialogView extends BaseDialog<OOStyle> {
         }
 
         viewModel.setSelectedTab(tabPane.getSelectionModel().getSelectedItem());
-        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            viewModel.setSelectedTab(newValue);
-        });
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> viewModel.setSelectedTab(newValue));
 
         updateCurrentStyleLabel();
     }

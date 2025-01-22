@@ -97,13 +97,13 @@ public class OOFormatBibliography {
             return OOText.fromString("Unresolved(%s)".formatted(citedKey.citationKey));
         } else {
             // Resolved entry, use the layout engine
-            BibEntry bibentry = citedKey.getLookupResult().get().entry;
+            BibEntry bibentry = citedKey.getLookupResult().get().entry();
             Layout layout = style.getReferenceFormat(bibentry.getType());
             layout.setPostFormatter(POSTFORMATTER);
 
             return formatFullReferenceOfBibEntry(layout,
                                                  bibentry,
-                                                 citedKey.getLookupResult().get().database,
+                    citedKey.getLookupResult().get().database(),
                                                  citedKey.getUniqueLetter().orElse(null));
         }
     }

@@ -324,9 +324,7 @@ public class Bootstrap {
                     Thread.sleep(500);
                 }
             }
-        } catch (BootstrapException e) {
-            throw e;
-        } catch (java.lang.RuntimeException e) {
+        } catch (BootstrapException | RuntimeException e) {
             throw e;
         } catch (Exception e) {
             throw new BootstrapException(e);
@@ -349,8 +347,6 @@ public class Bootstrap {
                         }
                         out.println(prefix + s);
                     }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace(System.err);
                 } catch (IOException e) {
                     e.printStackTrace(System.err);
                 }

@@ -5,16 +5,11 @@ import java.util.Objects;
 import org.jabref.model.database.BibDatabase;
 import org.jabref.model.entry.BibEntry;
 
-public class CitationLookupResult {
+public record CitationLookupResult(BibEntry entry, BibDatabase database) {
 
-    public final BibEntry entry;
-    public final BibDatabase database;
-
-    public CitationLookupResult(BibEntry entry, BibDatabase database) {
+    public CitationLookupResult {
         Objects.requireNonNull(entry);
         Objects.requireNonNull(database);
-        this.entry = entry;
-        this.database = database;
     }
 
     /**
@@ -31,15 +26,10 @@ public class CitationLookupResult {
         if (otherObject == this) {
             return true;
         }
-        if (!(otherObject instanceof CitationLookupResult)) {
+        if (!(otherObject instanceof CitationLookupResult that)) {
             return false;
         }
-        CitationLookupResult that = (CitationLookupResult) otherObject;
         return Objects.equals(this.entry, that.entry) && Objects.equals(this.database, that.database);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(entry, database);
-    }
 }

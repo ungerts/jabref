@@ -50,7 +50,7 @@ public class CitedKey implements
 
     @Override
     public Optional<BibEntry> getBibEntry() {
-        return db.map(e -> e.entry);
+        return db.map(e -> e.entry());
     }
 
     /*

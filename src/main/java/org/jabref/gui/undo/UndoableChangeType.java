@@ -16,7 +16,7 @@ public class UndoableChangeType extends AbstractUndoableJabRefEdit {
     private final BibEntry entry;
 
     public UndoableChangeType(FieldChange change) {
-        this(change.getEntry(), EntryTypeFactory.parse(change.getOldValue()), EntryTypeFactory.parse(change.getNewValue()));
+        this(change.entry(), EntryTypeFactory.parse(change.oldValue()), EntryTypeFactory.parse(change.newValue()));
     }
 
     public UndoableChangeType(BibEntry entry, EntryType oldType, EntryType newType) {
